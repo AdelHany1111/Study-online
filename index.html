@@ -2250,12 +2250,64 @@
     #screen-security-settings.active,
     #screen-appearance-settings.active,
     #screen-reminder-settings.active,
+    #screen-notification-settings.active,
     #screen-backup-settings.active,
     #screen-home-customize.active {
       background:
         radial-gradient(125% 270px at 50% -25px, rgba(192, 38, 211, 0.36) 0%, rgba(124, 58, 237, 0.24) 40%, rgba(6, 5, 18, 0) 78%),
         #050511;
       padding-top: 14px;
+    }
+
+    .nt-hero-card {
+      background: linear-gradient(145deg, rgba(109, 40, 217, 0.48), rgba(19, 14, 48, 0.94));
+      border: 1.5px solid rgba(192, 132, 252, 0.5);
+      border-radius: 24px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+    .nt-diag-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .nt-diag-box {
+      padding: 8px 6px;
+      border-radius: 14px;
+      background: rgba(10, 12, 30, 0.68);
+      border: 1px solid rgba(167, 139, 250, 0.26);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .nt-hours-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .nt-hour-box {
+      padding: 10px 8px;
+      border-radius: 16px;
+      background: rgba(15, 10, 36, 0.72);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      text-align: center;
+    }
+    .nt-hist-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(167, 139, 250, 0.18);
+      margin-bottom: 6px;
+    }
+    .nt-hist-row:last-child {
+      margin-bottom: 0;
     }
 
     .st-profile-card {
@@ -9151,6 +9203,7 @@
       <section id="screen-security-settings" class="screen no-nav" aria-label="الأمان والخصوصية"></section>
       <section id="screen-appearance-settings" class="screen no-nav" aria-label="المظهر وإمكانية الوصول"></section>
       <section id="screen-reminder-settings" class="screen no-nav" aria-label="التذكيرات والتقويم"></section>
+      <section id="screen-notification-settings" class="screen no-nav" aria-label="إعدادات الإشعارات"></section>
       <section id="screen-backup-settings" class="screen no-nav" aria-label="النسخ الاحتياطي"></section>
       <section id="screen-home-customize" class="screen no-nav" aria-label="تخصيص الرئيسية"></section>
       <section id="screen-self-bet" class="screen no-nav" aria-label="رهان على نفسك"></section>
@@ -10974,6 +11027,27 @@
         inAppOpenAlert: true,
         lastAlertDay: null
       },
+      notifications: {
+        enabled: true,
+        welcomeTestSent: false,
+        welcomeTestSentAt: null,
+        noStudy10pmEnabled: true,
+        noStudy10pmHour: 22,
+        noStudy10pmMinute: 0,
+        noStudy10pmMessage: "مذاكرتش ولا دقيقة النهاردة! الحق اعمل لو جلسة سريعة ⏱️🔥",
+        last10pmNotifDay: null,
+        sessionCompleteEnabled: true,
+        streakRiskEnabled: true,
+        kingdomEnabled: true,
+        merchantEnabled: true,
+        quietHoursEnabled: false,
+        quietStartHour: 0,
+        quietEndHour: 7,
+        vibrateWithNotif: true,
+        soundWithNotif: true,
+        requireInteraction: false,
+        history: []
+      },
       backup: {
         lastBackupAt: null,
         weeklyReminder: true,
@@ -11400,8 +11474,45 @@
     s.appearance = Object.assign({}, def.appearance, stripProto(cleanRaw.appearance));
     s.appearance.fontScale = Math.max(85, Math.min(130, fin(s.appearance.fontScale, 100)));
     s.reminders = Object.assign({}, def.reminders, stripProto(cleanRaw.reminders));
+    s.reminders.hour = Math.max(0, Math.min(23, Math.round(fin(s.reminders.hour, 20))));
+    s.reminders.minute = Math.max(0, Math.min(59, Math.round(fin(s.reminders.minute, 0))));
+    s.reminders.message = String(s.reminders.message || "حان وقت التركيز 🔥").trim().slice(0, 60) || "حان وقت التركيز 🔥";
     if (!Array.isArray(s.reminders.days) || s.reminders.days.length !== 7) s.reminders.days = [...def.reminders.days];
     else s.reminders.days = s.reminders.days.map(Boolean);
+
+    const rawNotif = stripProto(cleanRaw.notifications);
+    s.notifications = Object.assign({}, def.notifications, rawNotif);
+    s.notifications.enabled = s.notifications.enabled !== false;
+    s.notifications.welcomeTestSent = !!s.notifications.welcomeTestSent;
+    s.notifications.welcomeTestSentAt = s.notifications.welcomeTestSentAt ? Math.round(fin(s.notifications.welcomeTestSentAt, Date.now())) : null;
+    s.notifications.noStudy10pmEnabled = s.notifications.noStudy10pmEnabled !== false;
+    s.notifications.noStudy10pmHour = Math.max(0, Math.min(23, Math.round(fin(s.notifications.noStudy10pmHour, 22))));
+    s.notifications.noStudy10pmMinute = Math.max(0, Math.min(59, Math.round(fin(s.notifications.noStudy10pmMinute, 0))));
+    s.notifications.noStudy10pmMessage = String(s.notifications.noStudy10pmMessage || def.notifications.noStudy10pmMessage).trim().slice(0, 90) || def.notifications.noStudy10pmMessage;
+    s.notifications.last10pmNotifDay = typeof s.notifications.last10pmNotifDay === "string" ? s.notifications.last10pmNotifDay : null;
+    s.notifications.sessionCompleteEnabled = s.notifications.sessionCompleteEnabled !== false;
+    s.notifications.streakRiskEnabled = s.notifications.streakRiskEnabled !== false;
+    s.notifications.kingdomEnabled = s.notifications.kingdomEnabled !== false;
+    s.notifications.merchantEnabled = s.notifications.merchantEnabled !== false;
+    s.notifications.quietHoursEnabled = !!s.notifications.quietHoursEnabled;
+    s.notifications.quietStartHour = Math.max(0, Math.min(23, Math.round(fin(s.notifications.quietStartHour, 0))));
+    s.notifications.quietEndHour = Math.max(0, Math.min(23, Math.round(fin(s.notifications.quietEndHour, 7))));
+    s.notifications.vibrateWithNotif = s.notifications.vibrateWithNotif !== false;
+    s.notifications.soundWithNotif = s.notifications.soundWithNotif !== false;
+    s.notifications.requireInteraction = !!s.notifications.requireInteraction;
+    s.notifications.history = Array.isArray(rawNotif.history)
+      ? rawNotif.history
+        .filter(h => h && typeof h === "object" && typeof h.title === "string")
+        .slice(0, 15)
+        .map(h => ({
+          id: String(h.id || uid("nt")),
+          title: String(h.title || "").slice(0, 80),
+          body: String(h.body || "").slice(0, 220),
+          type: String(h.type || "general").slice(0, 24),
+          at: Math.round(fin(h.at, Date.now()))
+        }))
+      : [];
+
     s.backup = Object.assign({}, def.backup, stripProto(cleanRaw.backup));
     s.homeLayout = Object.assign({}, def.homeLayout, stripProto(cleanRaw.homeLayout));
     const oldDefaultHomeOrder = ["battle", "duties", "week", "companion", "bet", "bento", "expeditions", "merchant", "quests", "event"];
@@ -14372,6 +14483,12 @@
           const curLv = getResearchLevel(rc.id);
           if (curLv < rc.maxLv) lab.levels[rc.id] = curLv + 1;
           FX.showToast(`⚗️ اكتمل بحث «${rc.name}» للمستوى ${lab.levels[rc.id]}!`, "reward");
+          if (document.hidden && state.notifications?.enabled && state.notifications?.kingdomEnabled) {
+            showSystemNotification("⚗️ خلص البحث في المختبر!", `اكتمل بحث «${rc.name}» للمستوى ${lab.levels[rc.id]}!`, {
+              tag: `study-online-lab-${rc.id}`,
+              type: "kingdom"
+            });
+          }
         }
         finishedAny = true;
       } else {
@@ -14619,6 +14736,12 @@
     ) {
       mr.warned2hDay = today;
       changed = true;
+      if (state.notifications?.enabled && state.notifications?.merchantEnabled) {
+        showSystemNotification("🐪 الحق التاجر المتجول!", "التاجر ماشي خلال أقل من ساعتين ومعاه عروض نادرة!", {
+          tag: `study-online-merchant-${today}`,
+          type: "merchant"
+        });
+      }
       setTimeout(() => {
         if (currentScreen !== "focus" && currentScreen !== "welcome") {
           FX.showToast("⚠️ الحق! التاجر المتجول ماشي خلال أقل من ساعتين ومعاه عروض نادرة 🐪", "warn");
@@ -14933,6 +15056,13 @@
     exp.history.unshift({ destName: dest.name, coins: finalCoins, ambush, chest: !!chestReward, at: Date.now() });
     exp.history = exp.history.slice(0, 10);
     exp.active = null;
+
+    if (document.hidden && state.notifications?.enabled && state.notifications?.kingdomEnabled) {
+      showSystemNotification(`🧭 رجعت رحلة ${dest.name}!`, `البطل رجع بالسلامة ومعاه +${formatNum(finalCoins)} 🪙${chestReward ? ` و${chestReward}` : ""}!`, {
+        tag: `study-online-exp-${dest.id}`,
+        type: "kingdom"
+      });
+    }
 
     checkAchievements();
     AudioFX.playSuccess();
@@ -20529,6 +20659,12 @@
       if (state.settings.endChime) AudioFX.playEndChime();
       else AudioFX.playSuccess();
       Haptics.vibrate([25, 50, 25]);
+      if (document.hidden && state.notifications?.enabled && state.notifications?.sessionCompleteEnabled) {
+        showSystemNotification("انتصار! خلصت جلستك 🎉", `عاش يا بطل! كسبت +${formatNum(preview.coins)} 🪙 و+${formatNum(preview.xp)} XP`, {
+          tag: "study-online-session-done",
+          type: "session"
+        });
+      }
       EventBus.emit("sessionCompleted", { minutes: sess.minutes });
       checkAchievements();
 
@@ -28507,6 +28643,7 @@
       <div class="fs-card st-menu-card">
         ${menuRow("focus-settings", "🎯", "التركيز", "المدة والراحة والوضع الصارم")}
         ${menuRow("sound-settings", "🔊", "الصوت والاهتزاز والحركة", "تحكم في أصوات اللعبة")}
+        ${menuRow("notification-settings", "🔔", "إعدادات الإشعارات المتقدمة", "الأذونات، تنبيه 10 م، وساعات الهدوء")}
         ${menuRow("reminder-settings", "⏰", "التذكيرات والتقويم", "لا تفوّت أي فرصة")}
       </div>
 
@@ -29204,9 +29341,22 @@
     const hr12 = hr24 % 12 || 12;
     const ampm = hr24 >= 12 ? "م" : "ص";
     const timeText = `${hr12}:${pad2(minVal)} ${ampm}`;
+    const permGranted = typeof Notification !== "undefined" && Notification.permission === "granted";
 
     el.innerHTML = `
       ${renderSettingsHeader("التذكيرات والتقويم", "⏰", "settings")}
+
+      <!-- رابط سريع لإعدادات الإشعارات المتقدمة -->
+      <div class="fs-card flex-between" id="rm-open-adv-notif" role="button" tabindex="0" style="cursor:pointer;border-color:${permGranted ? "rgba(52,211,153,0.48)" : "rgba(250,204,21,0.55)"};">
+        <div class="flex-center gap-8">
+          <span class="emoji" style="font-size:28px;">🔔</span>
+          <div>
+            <div class="fw-900 text-sm">إعدادات الإشعارات المتقدمة</div>
+            <div class="text-xs text-muted mt-8">${permGranted ? "الإذن مفعّل ✓ · تحكم في تنبيه 10 م وساعات الهدوء" : "⚠️ فعّل إذن الإشعارات وظبط تنبيه 10 مساءً"}</div>
+          </div>
+        </div>
+        <span class="btn btn-secondary btn-sm">افتح ←</span>
+      </div>
 
       <!-- تذكير المذاكرة اليومي -->
       <div class="fs-card">
@@ -29263,7 +29413,7 @@
         <div class="fs-toggle-row">
           <div>
             <div class="fs-card-title" style="margin-bottom:2px;"><span class="emoji">🔔</span><span>تنبيه داخل التطبيق عند الفتح</span></div>
-            <div class="text-xs text-muted fw-700">التذكيرات الخارجية تتم عبر تقويم الهاتف</div>
+            <div class="text-xs text-muted fw-700">التذكيرات الخارجية تتم عبر الإشعارات وتقويم الهاتف</div>
           </div>
           <button class="fs-toggle ${rm.inAppOpenAlert ? "on" : ""}" id="rm-alert-tog" role="switch" aria-checked="${!!rm.inAppOpenAlert}"></button>
         </div>
@@ -29271,11 +29421,16 @@
     `;
 
     el.querySelector("[data-go-shop]").onclick = () => { AudioFX.playClick(); navigate("shop"); };
+    document.getElementById("rm-open-adv-notif").onclick = () => {
+      AudioFX.playClick();
+      navigate("notification-settings", { from: "reminder-settings" });
+    };
 
     document.getElementById("rm-en-tog").onclick = () => {
       rm.enabled = !rm.enabled;
       AudioFX.playClick();
       saveState();
+      syncPwaNotifications();
       renderReminderSettings();
     };
 
@@ -29286,6 +29441,7 @@
       rm.minute = total % 60;
       AudioFX.playClick();
       saveState();
+      syncPwaNotifications();
       renderReminderSettings();
     };
     document.getElementById("rm-time-up").onclick = () => shiftTime(30);
@@ -29297,6 +29453,7 @@
         rm.days[i] = !rm.days[i];
         AudioFX.playClick();
         saveState();
+        syncPwaNotifications();
         renderReminderSettings();
       };
     });
@@ -29308,8 +29465,10 @@
 
     document.getElementById("rm-streak-tog").onclick = () => {
       rm.streakProtection = !rm.streakProtection;
+      if (state.notifications) state.notifications.streakRiskEnabled = rm.streakProtection;
       AudioFX.playClick();
       saveState();
+      syncPwaNotifications();
       renderReminderSettings();
     };
 
@@ -29321,6 +29480,457 @@
       saveState();
       renderReminderSettings();
     };
+  }
+
+  let notifBackScreen = "settings";
+
+  function renderNotificationSettings() {
+    const el = document.getElementById("screen-notification-settings");
+    if (currentParams && currentParams.from) {
+      notifBackScreen = currentParams.from;
+      currentParams = {};
+    }
+
+    const nt = state.notifications;
+    const rm = state.reminders;
+    const today = getTodayKey();
+    const todayMin = Number(state.history?.[today]?.min || 0);
+    const hasNotifApi = typeof Notification !== "undefined";
+    const perm = hasNotifApi ? Notification.permission : "unsupported";
+
+    const fmtHrAr = (h24, m = 0) => {
+      const hr12 = h24 % 12 || 12;
+      const ap = h24 >= 12 ? "م" : "ص";
+      return `${hr12}:${pad2(m)} ${ap}`;
+    };
+
+    const permBadge = perm === "granted"
+      ? `<span class="pill pill-green text-xs">مفعّلة ومستعدة ✅</span>`
+      : perm === "denied"
+        ? `<span class="pill pill-red text-xs">مقفولة من المتصفح ❌</span>`
+        : perm === "default"
+          ? `<span class="pill pill-gold text-xs">محتاجة إذنك ⚠️</span>`
+          : `<span class="pill pill-muted text-xs">غير مدعومة 🚫</span>`;
+
+    const swConnected = !!(pwaSwReg && pwaSwReg.active);
+    const triggerSupport = hasNotifApi && "showTrigger" in Notification.prototype && typeof window.TimestampTrigger === "function";
+    const quietNow = isQuietHoursNow();
+
+    const is10pmInQuiet = nt.quietHoursEnabled && (() => {
+      const h = Number(nt.noStudy10pmHour ?? 22);
+      const s = Number(nt.quietStartHour ?? 0);
+      const e = Number(nt.quietEndHour ?? 7);
+      if (s === e) return false;
+      return s < e ? (h >= s && h < e) : (h >= s || h < e);
+    })();
+
+    const presets10pm = [
+      "مذاكرتش ولا دقيقة النهاردة! الحق اعمل لو جلسة سريعة ⏱️🔥",
+      "الساعة 10 بليل ومبدأتش لسه — 25 دقيقة بس تفرق معاك 💪",
+      "وحش المادة مستنيك! الحق خلّص جلسة قبل اليوم ما يخلص ⚔️"
+    ];
+
+    const histList = Array.isArray(nt.history) ? nt.history : [];
+
+    el.innerHTML = `
+      ${renderSettingsHeader("إعدادات الإشعارات", "🔔", notifBackScreen || "settings")}
+
+      <!-- 1. بطاقة حالة الإذن والتشخيص -->
+      <div class="nt-hero-card">
+        <div class="flex-between mb-8">
+          <div class="flex-center gap-8">
+            <span class="emoji" style="font-size:30px;">🔔</span>
+            <div>
+              <div class="fw-900" style="font-size:17px;">مركز الإشعارات الذكي</div>
+              <div class="text-xs text-muted mt-8">إدارة كاملة لإشعارات المتصفح والتنبيهات</div>
+            </div>
+          </div>
+          ${permBadge}
+        </div>
+
+        <div class="nt-diag-grid">
+          <div class="nt-diag-box">
+            <div class="text-muted">الخدمة الخلفية</div>
+            <div class="mt-8 ${swConnected ? "text-green" : "text-gold"}">${swConnected ? "شغالة ✓" : "محلية ⏳"}</div>
+          </div>
+          <div class="nt-diag-box">
+            <div class="text-muted">الجدولة التلقائية</div>
+            <div class="mt-8 ${triggerSupport ? "text-green" : "text-muted"}">${triggerSupport ? "مدعومة ✓" : "أثناء الفتح"}</div>
+          </div>
+          <div class="nt-diag-box">
+            <div class="text-muted">إشعار التجربة</div>
+            <div class="mt-8 ${nt.welcomeTestSent ? "text-green" : "text-gold"}">${nt.welcomeTestSent ? "اتبعت مرة ✓" : "مستني الإذن"}</div>
+          </div>
+        </div>
+
+        ${perm === "denied" ? `
+          <div class="pill pill-red mb-12" style="width:100%;justify-content:center;font-size:11.5px;white-space:normal;text-align:center;padding:8px 12px;">
+            ❌ إنت قافل الإشعارات من المتصفح — دوس على علامة القفل 🔒 جنب العنوان فوق واسمح بالإشعارات وبعدها اعمل تحديث
+          </div>
+        ` : ""}
+
+        <div class="flex-between gap-8">
+          ${perm !== "granted" && perm !== "unsupported"
+            ? `<button class="btn btn-primary btn-sm" style="flex:1;" id="nt-req-perm">فعّل الإشعارات الآن 🔔</button>`
+            : `<button class="btn btn-primary btn-sm" style="flex:1;" id="nt-test-now" ${perm !== "granted" ? "disabled" : ""}>إشعار تجربة فوري 🚀</button>`}
+          <button class="btn btn-secondary btn-sm" id="nt-sync-now">مزامنة 🔄</button>
+        </div>
+      </div>
+
+      <!-- 2. المفتاح الرئيسي -->
+      <div class="fs-card">
+        <div class="fs-toggle-row">
+          <div>
+            <div class="fs-card-title" style="margin-bottom:2px;"><span class="emoji">⚡</span><span>تشغيل الإشعارات الذكية</span></div>
+            <div class="text-xs text-muted fw-700">مفتاح رئيسي يتحكم في كل قنوات الإشعارات</div>
+          </div>
+          <button class="fs-toggle ${nt.enabled ? "on" : ""}" id="nt-master-tog" role="switch" aria-checked="${!!nt.enabled}"></button>
+        </div>
+      </div>
+
+      <!-- 3. تنبيه الساعة 10 مساءً (لو مذاكرتش ولا دقيقة) -->
+      <div class="fs-card" style="border-color:rgba(255,215,106,0.52);">
+        <div class="fs-toggle-row mb-8">
+          <div>
+            <div class="fs-card-title" style="margin-bottom:2px;"><span class="emoji">🕙</span><span>تنبيه 10 مساءً عند عدم المذاكرة</span></div>
+            <div class="text-xs text-muted fw-700">يبعتلك إشعار لو مذاكرتش ولا دقيقة طول اليوم</div>
+          </div>
+          <button class="fs-toggle ${nt.noStudy10pmEnabled ? "on" : ""}" id="nt-10pm-tog" role="switch" aria-checked="${!!nt.noStudy10pmEnabled}"></button>
+        </div>
+
+        <div class="pill ${todayMin > 0 ? "pill-green" : "pill-gold"} mb-12" style="width:100%;justify-content:center;font-size:12px;">
+          ${todayMin > 0
+            ? `✓ عاش! ذاكرت ${todayMin} د النهاردة — التنبيه مش هييجي النهاردة`
+            : `⏳ النهاردة 0 دقيقة — لو مبدأتش هتوصلك رسالة الساعة ${fmtHrAr(nt.noStudy10pmHour, nt.noStudy10pmMinute)}`}
+        </div>
+
+        <div class="fs-stepper-row mb-8">
+          <button class="fs-circle-btn" id="nt-10pm-plus" aria-label="تقديم ساعة التنبيه">+</button>
+          <div class="fs-row-label">
+            وقت التنبيه: <strong class="text-gold num">${fmtHrAr(nt.noStudy10pmHour, nt.noStudy10pmMinute)}</strong>
+            ${(nt.noStudy10pmHour !== 22 || nt.noStudy10pmMinute !== 0)
+              ? `<button class="fs-inline-btn" id="nt-10pm-reset" style="font-size:12px;">(رجّعه 10 م)</button>`
+              : ""}
+          </div>
+          <button class="fs-circle-btn" id="nt-10pm-minus" aria-label="تأخير ساعة التنبيه">−</button>
+        </div>
+
+        <div class="text-xs fw-800 text-muted mb-8">رسالة تنبيه الساعة 10 مساءً:</div>
+        <input type="text" class="rm-msg-input mb-8" id="nt-10pm-msg" maxlength="90" value="${escapeHtml(nt.noStudy10pmMessage)}" placeholder="اكتب رسالة تشجعك بالعامية..." />
+        <div class="chips-scroll">
+          ${presets10pm.map((txt, idx) => `<button class="chip ${nt.noStudy10pmMessage === txt ? "active-gold" : ""}" data-nt-preset="${idx}" style="min-height:30px;font-size:11px;">اقتراح ${idx + 1}</button>`).join("")}
+        </div>
+      </div>
+
+      <!-- 4. ساعات الهدوء (عدم الإزعاج DND) -->
+      <div class="fs-card">
+        <div class="fs-toggle-row">
+          <div>
+            <div class="fs-card-title" style="margin-bottom:2px;"><span class="emoji">🌙</span><span>ساعات الهدوء (عدم الإزعاج)</span></div>
+            <div class="text-xs text-muted fw-700">بيوقف الإشعارات وقت نومك عشان راحتك</div>
+          </div>
+          <button class="fs-toggle ${nt.quietHoursEnabled ? "on" : ""}" id="nt-quiet-tog" role="switch" aria-checked="${!!nt.quietHoursEnabled}"></button>
+        </div>
+
+        <div class="nt-hours-grid" style="${!nt.quietHoursEnabled ? "opacity:0.45;pointer-events:none;" : ""}">
+          <div class="nt-hour-box">
+            <div class="text-xs text-muted mb-8">من الساعة</div>
+            <div class="flex-between" style="justify-content:center;gap:10px;">
+              <button class="fs-circle-btn" style="width:30px;height:30px;font-size:16px;" id="nt-qs-minus">−</button>
+              <span class="fw-900 text-gold num">${fmtHrAr(nt.quietStartHour, 0)}</span>
+              <button class="fs-circle-btn" style="width:30px;height:30px;font-size:16px;" id="nt-qs-plus">+</button>
+            </div>
+          </div>
+          <div class="nt-hour-box">
+            <div class="text-xs text-muted mb-8">لحد الساعة</div>
+            <div class="flex-between" style="justify-content:center;gap:10px;">
+              <button class="fs-circle-btn" style="width:30px;height:30px;font-size:16px;" id="nt-qe-minus">−</button>
+              <span class="fw-900 text-gold num">${fmtHrAr(nt.quietEndHour, 0)}</span>
+              <button class="fs-circle-btn" style="width:30px;height:30px;font-size:16px;" id="nt-qe-plus">+</button>
+            </div>
+          </div>
+        </div>
+
+        ${nt.quietHoursEnabled ? `
+          <div class="text-xs fw-800 mt-8" style="text-align:center;color:${quietNow ? "#C4B5FD" : "#4ADE80"};">
+            ${quietNow ? "🌙 وضع الهدوء شغال دلوقتي" : "☀️ خارج ساعات الهدوء حالياً"}
+          </div>
+        ` : ""}
+        ${is10pmInQuiet ? `
+          <div class="pill pill-red mt-8" style="width:100%;justify-content:center;font-size:11px;">
+            ⚠️ ساعات الهدوء بتغطي وقت تنبيه ${fmtHrAr(nt.noStudy10pmHour, nt.noStudy10pmMinute)} وهتوقفه
+          </div>
+        ` : ""}
+      </div>
+
+      <!-- 5. القنوات التفصيلية -->
+      <div class="fs-card">
+        <div class="fs-card-title"><span class="emoji">🎛️</span><span>القنوات الذكية</span></div>
+
+        <div class="fs-toggle-row">
+          <div>
+            <div class="fs-row-label" style="text-align:right;">🎯 التذكير اليومي المجدول</div>
+            <div class="text-xs text-muted"><button class="fs-inline-btn" id="nt-go-rem" style="font-size:11.5px;">تعديل الساعة والأيام (${fmtHrAr(rm.hour, rm.minute)})</button></div>
+          </div>
+          <button class="fs-toggle ${rm.enabled ? "on" : ""}" id="nt-ch-daily" role="switch" aria-checked="${!!rm.enabled}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">⏱️ انتهاء جلسات التركيز والاستراحة</span>
+          <button class="fs-toggle ${nt.sessionCompleteEnabled ? "on" : ""}" id="nt-ch-sess" role="switch" aria-checked="${!!nt.sessionCompleteEnabled}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">🔥 حماية السلسلة وغارات الليل</span>
+          <button class="fs-toggle ${nt.streakRiskEnabled ? "on" : ""}" id="nt-ch-streak" role="switch" aria-checked="${!!nt.streakRiskEnabled}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">🏰 أخبار المملكة (الأبحاث والرحلات)</span>
+          <button class="fs-toggle ${nt.kingdomEnabled ? "on" : ""}" id="nt-ch-kingdom" role="switch" aria-checked="${!!nt.kingdomEnabled}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">🐪 تنبيه التاجر المتجول والمكافآت</span>
+          <button class="fs-toggle ${nt.merchantEnabled ? "on" : ""}" id="nt-ch-merch" role="switch" aria-checked="${!!nt.merchantEnabled}"></button>
+        </div>
+      </div>
+
+      <!-- 6. سلوك الإشعار -->
+      <div class="fs-card">
+        <div class="fs-card-title"><span class="emoji">⚙️</span><span>سلوك التنبيهات</span></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">📳 اهتزاز مع التنبيه</span>
+          <button class="fs-toggle ${nt.vibrateWithNotif ? "on" : ""}" id="nt-beh-vib" role="switch" aria-checked="${!!nt.vibrateWithNotif}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <span class="fs-row-label">🔊 نغمة تنبيه داخل التطبيق</span>
+          <button class="fs-toggle ${nt.soundWithNotif ? "on" : ""}" id="nt-beh-snd" role="switch" aria-checked="${!!nt.soundWithNotif}"></button>
+        </div>
+        <div class="fs-divider-line"></div>
+
+        <div class="fs-toggle-row">
+          <div>
+            <div class="fs-row-label" style="text-align:right;">📌 إشعار ثابت</div>
+            <div class="text-xs text-muted">يفضل ظاهر في شريط الإشعارات لحد ما تقفله بنفسك</div>
+          </div>
+          <button class="fs-toggle ${nt.requireInteraction ? "on" : ""}" id="nt-beh-req" role="switch" aria-checked="${!!nt.requireInteraction}"></button>
+        </div>
+      </div>
+
+      <!-- 7. سجل الإشعارات -->
+      <div class="fs-card">
+        <div class="flex-between mb-12">
+          <div class="fs-card-title" style="margin-bottom:0;"><span class="emoji">📜</span><span>سجل آخر الإشعارات (<span class="num">${histList.length}</span>)</span></div>
+          ${histList.length > 0 ? `<button class="btn btn-ghost btn-sm" id="nt-clear-hist" style="min-height:28px;padding:2px 10px;font-size:11px;color:#FCA5A5;">مسح 🗑️</button>` : ""}
+        </div>
+
+        ${!histList.length
+          ? `<div class="text-xs text-muted" style="text-align:center;padding:8px 0;">لسه مفيش إشعارات اتبعتت في السجل — جرب ابعت إشعار تجربة فوق!</div>`
+          : histList.map(h => {
+            let tm = "";
+            try { tm = new Intl.DateTimeFormat("ar-EG-u-nu-latn", { hour: "numeric", minute: "2-digit", day: "numeric", month: "short" }).format(new Date(h.at)); } catch {}
+            return `
+              <div class="nt-hist-row">
+                <div style="min-width:0;flex:1;">
+                  <div class="fw-900 text-xs">${escapeHtml(h.title)}</div>
+                  <div class="text-xs text-muted mt-8" style="line-height:1.35;">${escapeHtml(h.body)}</div>
+                </div>
+                <span class="text-xs text-muted num" style="white-space:nowrap;font-size:10.5px;">${tm}</span>
+              </div>
+            `;
+          }).join("")}
+      </div>
+    `;
+
+    el.querySelector("[data-go-shop]").onclick = () => { AudioFX.playClick(); navigate("shop"); };
+
+    const reqBtn = document.getElementById("nt-req-perm");
+    if (reqBtn) {
+      reqBtn.onclick = async () => {
+        AudioFX.playClick();
+        const res = await askPwaNotificationPermission();
+        if (res === "denied") {
+          FX.showToast("❌ المتصفح رافض الإشعارات — افتحها من إعدادات الموقع جنب العنوان", "error");
+        }
+        renderNotificationSettings();
+      };
+    }
+
+    const testBtn = document.getElementById("nt-test-now");
+    if (testBtn) {
+      testBtn.onclick = async () => {
+        AudioFX.playClick();
+        const ok = await showSystemNotification("تجربة من قلعة التركيز 🔔", "الاشعارات تعمل بنجاح", {
+          tag: `study-online-manual-test-${Date.now()}`,
+          type: "manual_test",
+          ignoreQuiet: true,
+          force: true
+        });
+        saveState();
+        FX.showToast(ok ? "🚀 بعتنالك إشعار التجربة!" : "تعذر إرسال الإشعار — تأكد من إذن المتصفح", ok ? "success" : "warn");
+        renderNotificationSettings();
+      };
+    }
+
+    document.getElementById("nt-sync-now").onclick = async () => {
+      AudioFX.playClick();
+      await syncPwaNotifications();
+      FX.showToast("🔄 تمت مزامنة إعدادات الإشعارات مع الخلفية!", "success");
+    };
+
+    document.getElementById("nt-master-tog").onclick = () => {
+      nt.enabled = !nt.enabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+
+    document.getElementById("nt-10pm-tog").onclick = () => {
+      nt.noStudy10pmEnabled = !nt.noStudy10pmEnabled;
+      AudioFX.playClick();
+      if (nt.noStudy10pmEnabled && perm === "default") askPwaNotificationPermission();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+
+    const shift10pm = (deltaH) => {
+      nt.noStudy10pmHour = ((Number(nt.noStudy10pmHour ?? 22) + deltaH) % 24 + 24) % 24;
+      nt.last10pmNotifDay = null;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-10pm-plus").onclick = () => shift10pm(1);
+    document.getElementById("nt-10pm-minus").onclick = () => shift10pm(-1);
+    const rst10pm = document.getElementById("nt-10pm-reset");
+    if (rst10pm) {
+      rst10pm.onclick = () => {
+        nt.noStudy10pmHour = 22;
+        nt.noStudy10pmMinute = 0;
+        AudioFX.playClick();
+        saveState();
+        syncPwaNotifications();
+        renderNotificationSettings();
+      };
+    }
+
+    document.getElementById("nt-10pm-msg").oninput = (e) => {
+      nt.noStudy10pmMessage = e.target.value;
+      saveState();
+    };
+    el.querySelectorAll("[data-nt-preset]").forEach(b => {
+      b.onclick = () => {
+        nt.noStudy10pmMessage = presets10pm[Number(b.dataset.ntPreset)] || presets10pm[0];
+        AudioFX.playClick();
+        saveState();
+        syncPwaNotifications();
+        renderNotificationSettings();
+      };
+    });
+
+    document.getElementById("nt-quiet-tog").onclick = () => {
+      nt.quietHoursEnabled = !nt.quietHoursEnabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+
+    const shiftQuiet = (key, delta) => {
+      nt[key] = ((Number(nt[key] ?? 0) + delta) % 24 + 24) % 24;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-qs-plus").onclick = () => shiftQuiet("quietStartHour", 1);
+    document.getElementById("nt-qs-minus").onclick = () => shiftQuiet("quietStartHour", -1);
+    document.getElementById("nt-qe-plus").onclick = () => shiftQuiet("quietEndHour", 1);
+    document.getElementById("nt-qe-minus").onclick = () => shiftQuiet("quietEndHour", -1);
+
+    document.getElementById("nt-go-rem").onclick = () => {
+      AudioFX.playClick();
+      navigate("reminder-settings");
+    };
+    document.getElementById("nt-ch-daily").onclick = () => {
+      rm.enabled = !rm.enabled;
+      if (rm.enabled && perm === "default") askPwaNotificationPermission();
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-ch-sess").onclick = () => {
+      nt.sessionCompleteEnabled = !nt.sessionCompleteEnabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-ch-streak").onclick = () => {
+      nt.streakRiskEnabled = !nt.streakRiskEnabled;
+      rm.streakProtection = nt.streakRiskEnabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-ch-kingdom").onclick = () => {
+      nt.kingdomEnabled = !nt.kingdomEnabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-ch-merch").onclick = () => {
+      nt.merchantEnabled = !nt.merchantEnabled;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+
+    document.getElementById("nt-beh-vib").onclick = () => {
+      nt.vibrateWithNotif = !nt.vibrateWithNotif;
+      if (nt.vibrateWithNotif) Haptics.vibrate(20);
+      saveState();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-beh-snd").onclick = () => {
+      nt.soundWithNotif = !nt.soundWithNotif;
+      if (nt.soundWithNotif) AudioFX.playClick();
+      saveState();
+      renderNotificationSettings();
+    };
+    document.getElementById("nt-beh-req").onclick = () => {
+      nt.requireInteraction = !nt.requireInteraction;
+      AudioFX.playClick();
+      saveState();
+      syncPwaNotifications();
+      renderNotificationSettings();
+    };
+
+    const clrHist = document.getElementById("nt-clear-hist");
+    if (clrHist) {
+      clrHist.onclick = () => {
+        nt.history = [];
+        AudioFX.playClick();
+        saveState();
+        FX.showToast("اتمسح سجل الإشعارات 🗑️", "success");
+        renderNotificationSettings();
+      };
+    }
   }
 
   function renderBackupSettings() {
@@ -30266,9 +30876,12 @@
 
   function checkRemindersOnOpen() {
     const rm = state?.reminders;
+    const nt = state?.notifications;
     const today = getTodayKey();
     const todayH = getTodayHistory();
     const now = new Date();
+
+    check10PmNoStudyNotification(now);
 
     if (rm && rm.inAppOpenAlert && rm.lastAlertDay !== today && todayH.sessions === 0) {
       // SAT=0..FRI=6 mapping from JS getDay() (SUN=0..SAT=6)
@@ -30276,7 +30889,7 @@
       const hoursToMid = 24 - now.getHours() - now.getMinutes() / 60;
       const pastReminderTime = rm.enabled && rm.days[dayIdx] && (now.getHours() > rm.hour || (now.getHours() === rm.hour && now.getMinutes() >= rm.minute));
 
-      if (rm.streakProtection && state.streak.current > 0 && hoursToMid <= 2) {
+      if ((rm.streakProtection || nt?.streakRiskEnabled) && state.streak.current > 0 && hoursToMid <= 2) {
         rm.lastAlertDay = today;
         saveState();
         setTimeout(() => FX.showToast(`🛡️ الحق سلسلتك (${state.streak.current} يوم)! فاضل أقل من ساعتين على نص الليل`, "warn"), 700);
@@ -35502,6 +36115,7 @@
     "security-settings": renderSecuritySettings,
     "appearance-settings": renderAppearanceSettings,
     "reminder-settings": renderReminderSettings,
+    "notification-settings": renderNotificationSettings,
     "backup-settings": renderBackupSettings,
     "home-customize": renderHomeCustomize,
     "self-bet": renderSelfBet,
@@ -35584,7 +36198,7 @@
   const TRANSIENT_SCREENS = new Set(["welcome", "focus", "victory", "chest", "bot-profile"]);
 
   function getFallbackParentScreen(scr) {
-    if (["sound-settings", "security-settings", "appearance-settings", "reminder-settings", "backup-settings", "home-customize"].includes(scr)) return "settings";
+    if (["sound-settings", "security-settings", "appearance-settings", "reminder-settings", "notification-settings", "backup-settings", "home-customize"].includes(scr)) return "settings";
     if (["kingdom-buildings", "kingdom-treasury", "kingdom-demands", "kingdom-people", "kingdom-rating", "kingdom-decrees", "kingdom-wonders", "research-lab", "expeditions", "night-raids", "kingdom-supplies", "kingdom-festival"].includes(scr)) return "kingdom";
     if (["trophies", "report", "exam", "settings", "subjects", "rebirth", "backpack", "mailbox"].includes(scr)) return "profile";
     if (["league-membership", "bot-profile"].includes(scr)) return "league";
@@ -36354,6 +36968,10 @@
       syncUnlockedTitles();
       applyAppearanceSettings();
       startSplashSequence();
+      runWhenSplashDone(() => {
+        sendOneTimeWelcomeNotification();
+        check10PmNoStudyNotification();
+      });
 
       checkClockIntegrity(false);
       const hasPinLock = !!(state.security?.pinEnabled && /^\d{4}$/.test(state.security?.pinCode || ""));
@@ -36435,6 +37053,7 @@
       const wasDrifted = clockTampered;
       if (checkClockIntegrity(false)) return;
       checkDayAndWeekRollover();
+      check10PmNoStudyNotification();
       const lostCitNow = processZeroCoinCitizenAttrition();
       if (wasDrifted || (lostCitNow > 0 && (currentScreen === "kingdom" || currentScreen === "kingdom-people" || currentScreen === "home"))) {
         renderCurrentScreen();
@@ -36481,6 +37100,152 @@
   const PWA_IDB_NAME = "StudyOnlineNotificationsDB";
   const PWA_IDB_STORE = "reminders";
   let pwaSwReg = null;
+  let welcomeNotifLock = false;
+
+  function isQuietHoursNow(date = new Date()) {
+    const nt = state?.notifications;
+    if (!nt || !nt.quietHoursEnabled) return false;
+    const h = date.getHours();
+    const start = Number(nt.quietStartHour ?? 0);
+    const end = Number(nt.quietEndHour ?? 7);
+    if (start === end) return false;
+    if (start < end) return h >= start && h < end;
+    return h >= start || h < end;
+  }
+
+  async function resolveSwRegSafe(timeoutMs = 2000) {
+    if (pwaSwReg) return pwaSwReg;
+    if (!("serviceWorker" in navigator)) return null;
+    try {
+      const reg = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise(resolve => setTimeout(() => resolve(null), timeoutMs))
+      ]);
+      if (reg) pwaSwReg = reg;
+      return pwaSwReg;
+    } catch {
+      return null;
+    }
+  }
+
+  async function showSystemNotification(title, body, opts = {}) {
+    const nt = state?.notifications;
+    if (!opts.force && nt && nt.enabled === false) return false;
+    if (!opts.ignoreQuiet && isQuietHoursNow()) return false;
+
+    const cleanTitle = String(title || "قلعة التركيز").slice(0, 80);
+    const cleanBody = String(body || "").slice(0, 220);
+
+    if (nt) {
+      if (!Array.isArray(nt.history)) nt.history = [];
+      nt.history.unshift({
+        id: uid("nt"),
+        title: cleanTitle,
+        body: cleanBody,
+        type: String(opts.type || "general"),
+        at: Date.now()
+      });
+      if (nt.history.length > 15) nt.history.length = 15;
+      saveState();
+    }
+
+    if (!document.hidden) {
+      if (nt?.soundWithNotif !== false && state?.settings?.sound) AudioFX.playSuccess();
+      if (nt?.vibrateWithNotif !== false && state?.settings?.vibrate) Haptics.vibrate([15, 30, 15]);
+    }
+
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") {
+      return false;
+    }
+
+    const notifOpts = {
+      body: cleanBody,
+      icon: "./icon-192.png",
+      badge: "./icon-192.png",
+      tag: opts.tag || `study-online-msg-${Date.now()}`,
+      dir: "rtl",
+      lang: "ar",
+      renotify: !!opts.renotify,
+      requireInteraction: opts.requireInteraction ?? !!nt?.requireInteraction
+    };
+
+    try {
+      const reg = await resolveSwRegSafe(1500);
+      if (reg && typeof reg.showNotification === "function") {
+        await reg.showNotification(cleanTitle, notifOpts);
+        return true;
+      }
+      new Notification(cleanTitle, notifOpts);
+      return true;
+    } catch {
+      try {
+        new Notification(cleanTitle, notifOpts);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+  }
+
+  async function sendOneTimeWelcomeNotification() {
+    if (!state?.notifications || welcomeNotifLock) return false;
+    if (state.notifications.welcomeTestSent) return false;
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") return false;
+
+    welcomeNotifLock = true;
+    await resolveSwRegSafe(2500);
+    if (state.notifications.welcomeTestSent) return false;
+
+    state.notifications.welcomeTestSent = true;
+    state.notifications.welcomeTestSentAt = Date.now();
+    saveState(true);
+
+    const sent = await showSystemNotification("قلعة التركيز 🔔", "الاشعارات تعمل بنجاح", {
+      tag: "study-online-welcome-test",
+      type: "welcome_test",
+      ignoreQuiet: true,
+      force: true
+    });
+    if (!sent && currentScreen !== "focus") {
+      FX.showToast("🔔 الاشعارات تعمل بنجاح", "success");
+    }
+    return true;
+  }
+
+  function check10PmNoStudyNotification(date = new Date()) {
+    if (!state?.profile?.createdAt || !state?.notifications) return false;
+    const nt = state.notifications;
+    if (!nt.enabled || !nt.noStudy10pmEnabled) return false;
+    if (state.activeSession && !state.activeSession.isRest) return false;
+
+    const today = getTodayKey(date);
+    if (nt.last10pmNotifDay === today) return false;
+
+    const todayMin = Number(state.history?.[today]?.min || 0);
+    if (todayMin > 0) return false;
+
+    const targetH = Math.max(0, Math.min(23, Number(nt.noStudy10pmHour ?? 22)));
+    const targetM = Math.max(0, Math.min(59, Number(nt.noStudy10pmMinute ?? 0)));
+    const nowH = date.getHours();
+    const nowM = date.getMinutes();
+    if (nowH < targetH || (nowH === targetH && nowM < targetM)) return false;
+
+    if (isQuietHoursNow(date)) return false;
+
+    nt.last10pmNotifDay = today;
+    saveState(true);
+
+    const msg = nt.noStudy10pmMessage || "مذاكرتش ولا دقيقة النهاردة! الحق اعمل لو جلسة سريعة ⏱️🔥";
+    showSystemNotification("⏰ الساعة 10 مساءً — فين مذاكرتك؟", msg, {
+      tag: "study-online-10pm-nostudy",
+      type: "10pm_nostudy",
+      renotify: true
+    });
+    if (!document.hidden && currentScreen !== "focus" && currentScreen !== "welcome") {
+      FX.showToast(`⏰ ${msg}`, "warn");
+    }
+    return true;
+  }
 
   function openPwaNotifDB() {
     return new Promise((resolve, reject) => {
@@ -36501,8 +37266,9 @@
   }
 
   async function writePwaConfigToIDB(payload) {
+    let db = null;
     try {
-      const db = await openPwaNotifDB();
+      db = await openPwaNotifDB();
       await new Promise((resolve) => {
         const tx = db.transaction(PWA_IDB_STORE, "readwrite");
         const store = tx.objectStore(PWA_IDB_STORE);
@@ -36514,7 +37280,11 @@
         tx.oncomplete = () => resolve(true);
         tx.onerror = () => resolve(false);
       });
-    } catch { /* تجاهل بأمان لو المتصفح مانع IndexedDB */ }
+    } catch {
+      /* تجاهل بأمان لو المتصفح مانع IndexedDB */
+    } finally {
+      try { if (db) db.close(); } catch { /* ignore */ }
+    }
   }
 
   function getNextReminderTimestamp(hour, minute, daysArr) {
@@ -36534,18 +37304,32 @@
     if (!state) return;
     const today = getTodayKey();
     const todaySess = state.history?.[today]?.sessions || 0;
+    const todayMin = Number(state.history?.[today]?.min || 0);
     const rm = state.reminders || {};
+    const nt = state.notifications || {};
     const sess = state.activeSession;
+    const masterOn = nt.enabled !== false;
 
     const payload = {
-      enabled: !!rm.enabled,
+      masterEnabled: masterOn,
+      enabled: masterOn && !!rm.enabled,
       hour: Number(rm.hour ?? 20),
       minute: Number(rm.minute ?? 0),
       days: Array.isArray(rm.days) ? [...rm.days] : [true, true, true, true, true, true, true],
       message: rm.message || "حان وقت التركيز 🔥",
-      streakProtection: !!rm.streakProtection,
+      streakProtection: masterOn && !!rm.streakProtection && nt.streakRiskEnabled !== false,
       streakCurrent: Number(state.streak?.current || 0),
       todaySessions: Number(todaySess),
+      todayMinutes: todayMin,
+      noStudy10pmEnabled: masterOn && nt.noStudy10pmEnabled !== false,
+      noStudy10pmHour: Number(nt.noStudy10pmHour ?? 22),
+      noStudy10pmMinute: Number(nt.noStudy10pmMinute ?? 0),
+      noStudy10pmMessage: nt.noStudy10pmMessage || "مذاكرتش ولا دقيقة النهاردة! الحق اعمل لو جلسة سريعة ⏱️🔥",
+      last10pmNotifDay: nt.last10pmNotifDay || null,
+      quietHoursEnabled: !!nt.quietHoursEnabled,
+      quietStartHour: Number(nt.quietStartHour ?? 0),
+      quietEndHour: Number(nt.quietEndHour ?? 7),
+      sessionCompleteEnabled: masterOn && nt.sessionCompleteEnabled !== false,
       activeSessionId: sess ? sess.id : null,
       activeSessionEndAt: sess && !sess.pausedAt ? Number(sess.endAt) : null,
       activeSessionIsRest: !!(sess && sess.isRest),
@@ -36556,7 +37340,7 @@
 
     if (pwaSwReg && pwaSwReg.active) {
       pwaSwReg.active.postMessage({ type: "SYNC_NOTIFICATIONS", payload });
-      if (sess && !sess.pausedAt && sess.endAt > Date.now()) {
+      if (payload.sessionCompleteEnabled && sess && !sess.pausedAt && sess.endAt > Date.now()) {
         pwaSwReg.active.postMessage({
           type: "SCHEDULE_SESSION_FALLBACK",
           delayMs: Math.max(1000, sess.endAt - Date.now() + 800)
@@ -36573,14 +37357,22 @@
       typeof window.TimestampTrigger === "function"
     ) {
       try {
+        const triggerTags = new Set([
+          "study-online-daily-trigger",
+          "study-online-streak-trigger",
+          "study-online-session-trigger",
+          "study-online-10pm-trigger"
+        ]);
         const existing = await pwaSwReg.getNotifications({ includeTriggered: true });
         for (const n of existing) {
-          if (n.tag && n.tag.startsWith("study-online-")) n.close();
+          if (n.tag && triggerTags.has(n.tag)) n.close();
         }
+        if (!masterOn) return;
+
         if (payload.enabled) {
           const nextTs = getNextReminderTimestamp(payload.hour, payload.minute, payload.days);
-          if (nextTs) {
-            await pwaSwReg.showNotification("Study Online — وقت التركيز! ⚔️", {
+          if (nextTs && !isQuietHoursNow(new Date(nextTs))) {
+            await pwaSwReg.showNotification("قلعة التركيز — وقت المذاكرة! ⚔️", {
               body: payload.message,
               icon: "./icon-192.png",
               badge: "./icon-192.png",
@@ -36591,10 +37383,26 @@
             });
           }
         }
+        if (payload.noStudy10pmEnabled && payload.todayMinutes === 0 && payload.last10pmNotifDay !== today && state.profile?.createdAt) {
+          const now = new Date();
+          const tenPmTs = new Date(now.getFullYear(), now.getMonth(), now.getDate(), payload.noStudy10pmHour, payload.noStudy10pmMinute, 0, 0).getTime();
+          if (tenPmTs > Date.now() + 5000 && !isQuietHoursNow(new Date(tenPmTs))) {
+            await pwaSwReg.showNotification("⏰ الساعة 10 مساءً — فين مذاكرتك؟", {
+              body: payload.noStudy10pmMessage,
+              icon: "./icon-192.png",
+              badge: "./icon-192.png",
+              tag: "study-online-10pm-trigger",
+              dir: "rtl",
+              lang: "ar",
+              showTrigger: new window.TimestampTrigger(tenPmTs)
+            });
+          }
+        }
         if (payload.streakProtection && payload.streakCurrent > 0 && payload.todaySessions === 0) {
           const now = new Date();
-          const warnTs = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 22, 0, 0, 0).getTime();
-          if (warnTs > Date.now() + 5000) {
+          const warnMin = payload.noStudy10pmEnabled && payload.noStudy10pmHour === 22 && payload.noStudy10pmMinute === 0 ? 15 : 0;
+          const warnTs = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 22, warnMin, 0, 0).getTime();
+          if (warnTs > Date.now() + 5000 && !isQuietHoursNow(new Date(warnTs))) {
             await pwaSwReg.showNotification("⚠️ الحق سلسلتك قبل نص الليل!", {
               body: `سلسلتك (${payload.streakCurrent} يوم) في خطر! ادخل ذاكر جلسة سريعة 🔥`,
               icon: "./icon-192.png",
@@ -36606,11 +37414,11 @@
             });
           }
         }
-        if (payload.activeSessionEndAt && payload.activeSessionEndAt > Date.now() + 3000) {
+        if (payload.sessionCompleteEnabled && payload.activeSessionEndAt && payload.activeSessionEndAt > Date.now() + 3000) {
           await pwaSwReg.showNotification("انتصار! خلصت جلستك 🎉", {
             body: payload.activeSessionIsRest
               ? "الاستراحة خلصت! ارجع للتطبيق وكمل مذاكرة ⚔️"
-              : "عاش يا بطل! افتح Study Online عشان تستلم عملاتك ونقاط الـ XP 🪙",
+              : "عاش يا بطل! افتح قلعة التركيز عشان تستلم عملاتك ونقاط الـ XP 🪙",
             icon: "./icon-192.png",
             badge: "./icon-192.png",
             tag: "study-online-session-trigger",
@@ -36626,6 +37434,8 @@
   async function askPwaNotificationPermission() {
     if (typeof Notification === "undefined") return "unsupported";
     if (Notification.permission === "granted") {
+      await sendOneTimeWelcomeNotification();
+      check10PmNoStudyNotification();
       await syncPwaNotifications();
       return "granted";
     }
@@ -36634,6 +37444,8 @@
       const perm = await Notification.requestPermission();
       if (perm === "granted") {
         FX.showToast("🔔 اتفعّلت الإشعارات! هتوصلك حتى لو إنت أوفلاين أو بره التطبيق", "success");
+        await sendOneTimeWelcomeNotification();
+        check10PmNoStudyNotification();
         await syncPwaNotifications();
       }
       return perm;
@@ -36690,26 +37502,16 @@
   EventBus.on("sessionCompleted", () => syncPwaNotifications());
   EventBus.on("dayRolled", () => syncPwaNotifications());
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) syncPwaNotifications();
+    if (document.hidden) {
+      syncPwaNotifications();
+    } else {
+      sendOneTimeWelcomeNotification();
+      check10PmNoStudyNotification();
+    }
   });
   setInterval(() => {
     syncPwaNotifications();
-    if (pwaSwReg && pwaSwReg.active && typeof Notification !== "undefined" && Notification.permission === "granted") {
-      pwaSwReg.active.postMessage({ type: "SYNC_NOTIFICATIONS", payload: {
-        enabled: !!state?.reminders?.enabled,
-        hour: Number(state?.reminders?.hour ?? 20),
-        minute: Number(state?.reminders?.minute ?? 0),
-        days: Array.isArray(state?.reminders?.days) ? [...state.reminders.days] : [true, true, true, true, true, true, true],
-        message: state?.reminders?.message || "حان وقت التركيز 🔥",
-        streakProtection: !!state?.reminders?.streakProtection,
-        streakCurrent: Number(state?.streak?.current || 0),
-        todaySessions: Number(state?.history?.[getTodayKey()]?.sessions || 0),
-        activeSessionId: state?.activeSession ? state.activeSession.id : null,
-        activeSessionEndAt: state?.activeSession && !state.activeSession.pausedAt ? Number(state.activeSession.endAt) : null,
-        activeSessionIsRest: !!(state?.activeSession && state.activeSession.isRest),
-        updatedAt: Date.now()
-      } });
-    }
+    check10PmNoStudyNotification();
   }, 30000);
 
   // تسجيل الـ Service Worker
@@ -36754,6 +37556,10 @@
         }
 
         await syncPwaNotifications();
+        runWhenSplashDone(() => {
+          sendOneTimeWelcomeNotification();
+          check10PmNoStudyNotification();
+        });
       } catch (error) {
         console.error("Service Worker مش شغال:", error);
       }

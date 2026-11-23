@@ -84,8 +84,9 @@ function openNotifDB() {
 }
 
 async function readNotifPayload() {
+  let db = null;
   try {
-    const db = await openNotifDB();
+    db = await openNotifDB();
     return await new Promise((resolve) => {
       const tx = db.transaction(IDB_STORE, 'readonly');
       const store = tx.objectStore(IDB_STORE);
@@ -95,20 +96,30 @@ async function readNotifPayload() {
     });
   } catch {
     return null;
+  } finally {
+    try { if (db) db.close(); } catch { /* ignore */ }
   }
 }
 
 async function writeNotifPayload(data) {
+  let db = null;
   try {
-    const db = await openNotifDB();
+    db = await openNotifDB();
     return await new Promise((resolve) => {
       const tx = db.transaction(IDB_STORE, 'readwrite');
-      tx.objectStore(IDB_STORE).put({ id: 'config', ...data });
+      const store = tx.objectStore(IDB_STORE);
+      const getReq = store.get('config');
+      getReq.onsuccess = () => {
+        const prev = getReq.result || {};
+        store.put({ ...prev, id: 'config', ...data });
+      };
       tx.oncomplete = () => resolve(true);
       tx.onerror = () => resolve(false);
     });
   } catch {
     return false;
+  } finally {
+    try { if (db) db.close(); } catch { /* ignore */ }
   }
 }
 
@@ -119,23 +130,44 @@ function getLocalDayKey(d = new Date()) {
   return `${y}-${m}-${day}`;
 }
 
+function isSwQuietHoursNow(now, cfg) {
+  if (!cfg || !cfg.quietHoursEnabled) return false;
+  const h = now.getHours();
+  const start = Number.isFinite(Number(cfg.quietStartHour)) ? Number(cfg.quietStartHour) : 0;
+  const end = Number.isFinite(Number(cfg.quietEndHour)) ? Number(cfg.quietEndHour) : 7;
+  if (start === end) return false;
+  if (start < end) return h >= start && h < end;
+  return h >= start || h < end;
+}
+
 async function evaluateAndFireOfflineNotifications() {
   const cfg = await readNotifPayload();
-  if (!cfg) return;
+  if (!cfg || cfg.masterEnabled === false) return;
 
   const now = new Date();
   const nowMs = now.getTime();
   const todayKey = getLocalDayKey(now);
+  const quietNow = isSwQuietHoursNow(now, cfg);
   let changed = false;
 
+  const openClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  const hasVisibleClient = openClients.some((c) => c.visibilityState === 'visible');
+
   // 1. إشعار انتهاء جلسة التركيز لو انتهت والمستخدم بره التطبيق أو أوفلاين
-  if (cfg.activeSessionEndAt && nowMs >= cfg.activeSessionEndAt && cfg.notifiedSessionId !== cfg.activeSessionId) {
+  if (
+    cfg.sessionCompleteEnabled !== false &&
+    cfg.activeSessionEndAt &&
+    nowMs >= cfg.activeSessionEndAt &&
+    cfg.notifiedSessionId !== cfg.activeSessionId &&
+    !hasVisibleClient &&
+    !quietNow
+  ) {
     cfg.notifiedSessionId = cfg.activeSessionId;
     changed = true;
     await self.registration.showNotification('انتصار! خلصت جلستك 🎉', {
       body: cfg.activeSessionIsRest
         ? 'الاستراحة خلصت! ارجع للتطبيق وكمل مذاكرة ⚔️'
-        : 'عاش يا بطل! افتح Study Online عشان تستلم عملاتك ونقاط الـ XP 🪙',
+        : 'عاش يا بطل! افتح قلعة التركيز عشان تستلم عملاتك ونقاط الـ XP 🪙',
       icon: './icon-192.png',
       badge: './icon-192.png',
       tag: 'study-online-session-end',
@@ -146,17 +178,54 @@ async function evaluateAndFireOfflineNotifications() {
     });
   }
 
-  // 2. إشعار التذكير اليومي المخصص
+  if (quietNow) {
+    if (changed) await writeNotifPayload(cfg);
+    return;
+  }
+
+  // 2. إشعار الساعة 10 مساءً لو المستخدم مذاكرش ولا دقيقة طول اليوم
+  const todayMin = Number.isFinite(Number(cfg.todayMinutes)) ? Number(cfg.todayMinutes) : 0;
+  const target10H = Number.isFinite(Number(cfg.noStudy10pmHour)) ? Number(cfg.noStudy10pmHour) : 22;
+  const target10M = Number.isFinite(Number(cfg.noStudy10pmMinute)) ? Number(cfg.noStudy10pmMinute) : 0;
+  const curMins = now.getHours() * 60 + now.getMinutes();
+  const target10Total = target10H * 60 + target10M;
+  const activeFocusRunning = !!(cfg.activeSessionEndAt && nowMs < cfg.activeSessionEndAt && !cfg.activeSessionIsRest);
+
+  if (
+    cfg.noStudy10pmEnabled !== false &&
+    todayMin === 0 &&
+    !activeFocusRunning &&
+    curMins >= target10Total &&
+    cfg.last10pmNotifDay !== todayKey &&
+    cfg.last10pmSentDay !== todayKey &&
+    !hasVisibleClient
+  ) {
+    cfg.last10pmSentDay = todayKey;
+    changed = true;
+    await self.registration.showNotification('⏰ الساعة 10 مساءً — فين مذاكرتك؟', {
+      body: cfg.noStudy10pmMessage || 'مذاكرتش ولا دقيقة النهاردة! الحق اعمل لو جلسة سريعة ⏱️🔥',
+      icon: './icon-192.png',
+      badge: './icon-192.png',
+      tag: 'study-online-10pm-nostudy',
+      renotify: true,
+      dir: 'rtl',
+      lang: 'ar',
+      vibrate: [250, 100, 250]
+    });
+  }
+
+  // 3. إشعار التذكير اليومي المخصص
   if (cfg.enabled) {
     const dayIdx = (now.getDay() + 1) % 7; // 0 = السبت .. 6 = الجمعة
     const dayAllowed = Array.isArray(cfg.days) ? !!cfg.days[dayIdx] : true;
-    const remMins = (Number(cfg.hour) || 20) * 60 + (Number(cfg.minute) || 0);
-    const curMins = now.getHours() * 60 + now.getMinutes();
+    const remHour = Number.isFinite(Number(cfg.hour)) ? Number(cfg.hour) : 20;
+    const remMin = Number.isFinite(Number(cfg.minute)) ? Number(cfg.minute) : 0;
+    const remTotalMins = remHour * 60 + remMin;
 
-    if (dayAllowed && curMins >= remMins && cfg.lastDailySentDay !== todayKey && (cfg.todaySessions || 0) === 0) {
+    if (dayAllowed && curMins >= remTotalMins && cfg.lastDailySentDay !== todayKey && (cfg.todaySessions || 0) === 0 && !hasVisibleClient) {
       cfg.lastDailySentDay = todayKey;
       changed = true;
-      await self.registration.showNotification('Study Online — وقت التركيز! ⚔️', {
+      await self.registration.showNotification('قلعة التركيز — وقت المذاكرة! ⚔️', {
         body: cfg.message || 'حان وقت التركيز 🔥 يلا هات وحش المادة!',
         icon: './icon-192.png',
         badge: './icon-192.png',
@@ -169,9 +238,9 @@ async function evaluateAndFireOfflineNotifications() {
     }
   }
 
-  // 3. إشعار حماية السلسلة قبل منتصف الليل بساعتين (من 10 م)
+  // 4. إشعار حماية السلسلة قبل منتصف الليل بساعتين (من 10 م)
   if (cfg.streakProtection && (cfg.streakCurrent || 0) > 0 && (cfg.todaySessions || 0) === 0) {
-    if (now.getHours() >= 22 && cfg.lastStreakWarnDay !== todayKey) {
+    if (now.getHours() >= 22 && cfg.lastStreakWarnDay !== todayKey && !hasVisibleClient) {
       cfg.lastStreakWarnDay = todayKey;
       changed = true;
       await self.registration.showNotification('⚠️ الحق سلسلتك قبل نص الليل!', {
@@ -304,6 +373,8 @@ self.addEventListener('fetch', (event) => {
 // استقبال الرسائل من التطبيق (تحديث فوري / جدولة إشعار جلسة أو تذكير)
 let sessionTimerRef = null;
 
+let tenPmTimerRef = null;
+
 self.addEventListener('message', (event) => {
   const data = event.data || {};
   if (data.type === 'SKIP_WAITING') {
@@ -311,8 +382,25 @@ self.addEventListener('message', (event) => {
     return;
   }
   if (data.type === 'SYNC_NOTIFICATIONS') {
+    const p = data.payload || {};
+    if (tenPmTimerRef) {
+      clearTimeout(tenPmTimerRef);
+      tenPmTimerRef = null;
+    }
+    if (p.masterEnabled !== false && p.noStudy10pmEnabled !== false && Number(p.todayMinutes || 0) === 0) {
+      const now = new Date();
+      const targetH = Number.isFinite(Number(p.noStudy10pmHour)) ? Number(p.noStudy10pmHour) : 22;
+      const targetM = Number.isFinite(Number(p.noStudy10pmMinute)) ? Number(p.noStudy10pmMinute) : 0;
+      const targetMs = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetH, targetM, 0, 0).getTime();
+      const diffMs = targetMs - now.getTime();
+      if (diffMs > 1000 && diffMs <= 43200000) {
+        tenPmTimerRef = setTimeout(() => {
+          evaluateAndFireOfflineNotifications();
+        }, diffMs + 500);
+      }
+    }
     event.waitUntil(
-      writeNotifPayload(data.payload).then(() => evaluateAndFireOfflineNotifications())
+      writeNotifPayload(p).then(() => evaluateAndFireOfflineNotifications())
     );
     return;
   }
