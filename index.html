@@ -41041,7 +41041,10 @@
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
       try {
-        const reg = await navigator.serviceWorker.register("./sw.js");
+        const reg = await navigator.serviceWorker.register("./sw.js", {
+          updateViaCache: "none"
+        });
+
         pwaSwReg = reg;
         console.log("Service Worker شغال:", reg.scope);
 
@@ -41052,11 +41055,26 @@
         reg.addEventListener("updatefound", () => {
           const newWorker = reg.installing;
           if (!newWorker) return;
+
           newWorker.addEventListener("statechange", () => {
             if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
               showSwUpdateBanner(newWorker);
             }
           });
+        });
+
+        // فحص التحديثات فور تسجيل Service Worker
+        reg.update().catch(error => {
+          console.warn("تعذر فحص تحديث التطبيق:", error);
+        });
+
+        // إعادة فحص التحديثات عند العودة للتطبيق
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) {
+            reg.update().catch(error => {
+              console.warn("تعذر فحص تحديث التطبيق:", error);
+            });
+          }
         });
 
         let refreshing = false;

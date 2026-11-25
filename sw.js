@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study_online_cache_v1';
+const CACHE_NAME = 'study_online_cache_v2';
 const DATA_CACHE_NAME = 'study_online_data_v1';
 const IDB_NAME = 'StudyOnlineNotificationsDB';
 const IDB_STORE = 'reminders';
@@ -296,7 +296,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// التحقق هل الطلب ملف ثابت (Cache First) أم بيانات ديناميكية (Network First)
+// التحقق من الملفات الثابتة والبيانات الديناميكية وتحديد استراتيجية التخزين المناسبة
 function isStaticAssetRequest(urlObj, request) {
   if (urlObj.origin === self.location.origin) {
     if (request.mode === 'navigate') return true;
@@ -318,53 +318,107 @@ function isStaticAssetRequest(urlObj, request) {
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+
   if (request.method !== 'GET') return;
 
   const urlObj = new URL(request.url);
+
   if (!urlObj.protocol.startsWith('http')) return;
 
   if (isStaticAssetRequest(urlObj, request)) {
-    // Cache First للملفات الثابتة ومكتبات الـ CDN والخطوط
-    event.respondWith(
-      caches.match(request, { ignoreSearch: request.mode === 'navigate' }).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(request).then((networkResponse) => {
-          if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
-            const copy = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+
+    // Network First لصفحات وملفات التطبيق الأساسية
+    const isAppFile =
+      urlObj.origin === self.location.origin &&
+      (
+        request.mode === 'navigate' ||
+        /\.(html|js|css|json)$/i.test(urlObj.pathname)
+      );
+
+    if (isAppFile) {
+      event.respondWith(
+        fetch(request).then(async (networkResponse) => {
+          if (networkResponse && networkResponse.ok) {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(request, networkResponse.clone());
           }
+
           return networkResponse;
         }).catch(async () => {
+          const cached = await caches.match(request, {
+            ignoreSearch: request.mode === 'navigate'
+          });
+
+          if (cached) return cached;
+
           if (request.mode === 'navigate') {
-            const indexFallback = await caches.match('./index.html') || await caches.match('./');
-            if (indexFallback) return indexFallback;
+            const fallback =
+              await caches.match('./index.html') ||
+              await caches.match('./');
+
+            if (fallback) return fallback;
+
             return new Response(OFFLINE_FALLBACK_HTML, {
               status: 200,
-              headers: { 'Content-Type': 'text/html; charset=utf-8' }
+              headers: {
+                'Content-Type': 'text/html; charset=utf-8'
+              }
             });
           }
-          return new Response('', { status: 503, statusText: 'Offline' });
-        });
+
+          return new Response('', {
+            status: 503,
+            statusText: 'Offline'
+          });
+        })
+      );
+
+      return;
+    }
+
+    // Cache First للصور والخطوط ومكتبات CDN
+    event.respondWith(
+      caches.match(request).then(async (cached) => {
+        if (cached) return cached;
+
+        const response = await fetch(request);
+
+        if (response && (response.ok || response.type === 'opaque')) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        }
+
+        return response;
       })
     );
+
   } else {
     // Network First لأي طلبات بيانات ديناميكية
     event.respondWith(
-      fetch(request).then((networkResponse) => {
-        if (networkResponse && networkResponse.ok) {
-          const copy = networkResponse.clone();
-          caches.open(DATA_CACHE_NAME).then((cache) => cache.put(request, copy));
+      fetch(request).then(async (response) => {
+        if (response && response.ok) {
+          const cache = await caches.open(DATA_CACHE_NAME);
+          await cache.put(request, response.clone());
         }
-        return networkResponse;
+
+        return response;
       }).catch(async () => {
         const cachedData = await caches.match(request);
+
         if (cachedData) return cachedData;
-        return new Response(JSON.stringify({ offline: true, message: 'مفيش نت دلوقتي' }), {
-          status: 503,
-          headers: { 'Content-Type': 'application/json; charset=utf-8' }
-        });
+
+        return new Response(
+          JSON.stringify({
+            offline: true,
+            message: 'مفيش نت دلوقتي'
+          }),
+          {
+            status: 503,
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            }
+          }
+        );
       })
     );
   }
