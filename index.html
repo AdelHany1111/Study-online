@@ -9121,23 +9121,27 @@
     }
 
     /* =====================================================
-       19. STUDY ROOMS (TRYSTERO P2P LIVE ROOMS)
+       19. STUDY ROOMS PRO (TRYSTERO P2P LIVE ROOMS)
        ===================================================== */
     .home-rooms-card {
       position: relative;
-      border-radius: 24px;
-      padding: 15px 14px;
+      border-radius: 26px;
+      padding: 16px 14px;
       margin-bottom: 12px;
       background:
-        radial-gradient(95% 120px at 85% -15px, rgba(56, 189, 248, 0.24), transparent 72%),
-        radial-gradient(85% 110px at 15% 100%, rgba(168, 85, 247, 0.24), transparent 72%),
-        linear-gradient(160deg, rgba(28, 24, 72, 0.88) 0%, rgba(12, 16, 38, 0.96) 100%);
-      border: 1.5px solid rgba(56, 189, 248, 0.42);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        radial-gradient(95% 130px at 85% -15px, rgba(56, 189, 248, 0.28), transparent 72%),
+        radial-gradient(85% 110px at 15% 100%, rgba(168, 85, 247, 0.28), transparent 72%),
+        linear-gradient(155deg, rgba(36, 26, 88, 0.92) 0%, rgba(12, 16, 38, 0.97) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      overflow: hidden;
     }
     .home-rooms-card.live {
-      border-color: rgba(52, 211, 153, 0.65);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      border-color: rgba(52, 211, 153, 0.72);
+      background:
+        radial-gradient(90% 130px at 50% -10px, rgba(16, 185, 129, 0.25), transparent 70%),
+        linear-gradient(155deg, rgba(16, 48, 56, 0.92) 0%, rgba(12, 16, 38, 0.98) 100%);
+      box-shadow: 0 14px 34px rgba(16, 185, 129, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
     .sr-live-dot {
       width: 9px;
@@ -9146,35 +9150,68 @@
       background: #34D399;
       box-shadow: 0 0 10px #34D399;
       display: inline-block;
+      flex-shrink: 0;
       animation: navBadgePulse 1.4s infinite;
+    }
+    .sr-home-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .sr-home-ico {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(56, 189, 248, 0.28), rgba(124, 58, 237, 0.42));
+      border: 1px solid rgba(125, 211, 252, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(56, 189, 248, 0.2);
     }
     .sr-preset-scroll {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 2px;
+      padding-bottom: 4px;
       scrollbar-width: none;
     }
     .sr-preset-scroll::-webkit-scrollbar { display: none; }
-    .sr-preset-pill {
+    .sr-preset-card {
+      min-width: 172px;
+      padding: 10px 11px;
+      border-radius: 18px;
+      background: linear-gradient(165deg, rgba(255, 255, 255, 0.08), rgba(12, 15, 36, 0.72));
+      border: 1px solid rgba(167, 139, 250, 0.34);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: right;
+      flex-shrink: 0;
+      transition: transform 140ms ease, border-color 150ms ease;
+    }
+    .sr-preset-card:hover { border-color: rgba(255, 215, 106, 0.55); }
+    .sr-online-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      min-height: 36px;
-      padding: 6px 12px;
+      gap: 5px;
+      padding: 2px 8px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(167, 139, 250, 0.34);
-      color: #F8FAFC;
-      font-size: 12px;
-      font-weight: 800;
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #6EE7B7;
+      font-size: 10.5px;
+      font-weight: 900;
       white-space: nowrap;
-      flex-shrink: 0;
     }
 
     #screen-study-rooms.active {
       background:
-        radial-gradient(125% 270px at 50% -25px, rgba(56, 189, 248, 0.28) 0%, rgba(124, 58, 237, 0.24) 45%, rgba(5, 5, 17, 0) 78%),
+        radial-gradient(125% 280px at 50% -25px, rgba(56, 189, 248, 0.32) 0%, rgba(124, 58, 237, 0.26) 44%, rgba(5, 5, 17, 0) 78%),
         #050511;
       padding-top: 14px;
     }
@@ -9186,12 +9223,69 @@
       margin-bottom: 12px;
       min-height: 44px;
     }
-    .sr-code-bar {
+    .sr-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .sr-lobby-hero {
+      position: relative;
+      border-radius: 26px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      background:
+        radial-gradient(90% 140px at 50% 0%, rgba(56, 189, 248, 0.24), transparent 72%),
+        linear-gradient(155deg, rgba(64, 34, 138, 0.65), rgba(14, 16, 44, 0.96));
+      border: 1.5px solid rgba(125, 211, 252, 0.42);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      text-align: center;
+    }
+    .sr-pub-card {
+      border-radius: 22px;
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      background: linear-gradient(160deg, rgba(36, 26, 78, 0.8), rgba(13, 15, 38, 0.96));
+      border: 1.5px solid rgba(167, 139, 250, 0.36);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+    }
+    .sr-pub-card:last-child { margin-bottom: 0; }
+    .sr-mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .sr-mode-tile {
+      border-radius: 16px;
+      padding: 9px 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(167, 139, 250, 0.28);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #CBD5E1;
+    }
+    .sr-mode-tile.active {
+      border-color: var(--gold1);
+      background: linear-gradient(180deg, rgba(245, 166, 35, 0.22), rgba(30, 22, 68, 0.9));
+      color: #FFFFFF;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.28);
+    }
+
+    .sr-hud-strip {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 18px;
       background: rgba(16, 20, 44, 0.88);
       border: 1px solid rgba(56, 189, 248, 0.36);
@@ -9199,21 +9293,35 @@
       flex-wrap: wrap;
     }
     .sr-hero-arena {
-      border-radius: 26px;
+      position: relative;
+      border-radius: 28px;
       padding: 16px 14px;
       margin-bottom: 12px;
       background:
-        radial-gradient(95% 150px at 50% 0%, rgba(124, 58, 237, 0.36), transparent 72%),
-        linear-gradient(165deg, #2A1966 0%, #141236 62%, #0B0E24 100%);
-      border: 1.5px solid rgba(167, 139, 250, 0.42);
-      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+        radial-gradient(100% 180px at 50% 0%, rgba(124, 58, 237, 0.42), transparent 72%),
+        radial-gradient(70% 100px at 50% 100%, rgba(56, 189, 248, 0.14), transparent 72%),
+        linear-gradient(165deg, #2D186E 0%, #16123C 62%, #0B0E24 100%);
+      border: 1.5px solid rgba(196, 181, 253, 0.46);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.56), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       text-align: center;
+      overflow: hidden;
+    }
+    .sr-bonus-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 4px 0 8px;
     }
     .sr-ring-wrap {
       position: relative;
-      width: 188px;
-      height: 188px;
+      width: 204px;
+      height: 204px;
       margin: 8px auto 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.16) 0%, rgba(8, 10, 24, 0.72) 66%, transparent 72%);
+      box-shadow: 0 0 38px rgba(124, 58, 237, 0.24), inset 0 0 24px rgba(0, 0, 0, 0.52);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -9225,51 +9333,99 @@
       transform: rotate(-90deg);
     }
     .sr-mmss {
-      font-size: 38px;
+      font-size: 40px;
       font-weight: 900;
       line-height: 1;
       letter-spacing: 1px;
       z-index: 2;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+    }
+    .sr-quick-tools {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .sr-tool-card {
+      border-radius: 18px;
+      padding: 10px 6px;
+      background: linear-gradient(170deg, rgba(36, 26, 82, 0.82), rgba(14, 15, 38, 0.96));
+      border: 1.5px solid rgba(167, 139, 250, 0.34);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      min-width: 0;
+    }
+    .sr-tool-card.lit {
+      border-color: rgba(255, 215, 106, 0.7);
+      box-shadow: 0 0 18px rgba(245, 166, 35, 0.22);
     }
     .sr-boss-box {
-      padding: 10px 12px;
+      padding: 11px 12px;
       border-radius: 18px;
-      background: rgba(10, 12, 28, 0.62);
-      border: 1px solid rgba(248, 113, 113, 0.42);
+      background: rgba(8, 10, 26, 0.68);
+      border: 1px solid rgba(248, 113, 113, 0.45);
       margin-top: 10px;
       text-align: right;
+    }
+    .sr-gift-banner {
+      border-radius: 20px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.28), rgba(124, 58, 237, 0.42));
+      border: 1.5px solid rgba(253, 224, 71, 0.78);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: rewardPop 350ms ease;
+    }
+    .sr-fun-card {
+      border-radius: 20px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: linear-gradient(165deg, rgba(32, 24, 74, 0.78), rgba(14, 13, 36, 0.96));
+      border: 1.5px solid rgba(167, 139, 250, 0.36);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
     .sr-peer-card {
       border-radius: 20px;
       padding: 11px 12px;
       margin-bottom: 8px;
-      background: linear-gradient(180deg, rgba(30, 24, 68, 0.72), rgba(14, 13, 36, 0.94));
+      background: linear-gradient(180deg, rgba(30, 24, 68, 0.76), rgba(14, 13, 36, 0.95));
       border: 1.5px solid rgba(167, 139, 250, 0.28);
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
     }
     .sr-peer-card.me {
       border-color: rgba(255, 215, 106, 0.68);
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(30, 24, 68, 0.88));
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.16), rgba(30, 24, 68, 0.9));
     }
     .sr-peer-card.distracted {
-      border-color: rgba(248, 113, 113, 0.62);
+      border-color: rgba(248, 113, 113, 0.65);
     }
     .sr-rank-num {
-      width: 26px;
-      height: 26px;
-      border-radius: 9px;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 900;
       flex-shrink: 0;
     }
     .sr-chat-box {
-      max-height: 280px;
+      max-height: 290px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -9382,6 +9538,13 @@
       margin-right: 4px;
       box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
       vertical-align: middle;
+    }
+    @media (max-width: 380px) {
+      .sr-pub-card { flex-direction: column; align-items: stretch; }
+      .sr-quick-tools { gap: 6px; }
+      .sr-tool-card { padding: 8px 4px; }
+      .sr-ring-wrap { width: 184px; height: 184px; }
+      .sr-mmss { font-size: 34px; }
     }
   </style>
 </head>
@@ -11319,16 +11482,18 @@
         lastWeeklyRemindAt: null
       },
       homeLayout: {
-        order: ["battle", "rooms", "quests", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"],
+        order: ["battle", "quests", "rooms", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"],
         hidden: []
       },
       studyRooms: {
         lastStrategy: "nostr",
         recentRooms: [],
         zenMode: false,
+        muteChatSound: false,
         defaultDuration: 50,
         defaultBreak: 5,
         defaultMode: "coop",
+        defaultRoomMode: "flex",
         totalRoomSessions: 0,
         totalRoomMinutes: 0,
         roomBossesDefeated: 0,
@@ -11794,6 +11959,7 @@
     s.homeLayout = Object.assign({}, def.homeLayout, stripProto(cleanRaw.homeLayout));
     const oldDefaultHomeOrder = ["battle", "duties", "week", "companion", "bet", "bento", "expeditions", "merchant", "quests", "event"];
     const prevDefaultHomeOrder = ["battle", "quests", "duties", "week", "companion", "bet", "bento", "expeditions", "merchant", "event"];
+    const prevRoomsTopOrder = ["battle", "rooms", "quests", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"];
     if (!Array.isArray(s.homeLayout.order)) {
       s.homeLayout.order = [...def.homeLayout.order];
     } else {
@@ -11802,8 +11968,8 @@
       def.homeLayout.order.forEach(k => {
         if (!s.homeLayout.order.includes(k)) {
           if (k === "rooms") {
-            const bIdx = s.homeLayout.order.indexOf("battle");
-            if (bIdx >= 0) s.homeLayout.order.splice(bIdx + 1, 0, k);
+            const qIdx = s.homeLayout.order.indexOf("quests");
+            if (qIdx >= 0) s.homeLayout.order.splice(qIdx + 1, 0, k);
             else s.homeLayout.order.unshift(k);
           } else if (k === "discover") {
             const evIdx = s.homeLayout.order.indexOf("event");
@@ -11816,7 +11982,8 @@
       });
       const isOld1 = s.homeLayout.order.length === oldDefaultHomeOrder.length && s.homeLayout.order.every((k, i) => k === oldDefaultHomeOrder[i]);
       const isOld2 = s.homeLayout.order.length === prevDefaultHomeOrder.length && s.homeLayout.order.every((k, i) => k === prevDefaultHomeOrder[i]);
-      if (isOld1 || isOld2) {
+      const isOld3 = s.homeLayout.order.length === prevRoomsTopOrder.length && s.homeLayout.order.every((k, i) => k === prevRoomsTopOrder[i]);
+      if (isOld1 || isOld2 || isOld3) {
         s.homeLayout.order = [...def.homeLayout.order];
       }
     }
@@ -11837,9 +12004,11 @@
           }))
         : [],
       zenMode: !!rawSr.zenMode,
+      muteChatSound: !!rawSr.muteChatSound,
       defaultDuration: Math.max(10, Math.min(120, Math.round(fin(rawSr.defaultDuration, 50)))),
       defaultBreak: Math.max(1, Math.min(30, Math.round(fin(rawSr.defaultBreak, 5)))),
       defaultMode: ["coop", "versus", "boss_raid"].includes(rawSr.defaultMode) ? rawSr.defaultMode : "coop",
+      defaultRoomMode: ["strict", "flex", "open"].includes(rawSr.defaultRoomMode) ? rawSr.defaultRoomMode : "flex",
       totalRoomSessions: Math.max(0, Math.round(fin(rawSr.totalRoomSessions, 0))),
       totalRoomMinutes: Math.max(0, Math.round(fin(rawSr.totalRoomMinutes, 0))),
       roomBossesDefeated: Math.max(0, Math.round(fin(rawSr.roomBossesDefeated, 0))),
@@ -12560,15 +12729,15 @@
       items: cleanBpItems,
       activatedItems: cleanActivated,
       activeBuffs: {
-        sessionXpPct: Math.max(0, Math.min(s.progress.level >= 68 ? 125 : 100, Math.round(fin(rawAb.sessionXpPct, 0)))),
-        sessionCoinsPct: Math.max(0, Math.min(s.progress.level >= 68 ? 125 : 100, Math.round(fin(rawAb.sessionCoinsPct, 0)))),
-        sessionDmgPct: Math.max(0, Math.min(s.progress.level >= 68 ? 125 : 100, Math.round(fin(rawAb.sessionDmgPct, 0)))),
-        shieldDmgPct: Math.max(0, Math.min(s.progress.level >= 68 ? 125 : 100, Math.round(fin(rawAb.shieldDmgPct, 0)))),
-        luckChestPct: Math.max(0, Math.min(s.progress.level >= 68 ? 125 : 100, Math.round(fin(rawAb.luckChestPct, 0))))
+        sessionXpPct: Math.max(0, Math.min(200, Math.round(fin(rawAb.sessionXpPct, 0)))),
+        sessionCoinsPct: Math.max(0, Math.min(200, Math.round(fin(rawAb.sessionCoinsPct, 0)))),
+        sessionDmgPct: Math.max(0, Math.min(200, Math.round(fin(rawAb.sessionDmgPct, 0)))),
+        shieldDmgPct: Math.max(0, Math.min(200, Math.round(fin(rawAb.shieldDmgPct, 0)))),
+        luckChestPct: Math.max(0, Math.min(200, Math.round(fin(rawAb.luckChestPct, 0))))
       }
     };
     if (cleanActivated.length > 0) {
-      const bpCapMig = s.progress.level >= 68 ? 125 : 100;
+      const bpCapMig = 200;
       const recalc = { sessionXpPct: 0, sessionCoinsPct: 0, sessionDmgPct: 0, shieldDmgPct: 0, luckChestPct: 0 };
       for (const act of cleanActivated) {
         const meta = SHOP_CATALOG.find(x => x.id === act.itemId);
@@ -16784,7 +16953,7 @@
     return { active: true, sessionNum, tier: 1, name: "بداية اليوم", dmgBonus: 0, shardReward: 0, rareDouble: false };
   }
 
-  function calculateSessionPreview(minutes, consumeBuff = false) {
+  function calculateSessionPreview(minutes, consumeBuff = false, opts = {}) {
     const m = Math.max(CONFIG.MIN_SESSION_MIN, Math.min(CONFIG.MAX_SESSION_MIN, minutes));
     const todayH = getTodayHistory();
     const { factor, capped } = getCapFactorForMinutes(todayH.min, m);
@@ -16806,8 +16975,9 @@
     const heroDmgBonus = heroId === "knight" ? 0.10 : 0;
     const merchCoins = (state.buffs.merchantCoins?.charges || 0) > 0 ? (state.buffs.merchantCoins.mult || 0) : 0;
     const merchDmg = (state.buffs.merchantDamage?.charges || 0) > 0 ? (state.buffs.merchantDamage.mult || 0) : 0;
+    const inRoom = !!opts.inRoom;
     const bpBuffs = state.backpack?.activeBuffs || {};
-    const bpCapFrac = hasLevelFeature("perk_bag_cap225") ? 1.25 : 1;
+    const bpCapFrac = inRoom ? 2.0 : (hasLevelFeature("perk_bag_cap225") ? 1.25 : 1);
     const bpCoins = Math.min(bpCapFrac, (bpBuffs.sessionCoinsPct || 0) / 100);
     const bpXp = Math.min(bpCapFrac, (bpBuffs.sessionXpPct || 0) / 100);
     const bpDmg = Math.min(bpCapFrac, (bpBuffs.sessionDmgPct || 0) / 100);
@@ -16818,7 +16988,7 @@
     const citBonus = typeof getCitizenClassBonuses === "function" ? getCitizenClassBonuses() : { scholarXpPct: 0, merchantCoinsPct: 0 };
     const rbXpBonus = ((state.rebirth?.xpBonusPct || 0) / 100) + treeB.xpMult;
     const xp2Active = !!state.buffs.xp2;
-    const effectiveBpXp = xp2Active ? 0 : bpXp;
+    const effectiveBpXp = inRoom ? Math.min(2.0, bpXp + (xp2Active ? 1.0 : 0)) : (xp2Active ? 0 : bpXp);
 
     // Level-based passive expansions
     const firstStrikeDmg = (hasLevelFeature("perk_first_strike") && (todayH.sessions || 0) === 0) ? 0.10 : 0;
@@ -16845,7 +17015,7 @@
     }
     const eliteBonusCoins = eliteActive ? Math.max(0, coins - baseCoinsOnly) : 0;
     let xp = Math.round(m * 1.2 * streakMult * xpBonus * factor * festXpMult);
-    if (xp2Active) xp *= 2;
+    if (xp2Active && !inRoom) xp *= 2;
     const damage = Math.round(m * 20 * dmgBonus);
 
     if (consumeBuff) {
@@ -16871,7 +17041,7 @@
             const meta = SHOP_CATALOG.find(x => x.id === act.itemId);
             const t = meta?.effect?.type;
             if (t === "buff_dmg" || t === "buff_shield") return false;
-            if (factor > 0 && ((t === "buff_xp" && !xp2Active) || t === "buff_coins" || t === "buff_both")) return false;
+            if (factor > 0 && ((t === "buff_xp" && (!xp2Active || inRoom)) || t === "buff_coins" || t === "buff_both")) return false;
             return true;
           });
         }
@@ -16879,7 +17049,7 @@
           syncActiveBuffsFromQueue();
         } else if (state.backpack.activeBuffs) {
           if (factor > 0) {
-            if (!xp2Active) state.backpack.activeBuffs.sessionXpPct = 0;
+            if (!xp2Active || inRoom) state.backpack.activeBuffs.sessionXpPct = 0;
             state.backpack.activeBuffs.sessionCoinsPct = 0;
           }
           state.backpack.activeBuffs.sessionDmgPct = 0;
@@ -17078,11 +17248,16 @@
     return total;
   }
 
+  function getBackpackItemCapPct(inRoom = (typeof StudyRooms !== "undefined" && StudyRooms.isConnected())) {
+    if (inRoom) return 200; // +200% فوق الأساسي 100% = إجمالي 300% (3X) داخل الغرفة
+    return hasLevelFeature("perk_bag_cap225") ? 125 : 100;
+  }
+
   function syncActiveBuffsFromQueue() {
     if (!state?.backpack) return;
     const list = Array.isArray(state.backpack.activatedItems) ? state.backpack.activatedItems : [];
     const res = { sessionXpPct: 0, sessionCoinsPct: 0, sessionDmgPct: 0, shieldDmgPct: 0, luckChestPct: 0 };
-    const maxCap = hasLevelFeature("perk_bag_cap225") ? 125 : 100;
+    const maxCap = getBackpackItemCapPct();
     for (const act of list) {
       const meta = SHOP_CATALOG.find(x => x.id === act.itemId);
       const ef = meta?.effect;
@@ -17132,8 +17307,9 @@
     if (!Array.isArray(bp.activatedItems)) bp.activatedItems = [];
     if (!bp.activeBuffs) bp.activeBuffs = { sessionXpPct: 0, sessionCoinsPct: 0, sessionDmgPct: 0, shieldDmgPct: 0, luckChestPct: 0 };
 
-    const MAX_ITEM_BONUS_PCT = hasLevelFeature("perk_bag_cap225") ? 125 : 100;
-    const capLabel = MAX_ITEM_BONUS_PCT === 125 ? "2.25X (225%)" : "2X (200%)";
+    const inRoomNow = typeof StudyRooms !== "undefined" && StudyRooms.isConnected();
+    const MAX_ITEM_BONUS_PCT = getBackpackItemCapPct(inRoomNow);
+    const capLabel = MAX_ITEM_BONUS_PCT === 200 ? "3X (300%)" : MAX_ITEM_BONUS_PCT === 125 ? "2.25X (225%)" : "2X (200%)";
     const show2XCapModal = (channelName) => {
       AudioFX.playClick();
       Haptics.vibrate(25);
@@ -17145,7 +17321,7 @@
           <p class="text-sm text-muted mt-8">
             السلعة دي مش هتفيدك دلوقتي لأن الحد الأقصى لتراكم مكافآت السلع في ${escapeHtml(channelName)} هو <strong>${capLabel}</strong>، وإنت بالفعل واخد الحد الكامل.
           </p>
-          <p class="text-xs text-green mt-8 fw-800">ما سحبناش السلعة من حقيبتك — خلّيها للجلسة اللي بعدها!</p>
+          <p class="text-xs text-green mt-8 fw-800">ما سحبناش السلعة من حقيبتك — خلّيها للجولة الجاية!</p>
           <button class="btn btn-primary btn-block mt-16" onclick="UI.closeModal()">تمام، فهمت 👍</button>
         </div>
       `);
@@ -17167,12 +17343,14 @@
       return true;
     }
 
+    const curXpWithXp2 = (bp.activeBuffs.sessionXpPct || 0) + (state.buffs.xp2 ? 100 : 0);
+
     if (item.id === "cons_xp2") {
       if (state.buffs.xp2) {
         FX.showToast("مضاعف ×2 XP متجهز بالفعل لجلستك الجاية ⚡", "warn");
         return false;
       }
-      if ((bp.activeBuffs.sessionXpPct || 0) >= MAX_ITEM_BONUS_PCT) {
+      if ((inRoomNow ? curXpWithXp2 : (bp.activeBuffs.sessionXpPct || 0)) >= MAX_ITEM_BONUS_PCT) {
         show2XCapModal("نقاط الخبرة XP");
         return false;
       }
@@ -17196,7 +17374,7 @@
     const ef = item.effect;
     const ab = bp.activeBuffs;
 
-    // التحقق من حد التراكم 2X (200%) قبل استهلاك أي سلعة بونص
+    // التحقق من حد التراكم (3X في الغرف / 2X في الفردي) قبل استهلاك أي سلعة بونص
     const checkOverflowOrBlock = (curVal, addVal, chLabel) => {
       if (curVal >= MAX_ITEM_BONUS_PCT) {
         show2XCapModal(chLabel);
@@ -17205,12 +17383,15 @@
       if (!bypassOverflowWarn && curVal + addVal > MAX_ITEM_BONUS_PCT) {
         const gained = MAX_ITEM_BONUS_PCT - curVal;
         UI.confirmModal({
-          title: `تنبيه حد التراكم 2X (200%) ⚠️`,
-          body: `تراكم ${chLabel} عندك دلوقتي +${curVal}% (إجمالي ${100 + curVal}%). السلعة دي بتدي +${addVal}%، بس الحد الأقصى 2X (200%) يعني هتاخد +${gained}% بس والباقي مش هيفيدك. تستخدمها برضو؟`,
-          confirmText: "استخدمها على +2X",
+          title: `تنبيه حد التراكم ${capLabel} ⚠️`,
+          body: `تراكم ${chLabel} عندك دلوقتي +${curVal}% (إجمالي ${100 + curVal}%). السلعة دي بتدي +${addVal}%، بس الحد الأقصى ${capLabel} يعني هتاخد +${gained}% بس والباقي مش هيفيدك. تستخدمها برضو؟`,
+          confirmText: "استخدمها على الحد الأقصى",
           cancelText: "بلاش، وفّرها",
           onConfirm: () => {
-            if (useBackpackItem(itemId, true) && currentScreen === "backpack") renderBackpack();
+            if (useBackpackItem(itemId, true)) {
+              if (currentScreen === "backpack") renderBackpack();
+              else if (currentScreen === "study-rooms") renderStudyRooms();
+            }
           }
         });
         return "confirm";
@@ -17219,11 +17400,12 @@
     };
 
     if (ef.type === "buff_xp") {
-      if (state.buffs.xp2) {
+      if (!inRoomNow && state.buffs.xp2) {
         show2XCapModal("نقاط الخبرة XP (مضاعف ×2 مفعّل)");
         return false;
       }
-      const st = checkOverflowOrBlock(ab.sessionXpPct || 0, ef.pct, "نقاط الخبرة XP");
+      const xpBaseCur = inRoomNow ? curXpWithXp2 : (ab.sessionXpPct || 0);
+      const st = checkOverflowOrBlock(xpBaseCur, ef.pct, "نقاط الخبرة XP");
       if (st !== "ok") return false;
     } else if (ef.type === "buff_coins") {
       const st = checkOverflowOrBlock(ab.sessionCoinsPct || 0, ef.pct, "العملات");
@@ -17243,20 +17425,23 @@
       const st = checkOverflowOrBlock(ab.luckChestPct || 0, ef.pct, "حظ الصندوق النادر");
       if (st !== "ok") return false;
     } else if (ef.type === "buff_both") {
-      const xpCur = ab.sessionXpPct || 0;
+      const xpCur = inRoomNow ? curXpWithXp2 : (ab.sessionXpPct || 0);
       const cnCur = ab.sessionCoinsPct || 0;
-      if ((xpCur >= MAX_ITEM_BONUS_PCT || state.buffs.xp2) && cnCur >= MAX_ITEM_BONUS_PCT) {
+      if ((xpCur >= MAX_ITEM_BONUS_PCT || (!inRoomNow && state.buffs.xp2)) && cnCur >= MAX_ITEM_BONUS_PCT) {
         show2XCapModal("نقاط الخبرة والعملات");
         return false;
       }
       if (!bypassOverflowWarn && (xpCur + ef.xpPct > MAX_ITEM_BONUS_PCT || cnCur + ef.coinsPct > MAX_ITEM_BONUS_PCT)) {
         UI.confirmModal({
-          title: "تنبيه حد التراكم 2X (200%) ⚠️",
-          body: "جزء من زيادة الإكسير ده هيتعدى حد الـ 2X (200%) ومش هيفيدك بالكامل. تكمل استخدامه دلوقتي؟",
+          title: `تنبيه حد التراكم ${capLabel} ⚠️`,
+          body: `جزء من زيادة الإكسير ده هيتعدى حد الـ ${capLabel} ومش هيفيدك بالكامل. تكمل استخدامه دلوقتي؟`,
           confirmText: "استخدمه",
           cancelText: "وفّره بعدين",
           onConfirm: () => {
-            if (useBackpackItem(itemId, true) && currentScreen === "backpack") renderBackpack();
+            if (useBackpackItem(itemId, true)) {
+              if (currentScreen === "backpack") renderBackpack();
+              else if (currentScreen === "study-rooms") renderStudyRooms();
+            }
           }
         });
         return false;
@@ -22579,7 +22764,7 @@
     };
 
     const BENTO_SINGLE_KEYS = new Set(["companion", "bet", "expeditions", "merchant"]);
-    const layoutOrder = (state.homeLayout?.order || ["battle", "rooms", "quests", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"])
+    const layoutOrder = (state.homeLayout?.order || ["battle", "quests", "rooms", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"])
       .filter(k => sectionsMap[k] && !(state.homeLayout?.hidden || []).includes(k));
 
     let orderedSectionsHtml = "";
@@ -22766,6 +22951,19 @@
         e.stopPropagation();
         AudioFX.playClick();
         navigate("study-rooms", { action: "join", from: "home" });
+      };
+    }
+    if ((typeof navigator === "undefined" || navigator.onLine !== false) && !StudyRoomsDirectory.ready && !StudyRoomsDirectory.connecting) {
+      StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+    }
+    const hDirRefresh = document.getElementById("home-dir-refresh");
+    if (hDirRefresh) {
+      hDirRefresh.onclick = (e) => {
+        e.stopPropagation();
+        AudioFX.playClick();
+        StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+        StudyRoomsDirectory.recompute();
+        FX.showToast("🔄 اتحدّث عدد الأونلاين بالغرف العامة!", "success");
       };
     }
     const hReturnRoom = document.getElementById("home-return-room-btn");
@@ -30541,7 +30739,7 @@
       };
     });
     document.getElementById("hc-reset-btn").onclick = () => {
-      state.homeLayout = { order: ["battle", "rooms", "quests", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"], hidden: [] };
+      state.homeLayout = { order: ["battle", "quests", "rooms", "duties", "week", "bento", "companion", "bet", "expeditions", "merchant", "discover", "event"], hidden: [] };
       saveState();
       FX.showToast("رجعنا الترتيب الأصلي للرئيسية 🏠", "success");
       renderHomeCustomize();
@@ -35655,12 +35853,17 @@
 
     const tabs = ["الكل", "استهلاكيات", "عتاد ومقويات", "أطر ومظاهر", "الرفيق", "تحف وصناديق"];
     const tabCounts = Object.fromEntries(tabs.map(t => [t, t === "الكل" ? entries.length : entries.filter(e => e.cat === t).length]));
-    const maxCapPct = hasLevelFeature("perk_bag_cap225") ? 225 : 200;
+    const inRoomCap = typeof StudyRooms !== "undefined" && StudyRooms.isConnected();
+    const maxBonusPct = getBackpackItemCapPct(inRoomCap);
+    const maxCapPct = 100 + maxBonusPct;
+    const totalXpBoostNow = inRoomCap
+      ? Math.min(maxBonusPct, (ab.sessionXpPct || 0) + (state.buffs.xp2 ? 100 : 0))
+      : (state.buffs.xp2 ? 100 : (ab.sessionXpPct || 0));
     const capSlots = [
-      { label: "⚡ XP", val: state.buffs.xp2 ? 100 : (ab.sessionXpPct || 0), note: state.buffs.xp2 ? "200% (×2)" : `${100 + (ab.sessionXpPct || 0)}% / ${maxCapPct}%` },
-      { label: "🪙 عملات", val: ab.sessionCoinsPct || 0, note: `${100 + (ab.sessionCoinsPct || 0)}% / ${maxCapPct}%` },
-      { label: "⚔️ ضرر", val: ab.sessionDmgPct || 0, note: `${100 + (ab.sessionDmgPct || 0)}% / ${maxCapPct}%` },
-      { label: "🍀 حظ/دروع", val: Math.max(ab.luckChestPct || 0, ab.shieldDmgPct || 0), note: `${100 + Math.max(ab.luckChestPct || 0, ab.shieldDmgPct || 0)}% / ${maxCapPct}%` }
+      { label: "⚡ XP", val: totalXpBoostNow, note: inRoomCap ? `${100 + totalXpBoostNow}% / 300%` : (state.buffs.xp2 ? "200% (×2)" : `${100 + totalXpBoostNow}% / ${maxCapPct}%`) },
+      { label: "🪙 عملات", val: Math.min(maxBonusPct, ab.sessionCoinsPct || 0), note: `${100 + Math.min(maxBonusPct, ab.sessionCoinsPct || 0)}% / ${maxCapPct}%` },
+      { label: "⚔️ ضرر", val: Math.min(maxBonusPct, ab.sessionDmgPct || 0), note: `${100 + Math.min(maxBonusPct, ab.sessionDmgPct || 0)}% / ${maxCapPct}%` },
+      { label: "🍀 حظ/دروع", val: Math.min(maxBonusPct, Math.max(ab.luckChestPct || 0, ab.shieldDmgPct || 0)), note: `${100 + Math.min(maxBonusPct, Math.max(ab.luckChestPct || 0, ab.shieldDmgPct || 0))}% / ${maxCapPct}%` }
     ];
 
     const buildBpGridHtml = () => {
@@ -35878,12 +36081,12 @@
 
       <div class="glass-card mb-12" style="padding:10px 12px;border-color:rgba(167,139,250,0.4);">
         <div class="flex-between">
-          <span class="text-xs fw-900">⚡ سقف تراكم السلع (الحد الأقصى ${maxCapPct === 225 ? "2.25X / 225%" : "2X / 200%"})</span>
-          <span class="pill pill-purple text-xs" style="min-height:22px;padding:1px 8px;">حد +${maxCapPct - 100}%</span>
+          <span class="text-xs fw-900">⚡ سقف تراكم السلع (الحد الأقصى ${maxCapPct === 300 ? "3X / 300% داخل الغرفة" : maxCapPct === 225 ? "2.25X / 225%" : "2X / 200%"})</span>
+          <span class="pill pill-purple text-xs" style="min-height:22px;padding:1px 8px;">حد +${maxBonusPct}%</span>
         </div>
         <div class="buff-2x-grid">
           ${capSlots.map(cs => `
-            <div class="buff-2x-pill ${cs.val >= 100 ? "maxed" : ""}">
+            <div class="buff-2x-pill ${cs.val >= maxBonusPct ? "maxed" : ""}">
               <span>${cs.label}</span>
               <span class="num">${cs.note}</span>
             </div>
@@ -36468,16 +36671,133 @@
      8.28 STUDY ROOMS ENGINE & UI (TRYSTERO 0.27.0 P2P)
      ===================================================== */
   const STUDY_ROOM_APP_ID = "focus_castle_study_rooms_2026_v1";
+  const STUDY_ROOM_DIR_ID = "focus_castle_pub_dir_2026_v1";
   const PUBLIC_STUDY_ROOMS = [
-    { code: "fc_pub_thanawya_2026", title: "غرفة الثانوية والجامعة 🎓", mode: "coop", focusMin: 50, breakMin: 10 },
-    { code: "fc_pub_sprint_25", title: "ماراثون الـ 25 دقيقة ⚡", mode: "versus", focusMin: 25, breakMin: 5 },
-    { code: "fc_pub_night_owls", title: "بوم الليل والهدوء 🦉", mode: "boss_raid", focusMin: 50, breakMin: 10 }
+    {
+      code: "fc_pub_thanawya_2026",
+      title: "غرفة الثانوية والجامعة 🎓",
+      desc: "تركيز متوازن 50 د + 10 د راحة كل ساعة",
+      mode: "coop",
+      roomMode: "flex",
+      focusMin: 50,
+      breakMin: 10,
+      bossName: "غول التسويف العام",
+      bossEmoji: "👹"
+    },
+    {
+      code: "fc_pub_sprint_25",
+      title: "ماراثون الـ 25 دقيقة ⚡",
+      desc: "جولات سريعة وحماسية كل نص ساعة",
+      mode: "versus",
+      roomMode: "strict",
+      focusMin: 25,
+      breakMin: 5,
+      bossName: "عداء الوقت الشرس",
+      bossEmoji: "⚡"
+    },
+    {
+      code: "fc_pub_night_owls",
+      title: "بوم الليل والهدوء 🦉",
+      desc: "هدوء وتحدي وحش مشترك 50 د + 10 د راحة",
+      mode: "boss_raid",
+      roomMode: "flex",
+      focusMin: 50,
+      breakMin: 10,
+      bossName: "تنين السهر الأعظم",
+      bossEmoji: "🐉"
+    }
   ];
 
   let srActiveTab = "arena"; // arena | peers | chat
   let srLobbyTab = "create"; // create | join
   let srBackScreen = "home";
   let srRoomTimer = null;
+
+  const StudyRoomsDirectory = {
+    room: null,
+    presState: null,
+    hbTimer: null,
+    connecting: false,
+    ready: false,
+    counts: {},
+
+    getCount(code) {
+      if (StudyRooms.isConnected() && StudyRooms.isPublicFixed && StudyRooms.roomCode === code) {
+        return Math.max(this.counts[code] || 0, StudyRooms.getUserCount());
+      }
+      return this.counts[code] || 0;
+    },
+
+    getTotalPublicOnline() {
+      return PUBLIC_STUDY_ROOMS.reduce((acc, r) => acc + this.getCount(r.code), 0);
+    },
+
+    async connect(strategy = state?.studyRooms?.lastStrategy || "nostr") {
+      if (this.room || this.connecting) return;
+      if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+      this.connecting = true;
+      try {
+        const mod = await StudyRooms.loadLib(strategy);
+        const room = mod.joinRoom({ appId: STUDY_ROOM_DIR_ID, identity: "local" }, "public_lobby_dir");
+        const pres = room.makeUserState("pubPres", { roomCode: "", ts: 0 });
+        this.room = room;
+        this.presState = pres;
+        pres.onChange(() => this.recompute(), { replay: true });
+        room.onUserLeave(() => this.recompute());
+        this.ready = true;
+        if (StudyRooms.isConnected() && StudyRooms.isPublicFixed) {
+          this.setPresence(StudyRooms.roomCode);
+        }
+        if (this.hbTimer) clearInterval(this.hbTimer);
+        this.hbTimer = setInterval(() => {
+          if (StudyRooms.isConnected() && StudyRooms.isPublicFixed) {
+            this.setPresence(StudyRooms.roomCode);
+          }
+          this.recompute();
+        }, 18000);
+        this.recompute();
+      } catch {
+        /* فشل صامت في دليل الأونلاين لا يعطل أي وظيفة */
+      } finally {
+        this.connecting = false;
+      }
+    },
+
+    setPresence(roomCode = "") {
+      if (!this.presState) return;
+      try {
+        this.presState.set({ roomCode: String(roomCode || ""), ts: Date.now() });
+      } catch { /* ignore */ }
+    },
+
+    recompute() {
+      if (!this.presState) return;
+      const now = Date.now();
+      const map = {};
+      for (const r of PUBLIC_STUDY_ROOMS) map[r.code] = 0;
+      try {
+        const all = this.presState.getAll() || {};
+        for (const val of Object.values(all)) {
+          if (val && val.roomCode && map[val.roomCode] !== undefined && (now - (val.ts || 0)) < 75000) {
+            map[val.roomCode] += 1;
+          }
+        }
+      } catch { /* ignore */ }
+      if (StudyRooms.isConnected() && StudyRooms.isPublicFixed && map[StudyRooms.roomCode] !== undefined) {
+        map[StudyRooms.roomCode] = Math.max(map[StudyRooms.roomCode], StudyRooms.getUserCount());
+      }
+      this.counts = map;
+      document.querySelectorAll("[data-pub-online]").forEach(el => {
+        const code = el.dataset.pubOnline;
+        const cnt = this.getCount(code);
+        el.textContent = `${cnt} أونلاين`;
+      });
+      const totEl = document.getElementById("sr-dir-total-badge");
+      if (totEl) {
+        totEl.textContent = `${this.getTotalPublicOnline()} أونلاين`;
+      }
+    }
+  };
 
   const StudyRooms = {
     mods: {},
@@ -36492,13 +36812,17 @@
     unsubs: [],
     isConnecting: false,
     connectError: "",
-    isPublicOpen: false,
+    isPublicFixed: false,
     roomCode: "",
     messages: [],
+    blobUrls: [],
     peersPing: {},
     localTodos: [],
+    myJoinedAt: 0,
     myRoundRewarded: 0,
+    myRewardedBossRound: 0,
     myRoundStartedAt: 0,
+    myLastOpenChunkNotified: 0,
     myRoomMin: 0,
     myRoomSessions: 0,
     myRoomScore: 0,
@@ -36507,6 +36831,11 @@
     myStatus: "ready",
     myVotePollId: null,
     myVoteChoice: -1,
+    myRoomBet: null,
+    myRoomShield: false,
+    activeBeacon: null,
+    activeGiftDrop: null,
+    lastPubPhaseKey: "",
     hiddenAt: null,
     micStream: null,
     micOn: false,
@@ -36514,7 +36843,6 @@
     peerAudioEls: {},
     fileProgressPct: 0,
     unreadChatCount: 0,
-    _sessionStatsSnapshot: null,
 
     async loadLib(strategy = "nostr") {
       if (typeof navigator !== "undefined" && navigator.onLine === false) {
@@ -36527,7 +36855,10 @@
       let lastErr = null;
       for (const u of urls) {
         try {
-          const m = await import(u);
+          const m = await Promise.race([
+            import(u),
+            new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 11000))
+          ]);
           if (m && typeof m.joinRoom === "function") {
             this.mods[strategy] = m;
             return m;
@@ -36536,7 +36867,7 @@
           lastErr = err;
         }
       }
-      throw new Error(lastErr ? "تعذّر تحميل مكتبة الغرف — اتأكد من النت وجرب تاني أو غيّر الشبكة لـ MQTT" : "تعذّر الاتصال بخادم الإشارة");
+      throw new Error(lastErr ? "تعذّر تحميل خدمة الغرف — اتأكد من النت أو جرّب شبكة MQTT" : "تعذّر الاتصال بخادم الإشارة");
     },
 
     isConnected() {
@@ -36544,8 +36875,7 @@
     },
 
     isAdmin() {
-      if (!this.room || !this.self) return false;
-      if (this.isPublicOpen) return true;
+      if (!this.room || !this.self || this.isPublicFixed) return false;
       if (this.self.isAdmin) return true;
       try {
         if (typeof this.room.getRoles === "function") {
@@ -36557,9 +36887,53 @@
       return false;
     },
 
+    canEditRoom() {
+      return this.isConnected() && this.isAdmin() && !this.isPublicFixed;
+    },
+
+    getPublicFixedMeta(pubCfg, syncedMeta = null) {
+      const fMin = pubCfg.focusMin || 50;
+      const bMin = pubCfg.breakMin || 10;
+      const cycleMs = (fMin + bMin) * 60000;
+      const focusMs = fMin * 60000;
+      const now = Date.now();
+      const roundNum = Math.floor(now / cycleMs) + 1;
+      const elapsed = now % cycleMs;
+      const inFocus = elapsed < focusMs;
+      const phase = inFocus ? "focus" : "break";
+      const phaseStartedAt = inFocus ? (now - elapsed) : (now - elapsed + focusMs);
+      const phaseEndsAt = phaseStartedAt + (inFocus ? focusMs : bMin * 60000);
+      return {
+        isPublicFixed: true,
+        title: pubCfg.title,
+        mode: pubCfg.mode,
+        roomMode: pubCfg.roomMode || "flex",
+        strictRoom: pubCfg.roomMode === "strict",
+        focusMin: fMin,
+        breakMin: bMin,
+        maxUsers: 24,
+        autoCycle: true,
+        phase,
+        phaseStartedAt,
+        phaseEndsAt,
+        roundNum,
+        bossName: pubCfg.bossName || "وحش الغرفة العام",
+        bossEmoji: pubCfg.bossEmoji || "👹",
+        bossMaxHp: syncedMeta?.bossMaxHp || 8000,
+        bossRounds: syncedMeta?.bossRounds || 1,
+        bossDefeatedCount: syncedMeta?.bossDefeatedCount || 0,
+        pinnedNote: `🔒 غرفة عامة بنظام وقت ثابت (${fMin} د تركيز + ${bMin} د راحة) — لا يتحكم فيها أحد`
+      };
+    },
+
     getMeta() {
       try {
-        return (this.metaState && this.metaState.get()) || null;
+        const raw = (this.metaState && this.metaState.get()) || null;
+        if (this.isPublicFixed) {
+          const pubCfg = PUBLIC_STUDY_ROOMS.find(p => p.code === this.roomCode) || PUBLIC_STUDY_ROOMS[0];
+          return this.getPublicFixedMeta(pubCfg, raw);
+        }
+        return raw;
       } catch {
         return null;
       }
@@ -36600,6 +36974,12 @@
       return Math.min(45, activePeers * 15);
     },
 
+    getActiveBeaconPct(roundNum) {
+      if (!this.activeBeacon) return 0;
+      if (this.activeBeacon.roundNum === roundNum && Date.now() < this.activeBeacon.endsAt) return 20;
+      return 0;
+    },
+
     buildMemberPayload() {
       const hero = HEROES.find(h => h.id === state.profile.hero) || HEROES[1];
       const actSubj = getActiveSubject();
@@ -36615,6 +36995,8 @@
         score: this.myRoomScore,
         bossDmg: this.myRoomBossDmg,
         roomStreak: this.myRoomStreak,
+        hasBet: !!(this.myRoomBet && !this.myRoomBet.failed),
+        betAmount: this.myRoomBet && !this.myRoomBet.failed ? this.myRoomBet.amount : 0,
         todos: this.localTodos.slice(0, 5),
         micOn: this.micOn,
         votePollId: this.myVotePollId,
@@ -36632,7 +37014,10 @@
 
     pushSystemMsg(text) {
       this.messages.push({ id: uid("srm"), kind: "sys", text, at: Date.now() });
-      if (this.messages.length > 80) this.messages.shift();
+      while (this.messages.length > 80) {
+        const old = this.messages.shift();
+        if (old?.url) { try { URL.revokeObjectURL(old.url); } catch {} }
+      }
     },
 
     recordRecentRoom(code, title, mode, hasPassword) {
@@ -36644,7 +37029,7 @@
       saveState();
     },
 
-    async createRoom({ title, mode = "coop", focusMin = 50, breakMin = 5, maxUsers = 8, password = "", autoCycle = true, strictRoom = false, strategy = "nostr", devMultiTab = false }) {
+    async createRoom({ title, mode = "coop", roomMode = "flex", focusMin = 50, breakMin = 5, maxUsers = 8, password = "", autoCycle = true, strategy = "nostr", devMultiTab = false }) {
       if (this.isConnecting) return false;
       this.isConnecting = true;
       this.connectError = "";
@@ -36660,14 +37045,19 @@
         };
         if (password && password.trim()) cfg.password = password.trim();
 
+        const validRoomMode = ["strict", "flex", "open"].includes(roomMode) ? roomMode : "flex";
+        const effFocus = validRoomMode === "open" ? 120 : Math.max(10, Math.min(120, Number(focusMin) || 50));
+
         const initialMeta = {
+          isPublicFixed: false,
           title: String(title || `غرفة ${state.profile.name || "الأبطال"}`).trim().slice(0, 36),
           mode,
-          focusMin: Math.max(10, Math.min(120, Number(focusMin) || 50)),
+          roomMode: validRoomMode,
+          strictRoom: validRoomMode === "strict",
+          focusMin: effFocus,
           breakMin: Math.max(1, Math.min(30, Number(breakMin) || 5)),
           maxUsers: cfg.maxUsers,
-          autoCycle: !!autoCycle,
-          strictRoom: !!strictRoom,
+          autoCycle: validRoomMode === "open" ? false : !!autoCycle,
           phase: "lobby",
           phaseStartedAt: 0,
           phaseEndsAt: 0,
@@ -36677,13 +37067,16 @@
           bossMaxHp: 6000,
           bossRounds: 1,
           bossDefeatedCount: 0,
-          pinnedNote: "أهلاً بكم! اكتب هدفك في المهام ودوس ابدأ الجولة ⚔️",
+          pinnedNote: "أهلاً بكم! اكتب هدفك في المهام والمضيف هيبدأ الجولة ⚔️",
           hasPassword: !!(password && password.trim())
         };
 
         const room = mod.joinRoom(cfg, baseSlug);
-        this._attachRoom({ room, selfInfo: null, isPublicOpen: false, initialMeta, strategy });
-        const selfInfo = await room.getSelf();
+        this._attachRoom({ room, selfInfo: null, isPublicFixed: false, initialMeta, strategy });
+        const selfInfo = await Promise.race([
+          room.getSelf(),
+          new Promise((_, rej) => setTimeout(() => rej(new Error("انتهى وقت الاتصال بالشبكة — جرّب شبكة MQTT من الإعدادات")), 12000))
+        ]);
         if (this.room !== room) return false;
         this.self = selfInfo;
         this.roomCode = selfInfo?.roomId || baseSlug;
@@ -36703,7 +37096,7 @@
       }
     },
 
-    async joinRoomByCode(rawInput, { password = "", fallbackTitle = "", fallbackMode = "coop", fallbackFocus = 50, fallbackBreak = 5, strategy = "nostr", devMultiTab = false } = {}) {
+    async joinRoomByCode(rawInput, { password = "", strategy = "nostr", devMultiTab = false } = {}) {
       if (this.isConnecting) return false;
       let code = String(rawInput || "").trim();
       if (code.includes("room=")) {
@@ -36725,7 +37118,10 @@
       try {
         await this.leave(true);
         const mod = await this.loadLib(strategy);
-        const hasRolesSuffix = code.includes("~");
+        const pubPreset = PUBLIC_STUDY_ROOMS.find(p => p.code === code);
+        const isPubFixed = !!pubPreset;
+        const hasRolesSuffix = !isPubFixed && code.includes("~");
+
         const cfg = {
           appId: STUDY_ROOM_APP_ID,
           identity: devMultiTab ? "none" : "local"
@@ -36733,43 +37129,64 @@
         if (hasRolesSuffix) {
           cfg.use = [mod.roles()];
         } else {
-          cfg.maxUsers = 12;
+          cfg.maxUsers = isPubFixed ? 24 : 12;
         }
-        if (password && password.trim()) cfg.password = password.trim();
+        if (!isPubFixed && password && password.trim()) cfg.password = password.trim();
 
-        const preset = PUBLIC_STUDY_ROOMS.find(p => p.code === code);
-        const initialMeta = hasRolesSuffix ? null : {
-          title: preset?.title || fallbackTitle || "غرفة مذاكرة مفتوحة",
-          mode: preset?.mode || fallbackMode,
-          focusMin: preset?.focusMin || fallbackFocus,
-          breakMin: preset?.breakMin || fallbackBreak,
-          maxUsers: 12,
-          autoCycle: true,
-          strictRoom: false,
-          phase: "lobby",
-          phaseStartedAt: 0,
-          phaseEndsAt: 0,
-          roundNum: 0,
-          bossName: "عملاق التشتّت الجماعي",
-          bossEmoji: "👹",
-          bossMaxHp: 6000,
-          bossRounds: 1,
-          bossDefeatedCount: 0,
-          pinnedNote: "غرفة مفتوحة للكل — أي حد يقدر يبدأ جولة تركيز جماعية!",
-          hasPassword: !!(password && password.trim())
-        };
+        const initialMeta = isPubFixed
+          ? this.getPublicFixedMeta(pubPreset, null)
+          : (hasRolesSuffix ? null : {
+            isPublicFixed: false,
+            title: "غرفة مذاكرة خاصة",
+            mode: "coop",
+            roomMode: "flex",
+            strictRoom: false,
+            focusMin: 50,
+            breakMin: 5,
+            maxUsers: 12,
+            autoCycle: true,
+            phase: "lobby",
+            phaseStartedAt: 0,
+            phaseEndsAt: 0,
+            roundNum: 0,
+            bossName: "عملاق التشتّت الجماعي",
+            bossEmoji: "👹",
+            bossMaxHp: 6000,
+            bossRounds: 1,
+            bossDefeatedCount: 0,
+            pinnedNote: "أهلاً بكم في الغرفة!",
+            hasPassword: !!(password && password.trim())
+          });
 
         const room = mod.joinRoom(cfg, code);
-        this._attachRoom({ room, selfInfo: { roomId: code, userId: null, isAdmin: !hasRolesSuffix }, isPublicOpen: !hasRolesSuffix, initialMeta, strategy });
-        const selfInfo = await room.getSelf();
+        this._attachRoom({
+          room,
+          selfInfo: { roomId: code, userId: null, isAdmin: false },
+          isPublicFixed: isPubFixed,
+          initialMeta,
+          strategy
+        });
+        const selfInfo = await Promise.race([
+          room.getSelf(),
+          new Promise((_, rej) => setTimeout(() => rej(new Error("انتهى وقت الدخول للغرفة — جرب شبكة MQTT")), 12000))
+        ]);
         if (this.room !== room) return false;
         this.self = selfInfo;
         this.roomCode = selfInfo?.roomId || code;
+        if (isPubFixed) {
+          const pubMeta = this.getMeta();
+          this.myStatus = pubMeta?.phase === "focus" ? "studying" : "resting";
+          this.myRoundStartedAt = pubMeta?.phase === "focus" ? Date.now() : 0;
+          this.lastPubPhaseKey = `${pubMeta?.roundNum}_${pubMeta?.phase}`;
+          StudyRoomsDirectory.connect(strategy).then(() => StudyRoomsDirectory.setPresence(this.roomCode));
+        }
         this.syncMyMember();
         const metaNow = this.getMeta();
-        this.recordRecentRoom(this.roomCode, metaNow?.title || preset?.title || "غرفة مذاكرة", metaNow?.mode || fallbackMode, !!(password && password.trim()));
+        if (!isPubFixed) {
+          this.recordRecentRoom(this.roomCode, metaNow?.title || "غرفة مذاكرة", metaNow?.mode || "coop", !!(password && password.trim()));
+        }
         AudioFX.playSuccess();
-        FX.showToast("🚪 دخلت الغرفة بنجاح! مستنيين صحابك يجمعوا", "success");
+        FX.showToast(isPubFixed ? `🎓 دخلت ${pubPreset.title} (الجدول الثابت شغال أوتوماتيكياً)` : "🚪 دخلت الغرفة بنجاح!", "success");
         return true;
       } catch (err) {
         this.connectError = err?.message || "مقدرناش ندخل الغرفة — راجع الكود أو كلمة السر";
@@ -36782,16 +37199,20 @@
       }
     },
 
-    _attachRoom({ room, selfInfo, isPublicOpen, initialMeta, strategy }) {
+    _attachRoom({ room, selfInfo, isPublicFixed, initialMeta, strategy }) {
       this.room = room;
       this.self = selfInfo;
-      this.isPublicOpen = isPublicOpen;
+      this.isPublicFixed = !!isPublicFixed;
       this.roomCode = selfInfo?.roomId || "";
       this.messages = [];
+      this.blobUrls = [];
       this.peersPing = {};
       this.unreadChatCount = 0;
+      this.myJoinedAt = Date.now();
       this.myRoundRewarded = 0;
+      this.myRewardedBossRound = 0;
       this.myRoundStartedAt = 0;
+      this.myLastOpenChunkNotified = 0;
       this.myRoomMin = 0;
       this.myRoomSessions = 0;
       this.myRoomScore = 0;
@@ -36800,15 +37221,20 @@
       this.myStatus = "ready";
       this.myVotePollId = null;
       this.myVoteChoice = -1;
+      this.myRoomBet = null;
+      this.myRoomShield = false;
+      this.activeBeacon = null;
+      this.activeGiftDrop = null;
+      this.lastPubPhaseKey = "";
       state.studyRooms.lastStrategy = strategy;
 
       const initPayload = this.buildMemberPayload();
       this.memberState = room.makeUserState("member", initPayload);
       this.memberState.set(initPayload);
-      this.metaState = isPublicOpen
+      this.metaState = this.isPublicFixed
         ? room.makeState("meta", initialMeta)
-        : (initialMeta ? room.makeState("meta", initialMeta) : room.makeState("meta", { phase: "lobby", title: "غرفة مذاكرة", focusMin: 50, breakMin: 5, roundNum: 0, bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000, bossRounds: 1, bossDefeatedCount: 0, mode: "coop" }));
-      this.pollState = isPublicOpen
+        : (initialMeta ? room.makeState("meta", initialMeta) : room.makeState("meta", { phase: "lobby", title: "غرفة مذاكرة", focusMin: 50, breakMin: 5, roundNum: 0, mode: "coop", roomMode: "flex", bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000, bossRounds: 1, bossDefeatedCount: 0 }));
+      this.pollState = this.isPublicFixed
         ? room.makeState("poll", null)
         : room.makeState("poll", null, { roles: "*" });
       this.chatAct = room.makeAction("chat");
@@ -36824,13 +37250,24 @@
       }
 
       const refreshUI = () => {
+        if (!this.isConnected()) return;
         if (currentScreen === "study-rooms") {
           const actEl = document.activeElement;
           const actId = actEl && (actEl.id === "sr-chat-inp" || actEl.id === "sr-todo-inp" || actEl.id === "sr-pin-inp") ? actEl.id : null;
           const savedVal = actId ? actEl.value : "";
           const selStart = actId ? actEl.selectionStart : null;
           const selEnd = actId ? actEl.selectionEnd : null;
+          const prevChatScroll = document.getElementById("sr-chat-scroll")?.scrollTop ?? null;
+          const wasAtBottom = (() => {
+            const box = document.getElementById("sr-chat-scroll");
+            if (!box) return true;
+            return box.scrollHeight - box.scrollTop - box.clientHeight < 28;
+          })();
           renderStudyRooms();
+          const newBox = document.getElementById("sr-chat-scroll");
+          if (newBox && prevChatScroll !== null) {
+            newBox.scrollTop = wasAtBottom ? newBox.scrollHeight : prevChatScroll;
+          }
           if (actId) {
             const restored = document.getElementById(actId);
             if (restored) {
@@ -36848,6 +37285,7 @@
 
       this.unsubs.push(
         room.onUserJoin(({ userId }) => {
+          if (!this.isConnected()) return;
           if (userId !== this.self?.userId) {
             const name = this.getMembers()[userId]?.name || "بطل جديد";
             this.pushSystemMsg(`👋 ${name} دخل الغرفة!`);
@@ -36859,6 +37297,7 @@
           }
           if (typeof room.ping === "function" && userId !== this.self?.userId) {
             Promise.resolve(room.ping(userId)).then(ms => {
+              if (!this.isConnected()) return;
               if (Number.isFinite(Number(ms))) {
                 this.peersPing[userId] = Math.round(Number(ms));
                 refreshUI();
@@ -36869,6 +37308,7 @@
         }, { replay: true }),
 
         room.onUserLeave(({ userId }) => {
+          if (!this.isConnected()) return;
           const prevName = this.getMembers()[userId]?.name || "زميل";
           this.pushSystemMsg(`🚪 ${prevName} خرج من الغرفة`);
           delete this.peersPing[userId];
@@ -36891,7 +37331,7 @@
           const msg = msgMap[code] || err?.message || "حصل خطأ في اتصال الغرفة";
           FX.showToast(msg, "error");
           if (["room-full", "banned", "decrypt-failed"].includes(code)) {
-            this.leave(true).then(refreshUI);
+            this.leave(true).then(() => { if (currentScreen === "study-rooms") renderStudyRooms(); });
           }
         }),
 
@@ -36912,20 +37352,31 @@
 
         this.memberState.onChange(() => refreshUI(), { replay: true }),
         this.metaState.onChange((next) => {
-          if (next && next.title) {
+          if (this.isPublicFixed) {
+            refreshUI();
+            return;
+          }
+          if (next && next.title && !next.isPublicFixed) {
             this.recordRecentRoom(this.roomCode, next.title, next.mode || "coop", !!next.hasPassword);
           }
           if (next && next.phase === "focus" && next.roundNum > 0 && this.myRoundRewarded !== next.roundNum) {
             this.myStatus = "studying";
+            this.myLastOpenChunkNotified = 0;
             if (!this.myRoundStartedAt || this.myRoundStartedAt < (next.phaseStartedAt || 0)) {
               this.myRoundStartedAt = Date.now();
             }
             this.syncMyMember();
           } else if (next && next.phase === "break") {
+            if (next.roomMode === "open" && next.roundNum > 0 && this.myRoundRewarded !== next.roundNum) {
+              this.completeFocusRound({ ...next, phase: "focus" }, { manualOpenStop: true });
+            }
             this.myStatus = "resting";
             this.myRoundStartedAt = 0;
             this.syncMyMember();
           } else if (next && next.phase === "lobby") {
+            if (next.roomMode === "open" && next.roundNum > 0 && this.myRoundRewarded !== next.roundNum) {
+              this.completeFocusRound({ ...next, phase: "focus" }, { manualOpenStop: true });
+            }
             this.myStatus = "ready";
             this.myRoundStartedAt = 0;
             this.syncMyMember();
@@ -36947,12 +37398,15 @@
             noteTag: data.noteTag || "",
             at: data.at || Date.now()
           });
-          if (this.messages.length > 80) this.messages.shift();
+          while (this.messages.length > 80) {
+            const old = this.messages.shift();
+            if (old?.url) { try { URL.revokeObjectURL(old.url); } catch {} }
+          }
           const isFromOther = userId !== this.self?.userId;
           if (isFromOther && (currentScreen !== "study-rooms" || srActiveTab !== "chat")) {
             this.unreadChatCount += 1;
           }
-          if (!state.studyRooms?.zenMode && isFromOther) AudioFX.playClick();
+          if (!state.studyRooms?.zenMode && !state.studyRooms?.muteChatSound && isFromOther) AudioFX.playClick();
           refreshUI();
         }),
 
@@ -36969,6 +37423,19 @@
             AudioFX.playHit();
             Haptics.vibrate([40, 40, 40]);
             FX.showToast(`👀 ${sender} بينغزك: صحصح وارجع ركّز في المذاكرة!`, "warn");
+          } else if (data.kind === "beacon") {
+            this.activeBeacon = { roundNum: data.roundNum, senderName: sender, endsAt: data.endsAt || (Date.now() + 3600000) };
+            this.pushSystemMsg(`🔥 ${sender} ولّع شعلة الحماس للغرفة! (+20% XP وضرر وحش للكل)`);
+            AudioFX.playLevelUp();
+            FX.confetti(false);
+            FX.showToast(`🔥 ${sender} فعّل +20% XP وضرر للغرفة كلها!`, "reward");
+            refreshUI();
+          } else if (data.kind === "gift_rain" && data.dropId) {
+            this.activeGiftDrop = { id: data.dropId, senderName: sender, amount: data.amount || 150, expiresAt: data.expiresAt || (Date.now() + 90000), claimed: false };
+            this.pushSystemMsg(`🎁 ${sender} رمى مطر هدايا! الحق التقط +${data.amount || 150} 🪙`);
+            AudioFX.playCoin();
+            FX.showToast(`🎁 ${sender} رمى مطر هدايا في الغرفة — التقط نصيبك!`, "reward");
+            refreshUI();
           }
         }),
 
@@ -36980,6 +37447,7 @@
           if (buf.byteLength > 2 * 1024 * 1024) return;
           const blob = new Blob([buf], { type: mime });
           const url = URL.createObjectURL(blob);
+          this.blobUrls.push(url);
           this.messages.push({
             id: uid("fl"),
             kind: "file",
@@ -36990,7 +37458,10 @@
             url,
             at: Date.now()
           });
-          if (this.messages.length > 80) this.messages.shift();
+          while (this.messages.length > 80) {
+            const old = this.messages.shift();
+            if (old?.url) { try { URL.revokeObjectURL(old.url); } catch {} }
+          }
           if (userId !== this.self?.userId && (currentScreen !== "study-rooms" || srActiveTab !== "chat")) {
             this.unreadChatCount += 1;
           }
@@ -37000,7 +37471,7 @@
         })
       );
 
-      this.pushSystemMsg("🎉 دخلت الغرفة المباشرة! ابدأ الجولة وقت ما تكون جاهز");
+      this.pushSystemMsg(this.isPublicFixed ? "🔒 دخلت غرفة عامة بنظام وقت ومسمى ثابت — بالتوفيق يا بطل!" : "🎉 دخلت الغرفة المباشرة! بالتوفيق يا أبطال");
       this._startTickLoop();
     },
 
@@ -37013,37 +37484,109 @@
           return;
         }
         const meta = this.getMeta();
-        if (meta && meta.phase === "focus" && meta.phaseEndsAt > 0) {
-          if (Date.now() >= meta.phaseEndsAt && this.myRoundRewarded !== meta.roundNum) {
-            this.completeFocusRound(meta);
+        if (!meta) return;
+
+        if (this.isPublicFixed) {
+          const curKey = `${meta.roundNum}_${meta.phase}`;
+          if (this.lastPubPhaseKey && this.lastPubPhaseKey !== curKey) {
+            const prevParts = this.lastPubPhaseKey.split("_");
+            const prevRound = Number(prevParts[0]);
+            const prevPhase = prevParts[1];
+            if (prevPhase === "focus" && this.myRoundRewarded !== prevRound) {
+              this.completeFocusRound({ ...meta, roundNum: prevRound, phase: "focus", phaseStartedAt: meta.phaseStartedAt - meta.focusMin * 60000 });
+            }
+            if (meta.phase === "focus") {
+              this.myStatus = "studying";
+              this.myRoundStartedAt = meta.phaseStartedAt;
+              this.pushSystemMsg(`⚔️ بدأت الجولة #${meta.roundNum} تلقائياً (${meta.focusMin} دقيقة)!`);
+              this.syncMyMember();
+            } else {
+              this.myStatus = "resting";
+              this.myRoundStartedAt = 0;
+              this.pushSystemMsg(`☕ وقت الاستراحة التلقائية (${meta.breakMin} دقائق)`);
+              this.syncMyMember();
+            }
+            if (currentScreen === "study-rooms") renderStudyRooms();
           }
-        } else if (meta && meta.phase === "break" && meta.phaseEndsAt > 0) {
-          if (Date.now() >= meta.phaseEndsAt && this.isAdmin()) {
-            if (meta.autoCycle) this.startRound(meta.focusMin || 50);
-            else this.stopPhaseToLobby();
+          this.lastPubPhaseKey = curKey;
+        } else {
+          if (meta.phase === "focus" && meta.phaseEndsAt > 0) {
+            if (meta.roomMode === "open") {
+              const elapsedSec = Math.floor(Math.max(0, Date.now() - (this.myRoundStartedAt || meta.phaseStartedAt)) / 1000);
+              const chunks = Math.floor(elapsedSec / 1800);
+              if (chunks > this.myLastOpenChunkNotified && this.myRoundRewarded !== meta.roundNum) {
+                this.myLastOpenChunkNotified = chunks;
+                AudioFX.playSuccess();
+                FX.showToast(`♾️ أتممت ${chunks * 30} دقيقة في الوضع المفتوح بالغرفة!`, "reward");
+              }
+            }
+            if (Date.now() >= meta.phaseEndsAt && this.myRoundRewarded !== meta.roundNum) {
+              this.completeFocusRound(meta);
+            }
+          } else if (meta.phase === "break" && meta.phaseEndsAt > 0) {
+            if (Date.now() >= meta.phaseEndsAt && this.canEditRoom()) {
+              if (meta.autoCycle) this.startRound(meta.focusMin || 50);
+              else this.stopPhaseToLobby();
+            }
           }
         }
+
         if (currentScreen === "study-rooms") {
           const mmssEl = document.getElementById("sr-timer-mmss");
           const ringEl = document.getElementById("sr-ring-prog");
-          if (mmssEl && meta) {
-            const remMs = meta.phase === "lobby" ? (meta.focusMin || 50) * 60000 : Math.max(0, (meta.phaseEndsAt || 0) - Date.now());
-            const totalSec = (meta.phase === "break" ? (meta.breakMin || 5) : (meta.focusMin || 50)) * 60;
-            mmssEl.textContent = formatTimeMMSS(Math.ceil(remMs / 1000));
-            if (ringEl) {
-              const circ = 2 * Math.PI * 82;
-              const frac = meta.phase === "lobby" ? 0 : Math.min(1, Math.max(0, 1 - (remMs / 1000) / Math.max(1, totalSec)));
-              ringEl.style.strokeDashoffset = String(circ * (1 - frac));
+          if (mmssEl) {
+            const isOpenFocus = meta.roomMode === "open" && meta.phase === "focus" && !this.isPublicFixed;
+            if (isOpenFocus) {
+              const elMs = Math.max(0, Math.min(7200000, Date.now() - (this.myRoundStartedAt || meta.phaseStartedAt)));
+              mmssEl.textContent = formatTimeMMSS(Math.floor(elMs / 1000));
+              if (ringEl) {
+                const circ = 2 * Math.PI * 88;
+                ringEl.style.strokeDashoffset = String(circ * (1 - Math.min(1, elMs / 7200000)));
+              }
+            } else {
+              const remMs = meta.phase === "lobby" ? (meta.focusMin || 50) * 60000 : Math.max(0, (meta.phaseEndsAt || 0) - Date.now());
+              const totalSec = (meta.phase === "break" ? (meta.breakMin || 5) : (meta.focusMin || 50)) * 60;
+              mmssEl.textContent = formatTimeMMSS(Math.ceil(remMs / 1000));
+              if (ringEl) {
+                const circ = 2 * Math.PI * 88;
+                const frac = meta.phase === "lobby" ? 0 : Math.min(1, Math.max(0, 1 - (remMs / 1000) / Math.max(1, totalSec)));
+                ringEl.style.strokeDashoffset = String(circ * (1 - frac));
+              }
             }
           }
         }
       }, 1000);
     },
 
-    startRound(customFocusMin = null) {
-      if (!this.isConnected() || !this.isAdmin()) return false;
+    updateRoomSettings(patch) {
+      if (!this.canEditRoom()) return false;
       const meta = this.getMeta() || {};
-      const fMin = Math.max(10, Math.min(120, Number(customFocusMin ?? meta.focusMin) || 50));
+      const nextRoomMode = ["strict", "flex", "open"].includes(patch.roomMode) ? patch.roomMode : (meta.roomMode || "flex");
+      const nextFocus = nextRoomMode === "open" ? 120 : Math.max(10, Math.min(120, Number(patch.focusMin ?? meta.focusMin) || 50));
+      const nextBreak = Math.max(1, Math.min(30, Number(patch.breakMin ?? meta.breakMin) || 5));
+      const nextMeta = {
+        ...meta,
+        title: String(patch.title ?? meta.title).trim().slice(0, 36) || meta.title,
+        mode: ["coop", "versus", "boss_raid"].includes(patch.mode) ? patch.mode : (meta.mode || "coop"),
+        roomMode: nextRoomMode,
+        strictRoom: nextRoomMode === "strict",
+        focusMin: nextFocus,
+        breakMin: nextBreak,
+        maxUsers: Math.max(2, Math.min(12, Number(patch.maxUsers ?? meta.maxUsers) || 8)),
+        autoCycle: nextRoomMode === "open" ? false : !!(patch.autoCycle ?? meta.autoCycle),
+        pinnedNote: String(patch.pinnedNote ?? meta.pinnedNote ?? "").trim().slice(0, 90)
+      };
+      this.metaState.set(nextMeta);
+      AudioFX.playSuccess();
+      FX.showToast("✅ اتحفظت إعدادات الغرفة وتحدثت عند الكل!", "success");
+      return true;
+    },
+
+    startRound(customFocusMin = null) {
+      if (!this.canEditRoom()) return false;
+      const meta = this.getMeta() || {};
+      const isOpen = meta.roomMode === "open";
+      const fMin = isOpen ? 120 : Math.max(10, Math.min(120, Number(customFocusMin ?? meta.focusMin) || 50));
       const now = Date.now();
       this.metaState.set({
         ...meta,
@@ -37053,13 +37596,13 @@
         phaseEndsAt: now + fMin * 60000,
         roundNum: (meta.roundNum || 0) + 1
       });
-      this.chatAct?.send({ id: uid("cm"), text: `⚔️ بدأت جولة تركيز جديدة (${fMin} دقيقة)! ركّزوا يا أبطال`, name: state.profile.name, at: now });
+      this.chatAct?.send({ id: uid("cm"), text: isOpen ? "♾️ بدأت جولة مفتوحة حرة (حتى ساعتين) — ركّز براحتك!" : `⚔️ بدأت جولة تركيز جديدة (${fMin} دقيقة)! ركّزوا يا أبطال`, name: state.profile.name, at: now });
       AudioFX.playSuccess();
       return true;
     },
 
     startBreakPhase() {
-      if (!this.isConnected() || !this.isAdmin()) return false;
+      if (!this.canEditRoom()) return false;
       const meta = this.getMeta() || {};
       const bMin = Math.max(1, Math.min(30, Number(meta.breakMin) || 5));
       const now = Date.now();
@@ -37074,32 +37617,234 @@
     },
 
     stopPhaseToLobby() {
-      if (!this.isConnected() || !this.isAdmin()) return false;
+      if (!this.canEditRoom()) return false;
       const meta = this.getMeta() || {};
       this.metaState.set({ ...meta, phase: "lobby", phaseStartedAt: 0, phaseEndsAt: 0 });
       return true;
     },
 
-    completeFocusRound(meta) {
+    claimOpenRoundEarly() {
+      const meta = this.getMeta();
+      if (!meta || meta.roomMode !== "open" || meta.phase !== "focus" || this.isPublicFixed) return false;
+      if (this.myRoundRewarded === meta.roundNum) {
+        FX.showToast("استلمت نقاط الجولة المفتوحة دي بالفعل ✓", "warn");
+        return false;
+      }
+      const elMin = Math.floor(Math.max(0, Date.now() - (this.myRoundStartedAt || meta.phaseStartedAt)) / 60000);
+      if (elMin < 10) {
+        FX.showToast(`لسه عدّى ${elMin} د بس — كمل 10 دقايق على الأقل عشان تحسب نقاطك ⏱️`, "warn");
+        return false;
+      }
+      this.completeFocusRound(meta, { manualOpenStop: true });
+      this.myStatus = "ready";
+      this.syncMyMember();
+      if (currentScreen === "study-rooms") renderStudyRooms();
+      return true;
+    },
+
+    placeRoomBet(amount = 300) {
+      if (!this.isConnected()) return false;
+      const meta = this.getMeta();
+      if (!meta || meta.phase === "break") {
+        FX.showToast("الرهان بيتعمل قبل أو أثناء جولة التركيز بس 🤝", "warn");
+        return false;
+      }
+      if (this.myRoomBet && this.myRoomBet.roundNum >= (meta.roundNum || 0)) {
+        FX.showToast("أنت عامل رهان للجولة دي بالفعل!", "warn");
+        return false;
+      }
+      if (state.wallet.coins < amount) {
+        FX.showToast(`ناقصك ${formatNum(amount - state.wallet.coins)} 🪙 للرهان ده`, "error");
+        return false;
+      }
+      const targetRound = meta.phase === "focus" ? meta.roundNum : (meta.roundNum || 0) + 1;
+      spendCoins(amount, `رهان صمود بالغرفة (${formatNum(amount)} 🪙) 🎯`);
+      this.myRoomBet = { roundNum: targetRound, amount, failed: false };
+      this.syncMyMember();
+      saveState();
+      AudioFX.playCoin();
+      FX.showToast(`🎯 راهنت بـ ${formatNum(amount)} 🪙! كمّل الجولة وتاخد ${formatNum(Math.round(amount * 1.5))} 🪙`, "reward");
+      return true;
+    },
+
+    activateTeamBeacon(currency = "gems") {
+      if (!this.isConnected()) return false;
+      const meta = this.getMeta();
+      const roundNum = meta?.phase === "focus" ? meta.roundNum : (meta?.roundNum || 0) + 1;
+      if (this.getActiveBeaconPct(roundNum) > 0) {
+        FX.showToast("شعلة الحماس منوّرة في الغرفة بالفعل 🔥", "warn");
+        return false;
+      }
+      if (currency === "crystals") {
+        if ((state.rebirth?.etherCrystals || 0) < 10) {
+          FX.showToast("ناقصك أحجار أثير (محتاج 10 🔮)", "error");
+          return false;
+        }
+        state.rebirth.etherCrystals -= 10;
+      } else {
+        if (state.wallet.gems < 10) {
+          FX.showToast("ناقصك جواهر (محتاج 10 💎)", "error");
+          return false;
+        }
+        state.wallet.gems -= 10;
+      }
+      const endsAt = Date.now() + 90 * 60000;
+      this.activeBeacon = { roundNum, senderName: state.profile.name || "أنت", endsAt };
+      this.myRoomScore += 120;
+      this.fxAct?.send({ kind: "beacon", roundNum, endsAt });
+      this.chatAct?.send({ id: uid("cm"), text: "🔥 ولّعت شعلة الحماس لكل الغرفة (+20% XP وضرر وحش)!", name: state.profile.name, at: Date.now() });
+      this.syncMyMember();
+      saveState();
+      AudioFX.playLevelUp();
+      FX.confetti(true);
+      FX.showToast("🔥 فعّلت شعلة الحماس للغرفة كلها (+20% XP وضرر)!", "reward");
+      return true;
+    },
+
+    strikeRoomBoss(currency = "coins") {
+      if (!this.isConnected()) return false;
+      const dmg = currency === "crystals" ? 1400 : 800;
+      if (currency === "crystals") {
+        if ((state.rebirth?.etherCrystals || 0) < 5) {
+          FX.showToast("ناقصك أحجار أثير (محتاج 5 🔮)", "error");
+          return false;
+        }
+        state.rebirth.etherCrystals -= 5;
+      } else {
+        if (state.wallet.coins < 500) {
+          FX.showToast("ناقصك عملات (محتاج 500 🪙)", "error");
+          return false;
+        }
+        spendCoins(500, "ضربة فورية لوحش الغرفة ⚡");
+      }
+      this.myRoomBossDmg += dmg;
+      this.myRoomScore += 150;
+      this.fxAct?.send({ kind: "react", emoji: "💥" });
+      this.chatAct?.send({ id: uid("cm"), text: `⚡ سددت ضربة خارقة لوحش الغرفة (-${formatNum(dmg)} HP)!`, name: state.profile.name, at: Date.now() });
+      this.checkRoomBossVictory();
+      this.syncMyMember();
+      saveState();
+      AudioFX.playHit();
+      Haptics.vibrate([20, 35]);
+      FX.showToast(`💥 ضربت وحش الغرفة بـ -${formatNum(dmg)} HP وزدت +150 نقطة صدارة!`, "reward");
+      return true;
+    },
+
+    sendGiftRain() {
+      if (!this.isConnected()) return false;
+      if (state.wallet.gems < 20) {
+        FX.showToast("مطر الهدايا محتاج 20 💎 جواهر", "error");
+        return false;
+      }
+      state.wallet.gems -= 20;
+      const dropId = uid("gft");
+      const expiresAt = Date.now() + 90000;
+      this.myRoomScore += 200;
+      this.fxAct?.send({ kind: "gift_rain", dropId, amount: 150, expiresAt });
+      this.chatAct?.send({ id: uid("cm"), text: "🎁 رميت مطر هدايا في الغرفة — التقطوا +150 🪙 مجاناً!", name: state.profile.name, at: Date.now() });
+      this.syncMyMember();
+      saveState();
+      AudioFX.playChest();
+      FX.confetti(true);
+      FX.showToast("🎁 رميت مطر هدايا لأصحابك وكسبت +200 نقطة صدارة!", "reward");
+      return true;
+    },
+
+    claimActiveGiftDrop() {
+      const g = this.activeGiftDrop;
+      if (!g || g.claimed || Date.now() > g.expiresAt) return false;
+      g.claimed = true;
+      awardCoins(g.amount, `هدية ${g.senderName} في الغرفة 🎁`);
+      saveState();
+      AudioFX.playCoin();
+      FX.confetti(false);
+      FX.showToast(`🎁 التقطت +${g.amount} 🪙 من هدية ${g.senderName}!`, "reward");
+      return true;
+    },
+
+    buyRoomShield() {
+      if (!this.isConnected()) return false;
+      if (this.myRoomShield) {
+        FX.showToast("معاك درع حماية الغرفة شغال بالفعل 🛡️", "warn");
+        return false;
+      }
+      if (state.wallet.coins < 250) {
+        FX.showToast("درع الغرفة سعره 250 🪙", "error");
+        return false;
+      }
+      spendCoins(250, "درع حماية التشتّت بالغرفة 🛡️");
+      this.myRoomShield = true;
+      saveState();
+      AudioFX.playSuccess();
+      FX.showToast("🛡️ جهّزت درع حماية الغرفة — لو خرجت غصب عنك هينقذك مرة!", "success");
+      return true;
+    },
+
+    checkRoomBossVictory() {
+      const meta = this.getMeta();
+      if (!meta) return false;
+      const members = this.getMembers();
+      const myId = this.self?.userId;
+      const prevTotalRoomDmg = Object.values(members).reduce((acc, m) => acc + (m?.bossDmg || 0), 0) - (members[myId]?.bossDmg || 0) + this.myRoomBossDmg;
+      const bMax = meta.bossMaxHp || 6000;
+      const bRound = meta.bossRounds || 1;
+      if (prevTotalRoomDmg >= bMax && this.myRewardedBossRound !== bRound) {
+        this.myRewardedBossRound = bRound;
+        awardCoins(500, "هزيمة وحش الغرفة الجماعي 👹");
+        state.studyRooms.roomBossesDefeated += 1;
+        state.studyRooms.roomStars += 1;
+        if (this.canEditRoom()) {
+          this.metaState.set({
+            ...meta,
+            bossMaxHp: Math.min(30000, bMax + 2500),
+            bossRounds: bRound + 1,
+            bossDefeatedCount: (meta.bossDefeatedCount || 0) + 1
+          });
+        }
+        FX.showToast("🏆 هزمتم وحش الغرفة الجماعي مع بعض! +500 🪙 ونجمة غرفة ⭐", "reward");
+        return true;
+      }
+      return false;
+    },
+
+    completeFocusRound(meta, opts = {}) {
       if (!meta || this.myRoundRewarded === meta.roundNum) return;
       this.myRoundRewarded = meta.roundNum;
 
-      const mins = Math.max(10, Math.min(120, Number(meta.focusMin) || 50));
-      const joinedLateMs = Math.max(0, (this.myRoundStartedAt || meta.phaseStartedAt) - meta.phaseStartedAt);
-      const attendedMin = Math.max(1, Math.round(mins - joinedLateMs / 60000));
+      checkDayAndWeekRollover();
+
+      let attendedMin = 0;
+      let openChunksCount = 1;
+      if (meta.roomMode === "open" && !this.isPublicFixed) {
+        const elMs = Math.max(0, Math.min(7200000, Date.now() - (this.myRoundStartedAt || meta.phaseStartedAt)));
+        attendedMin = Math.min(120, Math.floor(elMs / 60000));
+        openChunksCount = Math.max(1, Math.floor(attendedMin / 30));
+      } else {
+        const mins = Math.max(10, Math.min(120, Number(meta.focusMin) || 50));
+        const joinedLateMs = Math.max(0, (this.myRoundStartedAt || meta.phaseStartedAt) - meta.phaseStartedAt);
+        attendedMin = Math.max(0, Math.round(mins - joinedLateMs / 60000));
+      }
+
       if (attendedMin < 10) {
-        this.pushSystemMsg("⏱️ حضرت أقل من 10 دقايق من الجولة دي — استعد للجولة الجاية عشان تاخد المكافآت!");
+        if (this.myRoomBet && this.myRoomBet.roundNum === meta.roundNum) {
+          this.myRoomBet = null;
+        }
+        this.pushSystemMsg("⏱️ حضرت أقل من 10 دقايق من الجولة دي — خليك جاهز من بداية الجولة الجاية عشان تاخد كل المكافآت!");
         return;
       }
 
       const today = getTodayKey();
       const hour = new Date().getHours();
-      const preview = calculateSessionPreview(attendedMin, true);
+      const preview = calculateSessionPreview(attendedMin, true, { inRoom: true });
       const coopPct = this.getCoopBonusPct();
+      const beaconPct = this.getActiveBeaconPct(meta.roundNum);
       const coopMult = 1 + coopPct / 100;
+      const xpMult = 1 + (coopPct + beaconPct) / 100;
+      const dmgMult = 1 + (coopPct + beaconPct) / 100;
+
       const coinsWon = Math.round(preview.coins * coopMult);
-      const xpWon = Math.round(preview.xp * coopMult);
-      const dmgWon = Math.round(preview.damage * coopMult);
+      const xpWon = Math.round(preview.xp * xpMult);
+      const dmgWon = Math.round(preview.damage * dmgMult);
 
       if (!state.history[today]) {
         state.history[today] = { min: 0, sessions: 0, xp: 0, bySubject: {}, byHour: Array(24).fill(0) };
@@ -37107,15 +37852,29 @@
       const h = state.history[today];
       const actSubj = getActiveSubject();
       const subjName = actSubj ? actSubj.name : "غرفة مذاكرة";
+      const switchedSubjectToday = Object.keys(h.bySubject || {}).some(k => k !== subjName && (h.bySubject[k] || 0) > 0);
+      const prevMin = h.min;
+      const goalBefore = getEffectiveTodayGoal();
       h.min += attendedMin;
-      h.sessions += 1;
+      h.sessions += openChunksCount;
       h.xp = (h.xp || 0) + xpWon;
       h.bySubject[subjName] = (h.bySubject[subjName] || 0) + attendedMin;
       h.byHour[hour] = (h.byHour[hour] || 0) + attendedMin;
 
       state.progress.totalMinutes += attendedMin;
-      state.progress.totalSessions += 1;
+      state.progress.totalSessions += openChunksCount;
       if (attendedMin >= 90) state.progress.marathonCount++;
+      if (hour >= 21) state.progress.nightSessions++;
+      if (hour < 9) state.progress.morningSessions++;
+      if (state.lastGoalCountedDay !== today && prevMin < goalBefore && h.min >= goalBefore) {
+        state.progress.goalCompletedCount++;
+        state.lastGoalCountedDay = today;
+      }
+      state.progress.maxSingleSessionMin = Math.max(state.progress.maxSingleSessionMin || 0, attendedMin);
+      const sessWk = getWeekKey();
+      if (!state.progress.weeklyMaxSessionMin) state.progress.weeklyMaxSessionMin = {};
+      state.progress.weeklyMaxSessionMin[sessWk] = Math.max(state.progress.weeklyMaxSessionMin[sessWk] || 0, attendedMin);
+
       if (!state.streak.lastDay || today > state.streak.lastDay) {
         state.streak.current += 1;
         state.streak.lastDay = today;
@@ -37138,56 +37897,85 @@
       awardCoins(coinsWon, `جولة غرفة جماعية (${attendedMin} د) 👥`);
       const xpRes = addXP(xpWon, "study_room");
       addKingdomFocusFuel(attendedMin >= 50 ? 16 : 8);
+      applyKingdomSessionRewards(attendedMin, coinsWon);
       applyCompanionFocusProgress(attendedMin);
       addSpeedupMinutes(attendedMin * 7);
-      if (attendedMin >= 25) addChestToQueue("random");
+      if (attendedMin >= 25) {
+        const chestCnt = meta.roomMode === "open" ? Math.max(1, openChunksCount) : 1;
+        for (let ci = 0; ci < chestCnt; ci++) addChestToQueue("random");
+        if (state.nightRaids && state.nightRaids.repelledDay !== today) {
+          state.nightRaids.repelledDay = today;
+          state.progress.nightRaidsRepelledCount = (state.progress.nightRaidsRepelledCount || 0) + 1;
+          grantNightRaidChaseLoot(today);
+        }
+      }
+
+      if ((state.rebirth?.count || 0) >= 1) {
+        addEtherShards(attendedMin >= 50 ? 30 : 15);
+      }
+      if (isGlowEra()) {
+        state.rebirth.glowCharge = Math.min(100, (state.rebirth.glowCharge || 0) + Math.min(100, Math.max(20, Math.round(attendedMin * 0.85))));
+        if (state.rebirth.glowCharge >= 100) state.rebirth.glowBurstReady = true;
+      }
 
       const boss = getActiveBoss();
+      let bossDefeatedFlag = false;
       if (boss && boss.status === "active") {
         boss.hp = Math.max(0, boss.hp - dmgWon);
-        if (boss.hp <= 0) applyArsenalBossDefeat(boss, "غرفة المذاكرة الجماعية 👥");
+        if (boss.hp <= 0) {
+          bossDefeatedFlag = true;
+          applyArsenalBossDefeat(boss, "غرفة المذاكرة الجماعية 👥");
+        }
       }
       applyWeeklyBossDamage(dmgWon, true);
-      recordSubjectSessionStats(subjName, attendedMin, coinsWon, xpWon, dmgWon, false);
-      advanceQuests("sessions", 1);
+      recordSubjectSessionStats(subjName, attendedMin, coinsWon, xpWon, dmgWon, bossDefeatedFlag);
+
+      advanceQuests("sessions", openChunksCount);
       advanceQuests("minutes", attendedMin);
       advanceQuests("damage", dmgWon);
-      advanceQuests("w_sessions", 1);
+      if (hour < 22) advanceQuests("before22", 1, true);
+      if (hour < 12) advanceQuests("before12", 1, true);
+      if (hour < 10) advanceQuests("before10", 1, true);
+      if (attendedMin >= 25) advanceQuests("single25", 1, true);
+      if (attendedMin >= 45) advanceQuests("single45", 1, true);
+      if (attendedMin >= 60) advanceQuests("single60", 1, true);
+      if (switchedSubjectToday) advanceQuests("multi_subject", 2, true);
+      if (h.min >= goalBefore) advanceQuests("goal_hit", 1, true);
+      advanceQuests("w_sessions", openChunksCount);
       advanceQuests("w_minutes", attendedMin);
+      const wk = getWeekKey();
+      let activeDays = 0;
+      for (let i = 0; i < 7; i++) {
+        if (state.history[addDaysToKey(wk, i)]?.sessions > 0) activeDays++;
+      }
+      advanceQuests("w_days", activeDays, true);
+
       syncSelfBetProgress(today);
+      syncEffortContract(attendedMin);
+
+      let betWinCoins = 0;
+      if (this.myRoomBet && this.myRoomBet.roundNum === meta.roundNum) {
+        if (!this.myRoomBet.failed) {
+          betWinCoins = Math.round(this.myRoomBet.amount * 1.5);
+          awardCoins(betWinCoins, "مكسب رهان صمود الغرفة 🎯");
+          this.myRoomScore += 120;
+        }
+        this.myRoomBet = null;
+      }
 
       this.myRoomMin += attendedMin;
-      this.myRoomSessions += 1;
+      this.myRoomSessions += openChunksCount;
       this.myRoomStreak += 1;
       this.myRoomScore += xpWon + Math.round(attendedMin * 2) + (this.myRoomStreak >= 2 ? 40 : 0);
       this.myRoomBossDmg += dmgWon;
-      state.studyRooms.totalRoomSessions += 1;
+      state.studyRooms.totalRoomSessions += openChunksCount;
       state.studyRooms.totalRoomMinutes += attendedMin;
 
-      // Room Raid Boss Check
-      const members = this.getMembers();
-      const prevTotalRoomDmg = Object.values(members).reduce((acc, m) => acc + (m?.bossDmg || 0), 0) - (members[this.self?.userId]?.bossDmg || 0) + this.myRoomBossDmg;
-      const bMax = meta.bossMaxHp || 6000;
-      if (prevTotalRoomDmg >= bMax) {
-        awardCoins(500, "هزيمة وحش الغرفة الجماعي 👹");
-        state.studyRooms.roomBossesDefeated += 1;
-        state.studyRooms.roomStars += 1;
-        if (this.isAdmin()) {
-          const nextRound = (meta.bossRounds || 1) + 1;
-          this.metaState.set({
-            ...meta,
-            bossMaxHp: Math.min(30000, bMax + 2500),
-            bossRounds: nextRound,
-            bossDefeatedCount: (meta.bossDefeatedCount || 0) + 1
-          });
-        }
-        FX.showToast("🏆 هزمتم وحش الغرفة الجماعي مع بعض! +500 🪙 ونجمة غرفة ⭐", "reward");
-      }
+      this.checkRoomBossVictory();
 
-      if (this.isAdmin() && meta.autoCycle) {
-        this.startBreakPhase();
-      } else if (this.isAdmin()) {
-        this.stopPhaseToLobby();
+      if (!this.isPublicFixed && this.canEditRoom() && !opts.manualOpenStop) {
+        if (meta.autoCycle) this.startBreakPhase();
+        else this.stopPhaseToLobby();
       }
 
       this.syncMyMember();
@@ -37196,7 +37984,10 @@
       AudioFX.playEndChime();
       FX.confetti(true);
       Haptics.vibrate([25, 45, 25]);
-      FX.showToast(`🎉 خلصت جولة الغرفة! +${formatNum(coinsWon)} 🪙 و+${formatNum(xpWon)} XP${coopPct > 0 ? ` (بونص جماعي +${coopPct}%)` : ""}`, "reward");
+      FX.showToast(
+        `🎉 خلصت جولة الغرفة! +${formatNum(coinsWon + betWinCoins)} 🪙 · +${formatNum(xpWon)} XP${xpRes.leveledUp ? ` · 👑 Lv${state.progress.level}` : ""}`,
+        "reward"
+      );
       checkAndRunAutoRebirth({ from: currentScreen });
     },
 
@@ -37213,7 +38004,10 @@
       };
       this.chatAct.send(msgObj);
       this.messages.push({ ...msgObj, kind: "chat", userId: this.self?.userId });
-      if (this.messages.length > 80) this.messages.shift();
+      while (this.messages.length > 80) {
+        const old = this.messages.shift();
+        if (old?.url) { try { URL.revokeObjectURL(old.url); } catch {} }
+      }
       AudioFX.playClick();
       return true;
     },
@@ -37250,6 +38044,7 @@
         const bytes = new Uint8Array(buf);
         await this.fileAct.send(bytes, { metadata: { name: file.name, type: file.type || "application/octet-stream" } });
         const url = URL.createObjectURL(file);
+        this.blobUrls.push(url);
         this.messages.push({
           id: uid("fl"),
           kind: "file",
@@ -37260,7 +38055,10 @@
           url,
           at: Date.now()
         });
-        if (this.messages.length > 80) this.messages.shift();
+        while (this.messages.length > 80) {
+          const old = this.messages.shift();
+          if (old?.url) { try { URL.revokeObjectURL(old.url); } catch {} }
+        }
         AudioFX.playSuccess();
         FX.showToast(`📎 شاركت «${file.name}» مع الغرفة!`, "success");
         return true;
@@ -37327,7 +38125,7 @@
     handleVisibilityChange(isHidden) {
       if (!this.isConnected()) return;
       const meta = this.getMeta();
-      if (!meta || meta.phase !== "focus") return;
+      if (!meta || meta.phase !== "focus" || meta.roomMode === "open") return;
       if (isHidden) {
         this.hiddenAt = Date.now();
         return;
@@ -37336,9 +38134,18 @@
       const awayMs = Date.now() - this.hiddenAt;
       this.hiddenAt = null;
       const graceMs = Math.max(5, Number(state.settings?.exitGraceSec) || 10) * 1000;
-      if (meta.strictRoom && awayMs > graceMs) {
+      const isStrict = meta.roomMode === "strict" || meta.strictRoom;
+      if (isStrict && awayMs > graceMs) {
+        if (this.myRoomShield) {
+          this.myRoomShield = false;
+          FX.showToast("🛡️ درع حماية الغرفة أنقذك وحمى سلسلتك ورهانك!", "reward");
+          return;
+        }
         this.myStatus = "distracted";
         this.myRoomStreak = 0;
+        if (this.myRoomBet && this.myRoomBet.roundNum === meta.roundNum) {
+          this.myRoomBet.failed = true;
+        }
         this.syncMyMember();
         FX.showToast("⚠️ خرجت وقت الجولة الصارمة — حالتك ظهرت «تشتّت» وانكسرت سلسلة الغرفة!", "warn");
         setTimeout(() => {
@@ -37366,13 +38173,18 @@
         this.micStream = null;
       }
       this.micOn = false;
+      this.deafened = false;
+      this.fileProgressPct = 0;
       Object.values(this.peerAudioEls).forEach(a => { try { a.remove(); } catch {} });
       this.peerAudioEls = {};
+      (this.blobUrls || []).forEach(u => { try { URL.revokeObjectURL(u); } catch {} });
+      this.blobUrls = [];
       this.unsubs.forEach(u => { try { if (typeof u === "function") u(); } catch {} });
       this.unsubs = [];
       if (this.room) {
         try { await this.room.leave(); } catch {}
       }
+      if (this.isPublicFixed) StudyRoomsDirectory.setPresence("");
       this.room = null;
       this.self = null;
       this.memberState = null;
@@ -37382,10 +38194,18 @@
       this.fxAct = null;
       this.fileAct = null;
       this.roomCode = "";
-      this.isPublicOpen = false;
+      this.isPublicFixed = false;
       this.messages = [];
       this.peersPing = {};
       this.unreadChatCount = 0;
+      this.myRoundRewarded = 0;
+      this.myRewardedBossRound = 0;
+      this.myRoundStartedAt = 0;
+      this.myLastOpenChunkNotified = 0;
+      this.myRoomBet = null;
+      this.myRoomShield = false;
+      this.activeBeacon = null;
+      this.activeGiftDrop = null;
 
       if (!silent && (summary.sessions > 0 || summary.mins >= 10)) {
         UI.openModal(`
@@ -37406,62 +38226,478 @@
       }
     },
 
+    openBackpack3XSheet() {
+      const bp = state.backpack || { items: {}, activeBuffs: {}, activatedItems: [] };
+      const ab = bp.activeBuffs || {};
+      const curXpBonus = Math.min(200, (ab.sessionXpPct || 0) + (state.buffs.xp2 ? 100 : 0));
+      const curCoinsBonus = Math.min(200, ab.sessionCoinsPct || 0);
+      const curDmgBonus = Math.min(200, ab.sessionDmgPct || 0);
+      const buffItems = SHOP_CATALOG.filter(it =>
+        it.stackable && it.effect &&
+        ["buff_xp", "buff_coins", "buff_both", "buff_dmg"].includes(it.effect.type) &&
+        (bp.items?.[it.id] || 0) > 0
+      );
+      const xp2Stock = state.shop?.consumables?.xp2 || 0;
+      const actList = bp.activatedItems || [];
+
+      UI.openSheet(`
+        <div class="flex-between mb-8">
+          <h3 class="fw-900">🎒 مقويات الغرفة (سقف 3X / 300%)</h3>
+          <button class="btn btn-ghost btn-sm" id="sr-bp-open-full">الحقيبة الكاملة</button>
+        </div>
+        <p class="text-xs text-muted mb-12">جوه غرف المذاكرة تقدر تجمع مقويات الحقيبة لحد <strong>300% (3X)</strong> للـ XP والعملات!</p>
+
+        <div class="glass-card mb-12" style="padding:12px;">
+          <div class="flex-between text-xs fw-900 mb-8">
+            <span>⚡ زيادة الـ XP بالسلع</span>
+            <span class="text-gold num">${100 + curXpBonus}% / 300% (3X)</span>
+          </div>
+          <div class="progress-track lg mb-12"><div class="progress-fill purple" style="width:${Math.min(100, (curXpBonus / 200) * 100)}%;"></div></div>
+
+          <div class="flex-between text-xs fw-900 mb-8">
+            <span>🪙 زيادة العملات بالسلع</span>
+            <span class="text-gold num">${100 + curCoinsBonus}% / 300% (3X)</span>
+          </div>
+          <div class="progress-track lg"><div class="progress-fill" style="width:${Math.min(100, (curCoinsBonus / 200) * 100)}%;"></div></div>
+
+          ${curDmgBonus > 0 ? `<div class="text-xs text-red fw-800 mt-8 num">⚔️ زيادة ضرر الوحوش المفعّلة: +${curDmgBonus}%</div>` : ""}
+        </div>
+
+        ${(state.buffs.xp2 || actList.length > 0) ? `
+          <div class="mb-12">
+            <div class="text-xs fw-900 text-green mb-8">✓ مفعّلة للجولة الحالية:</div>
+            ${state.buffs.xp2 ? `
+              <div class="bp-activated-row">
+                <span class="text-xs fw-900">⚡ مضاعف ×2 XP (+100%)</span>
+                <button class="btn btn-ghost btn-sm" style="min-height:26px;padding:2px 8px;font-size:11px;color:#FCA5A5;" data-srbp-deact="__xp2__">إلغاء ↩️</button>
+              </div>
+            ` : ""}
+            ${actList.map(act => {
+              const meta = SHOP_CATALOG.find(x => x.id === act.itemId);
+              if (!meta) return "";
+              return `
+                <div class="bp-activated-row">
+                  <span class="text-xs fw-900">${meta.emoji} ${escapeHtml(meta.name)}</span>
+                  <button class="btn btn-ghost btn-sm" style="min-height:26px;padding:2px 8px;font-size:11px;color:#FCA5A5;" data-srbp-deact="${act.uid}">إلغاء ↩️</button>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        ` : ""}
+
+        <div class="text-xs fw-900 text-muted mb-8">متاح في حقيبتك للتفعيل الفوري:</div>
+        <div style="max-height:36dvh;overflow-y:auto;">
+          ${xp2Stock > 0 ? `
+            <div class="cp-meal-row">
+              <div class="flex-center gap-8">
+                <span class="emoji" style="font-size:24px;">⚡</span>
+                <div>
+                  <div class="fw-900 text-xs">مضاعف ×2 XP (×${xp2Stock})</div>
+                  <div class="text-xs text-muted">+100% XP ضمن سقف الـ 3X</div>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" data-srbp-use="cons_xp2" ${state.buffs.xp2 ? "disabled" : ""}>${state.buffs.xp2 ? "شغال" : "فعّل ⚡"}</button>
+            </div>
+          ` : ""}
+          ${!buffItems.length && xp2Stock <= 0 ? `
+            <div class="text-xs text-muted" style="text-align:center;padding:12px 0;">
+              مفيش مقويات في حقيبتك دلوقتي — اشتري مشروبات الطاقة والحبر الذهبي من المتجر!
+            </div>
+          ` : buffItems.map(it => `
+            <div class="cp-meal-row">
+              <div class="flex-center gap-8">
+                <span class="emoji" style="font-size:24px;">${it.emoji}</span>
+                <div>
+                  <div class="fw-900 text-xs">${escapeHtml(it.name)} (×${bp.items[it.id]})</div>
+                  <div class="text-xs text-muted">${escapeHtml(it.desc)}</div>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" data-srbp-use="${it.id}">فعّل</button>
+            </div>
+          `).join("")}
+        </div>
+      `);
+
+      document.getElementById("sr-bp-open-full").onclick = () => { UI.closeSheet(); navigate("backpack", { from: "study-rooms" }); };
+      document.querySelectorAll("[data-srbp-use]").forEach(b => {
+        b.onclick = () => {
+          if (useBackpackItem(b.dataset.srbpUse)) {
+            this.openBackpack3XSheet();
+            if (currentScreen === "study-rooms") renderStudyRooms();
+          }
+        };
+      });
+      document.querySelectorAll("[data-srbp-deact]").forEach(b => {
+        b.onclick = () => {
+          if (deactivateBackpackBuff(b.dataset.srbpDeact)) {
+            this.openBackpack3XSheet();
+            if (currentScreen === "study-rooms") renderStudyRooms();
+          }
+        };
+      });
+    },
+
+    openFunModal() {
+      const meta = this.getMeta() || {};
+      const rNum = meta.phase === "focus" ? meta.roundNum : (meta.roundNum || 0) + 1;
+      const beaconOn = this.getActiveBeaconPct(rNum) > 0;
+      const hasBet = !!(this.myRoomBet && this.myRoomBet.roundNum >= (meta.roundNum || 0));
+
+      UI.openSheet(`
+        <div class="flex-between mb-8">
+          <h3 class="fw-900">🎉 متعة ومنافسة الغرفة</h3>
+          <div class="flex-center gap-8">
+            <span class="pill pill-gold text-xs num" style="min-height:24px;">🪙 ${formatNum(state.wallet.coins)}</span>
+            <span class="pill pill-blue text-xs num" style="min-height:24px;">💎 ${formatNum(state.wallet.gems)}</span>
+            <span class="pill pill-ether text-xs num" style="min-height:24px;">🔮 ${formatNum(state.rebirth?.etherCrystals || 0)}</span>
+          </div>
+        </div>
+        <p class="text-xs text-muted mb-12">اعمل تحديات حماسية ومفاجآت لصحابك بالعملات والجواهر والأثير!</p>
+
+        <div class="sr-fun-card">
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-sm">🎯 رهان صمود الجولة (+50% ربح)</div>
+            <div class="text-xs text-muted mt-8">${hasBet ? `✓ مراهن بـ ${formatNum(this.myRoomBet.amount)} 🪙 للجولة دي` : "راهن إنك تكمّل الجولة بدون تشتت واكسب 1.5X!"}</div>
+          </div>
+          <div class="flex-center gap-8">
+            <button class="btn btn-primary btn-sm" data-srf-bet="300" ${hasBet || state.wallet.coins < 300 ? "disabled" : ""}>300 🪙</button>
+            <button class="btn btn-secondary btn-sm" data-srf-bet="1000" ${hasBet || state.wallet.coins < 1000 ? "disabled" : ""}>1,000 🪙</button>
+          </div>
+        </div>
+
+        <div class="sr-fun-card">
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-sm">🔥 شعلة الحماس لكل الغرفة</div>
+            <div class="text-xs text-muted mt-8">${beaconOn ? "✓ منوّرة (+20% XP وضرر وحش للجميع)" : "تدّي كل الموجودين +20% XP وضرر وحش الجولة دي!"}</div>
+          </div>
+          <div class="flex-center gap-8">
+            <button class="btn btn-primary btn-sm" data-srf-beacon="gems" ${beaconOn || state.wallet.gems < 10 ? "disabled" : ""}>10 💎</button>
+            <button class="btn btn-secondary btn-sm" data-srf-beacon="crystals" ${beaconOn || (state.rebirth?.etherCrystals || 0) < 10 ? "disabled" : ""}>10 🔮</button>
+          </div>
+        </div>
+
+        <div class="sr-fun-card">
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-sm">⚡ ضربة فورية لوحش الغرفة</div>
+            <div class="text-xs text-muted mt-8">تضرب الوحش فوراً وتزود ترتيبك +150 نقطة صدارة!</div>
+          </div>
+          <div class="flex-center gap-8">
+            <button class="btn btn-danger btn-sm" data-srf-strike="coins" ${state.wallet.coins < 500 ? "disabled" : ""}>500 🪙<br><span style="font-size:9px;">-800 HP</span></button>
+            <button class="btn btn-secondary btn-sm" data-srf-strike="crystals" ${(state.rebirth?.etherCrystals || 0) < 5 ? "disabled" : ""}>5 🔮<br><span style="font-size:9px;">-1,400 HP</span></button>
+          </div>
+        </div>
+
+        <div class="sr-fun-card">
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-sm">🎁 مطر الهدايا للأبطال</div>
+            <div class="text-xs text-muted mt-8">ابعت ظرف +150 🪙 لكل زميل يلتقطه وخد +200 نقطة!</div>
+          </div>
+          <button class="btn btn-primary btn-sm" id="srf-gift-btn" ${state.wallet.gems < 20 ? "disabled" : ""}>20 💎</button>
+        </div>
+
+        <div class="sr-fun-card">
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-sm">🛡️ درع حماية الغرفة</div>
+            <div class="text-xs text-muted mt-8">${this.myRoomShield ? "✓ جاهز وهيحميك من أول تشتت" : "ينقذك لو خرجت بالغلط في الغرف الصارمة"}</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="srf-shield-btn" ${this.myRoomShield || state.wallet.coins < 250 ? "disabled" : ""}>${this.myRoomShield ? "مفعّل ✓" : "250 🪙"}</button>
+        </div>
+      `);
+
+      document.querySelectorAll("[data-srf-bet]").forEach(b => {
+        b.onclick = () => { if (this.placeRoomBet(Number(b.dataset.srfBet))) { this.openFunModal(); if (currentScreen === "study-rooms") renderStudyRooms(); } };
+      });
+      document.querySelectorAll("[data-srf-beacon]").forEach(b => {
+        b.onclick = () => { if (this.activateTeamBeacon(b.dataset.srfBeacon)) { this.openFunModal(); if (currentScreen === "study-rooms") renderStudyRooms(); } };
+      });
+      document.querySelectorAll("[data-srf-strike]").forEach(b => {
+        b.onclick = () => { if (this.strikeRoomBoss(b.dataset.srfStrike)) { this.openFunModal(); if (currentScreen === "study-rooms") renderStudyRooms(); } };
+      });
+      document.getElementById("srf-gift-btn").onclick = () => { if (this.sendGiftRain()) { this.openFunModal(); if (currentScreen === "study-rooms") renderStudyRooms(); } };
+      document.getElementById("srf-shield-btn").onclick = () => { if (this.buyRoomShield()) { this.openFunModal(); if (currentScreen === "study-rooms") renderStudyRooms(); } };
+    },
+
+    openSettingsModal(initialTab = null) {
+      const meta = this.getMeta() || {};
+      const canEdit = this.canEditRoom();
+      let sTab = initialTab || (canEdit ? "host" : "me");
+      let draft = {
+        title: meta.title || "غرفة مذاكرة",
+        mode: meta.mode || "coop",
+        roomMode: meta.roomMode || (meta.strictRoom ? "strict" : "flex"),
+        focusMin: meta.focusMin || 50,
+        breakMin: meta.breakMin || 5,
+        maxUsers: meta.maxUsers || 8,
+        autoCycle: meta.autoCycle !== false,
+        pinnedNote: meta.pinnedNote || ""
+      };
+
+      const draw = () => {
+        UI.openModal(`
+          <div>
+            <div class="flex-between mb-12">
+              <h3 class="fw-900">⚙️ إعدادات الغرفة</h3>
+              <button class="btn btn-ghost btn-sm" onclick="UI.closeModal()">✕</button>
+            </div>
+
+            <div class="segmented mb-12">
+              <button class="seg-btn ${sTab === "host" ? "active" : ""}" data-sr-stab="host">👑 تحكم المضيف</button>
+              <button class="seg-btn ${sTab === "me" ? "active" : ""}" data-sr-stab="me">🧘 راحتي والصوت</button>
+            </div>
+
+            ${sTab === "host" ? (
+              this.isPublicFixed ? `
+                <div class="glass-card" style="text-align:center;padding:18px 12px;">
+                  <div class="emoji" style="font-size:40px;">🔒</div>
+                  <div class="fw-900 text-gold mt-8">غرفة عامة بنظام ثابت</div>
+                  <p class="text-xs text-muted mt-8">المسمى والوقت في الغرف العامة ثابتين للكل ومحدش يقدر يعدلهم عشان النظام يفضل منضبط وعادل للجميع!</p>
+                </div>
+              ` : !canEdit ? `
+                <div class="glass-card" style="text-align:center;padding:18px 12px;">
+                  <div class="emoji" style="font-size:40px;">👑</div>
+                  <div class="fw-900 mt-8">تحكم المضيف</div>
+                  <p class="text-xs text-muted mt-8">المضيف بس هو اللي بيتحكم في وقت الغرفة ووضعها. تقدر تظبط إعدادات راحتك وصوتك من التبويب التاني!</p>
+                </div>
+              ` : `
+                <div style="max-height:56dvh;overflow-y:auto;padding-left:2px;">
+                  <div class="field-group">
+                    <label class="field-label">اسم الغرفة</label>
+                    <input class="input" id="srs-title" maxlength="36" value="${escapeHtml(draft.title)}" />
+                  </div>
+
+                  <div class="field-group">
+                    <label class="field-label">وضع الالتزام بالغرفة (تحكم المضيف)</label>
+                    <div class="sr-mode-grid">
+                      ${[
+                        ["strict", "🛡️ صارم", "كشف الخروج"],
+                        ["flex", "✨ مرن", "خروج آمن"],
+                        ["open", "♾️ مفتوح", "حر لحد ساعتين"]
+                      ].map(([k, l, sub]) => `
+                        <button class="sr-mode-tile ${draft.roomMode === k ? "active" : ""}" data-srs-rmode="${k}">
+                          <span>${l}</span>
+                          <span style="font-size:10px;opacity:0.8;">${sub}</span>
+                        </button>
+                      `).join("")}
+                    </div>
+                  </div>
+
+                  <div class="field-group">
+                    <label class="field-label">نظام المنافسة</label>
+                    <div class="sr-mode-grid">
+                      ${[
+                        ["coop", "🤝 تعاوني", "+45% بونص"],
+                        ["versus", "⚔️ سباق", "تحدي نقاط"],
+                        ["boss_raid", "🐉 غارة", "وحش مشترك"]
+                      ].map(([k, l, sub]) => `
+                        <button class="sr-mode-tile ${draft.mode === k ? "active" : ""}" data-srs-mode="${k}">
+                          <span>${l}</span>
+                          <span style="font-size:10px;opacity:0.8;">${sub}</span>
+                        </button>
+                      `).join("")}
+                    </div>
+                  </div>
+
+                  <div class="flex-between gap-8 mb-8" style="${draft.roomMode === "open" ? "opacity:0.45;pointer-events:none;" : ""}">
+                    <div style="flex:1;">
+                      <label class="field-label">التركيز (د)</label>
+                      <input class="input num" id="srs-fmin" type="number" min="10" max="120" value="${draft.focusMin}" />
+                    </div>
+                    <div style="flex:1;">
+                      <label class="field-label">الراحة (د)</label>
+                      <input class="input num" id="srs-bmin" type="number" min="1" max="30" value="${draft.breakMin}" />
+                    </div>
+                    <div style="flex:1;">
+                      <label class="field-label">السعة</label>
+                      <input class="input num" id="srs-maxu" type="number" min="2" max="12" value="${draft.maxUsers}" />
+                    </div>
+                  </div>
+
+                  <div class="fs-toggle-row mb-8" style="${draft.roomMode === "open" ? "opacity:0.45;pointer-events:none;" : ""}">
+                    <span class="text-xs fw-800">🔄 دورة تلقائية (تركيز ← راحة)</span>
+                    <button class="fs-toggle ${draft.autoCycle ? "on" : ""}" id="srs-auto"></button>
+                  </div>
+
+                  <div class="field-group">
+                    <label class="field-label">الملاحظة المثبتة بالغرفة</label>
+                    <input class="input" id="srs-pin" maxlength="90" value="${escapeHtml(draft.pinnedNote)}" />
+                  </div>
+
+                  <button class="btn btn-primary btn-block" id="srs-save-host">حفظ وتطبيق للجميع ✅</button>
+                </div>
+              `
+            ) : `
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div class="fs-toggle-row">
+                  <div>
+                    <div class="fw-900 text-sm">🧘 الوضع الهادئ (Zen Mode)</div>
+                    <div class="text-xs text-muted">بيخفي الشات والانفعالات عشان تركز 100%</div>
+                  </div>
+                  <button class="fs-toggle ${state.studyRooms?.zenMode ? "on" : ""}" id="srs-zen-tog"></button>
+                </div>
+
+                <div class="fs-toggle-row">
+                  <div>
+                    <div class="fw-900 text-sm">🔕 كتم صوت رسائل الشات</div>
+                    <div class="text-xs text-muted">من غير صوت تكّة مع كل رسالة جديدة</div>
+                  </div>
+                  <button class="fs-toggle ${state.studyRooms?.muteChatSound ? "on" : ""}" id="srs-mutechat-tog"></button>
+                </div>
+
+                <div>
+                  <div class="fw-900 text-xs text-muted mb-8">🎧 الصوت المحيطي الهادئ</div>
+                  <div class="chips-row">
+                    ${[["mute", "🔇 صمت"], ["rain", "🌧️ مطر"], ["cafe", "☕ مقهى"]].map(([k, l]) => `
+                      <button class="chip ${state.settings.ambientSound === k ? "active" : ""}" style="flex:1;justify-content:center;min-height:36px;" data-srs-amb="${k}">${l}</button>
+                    `).join("")}
+                  </div>
+                </div>
+
+                <div class="flex-between gap-8">
+                  <button class="btn ${this.micOn ? "btn-danger" : "btn-secondary"} btn-sm" style="flex:1;" id="srs-mic-btn">
+                    ${this.micOn ? "🎙️ اقفل المايك" : "🎤 افتح المايك"}
+                  </button>
+                  <button class="btn ${this.deafened ? "btn-ghost" : "btn-secondary"} btn-sm" style="flex:1;" id="srs-deaf-btn">
+                    ${this.deafened ? "🔇 السماعة مكتومة" : "🔊 سماع الغرفة"}
+                  </button>
+                </div>
+
+                <button class="btn btn-secondary btn-sm btn-block" id="srs-subj-btn">
+                  📘 تغيير المادة النشطة (${escapeHtml(getActiveSubject()?.name || "اختار")})
+                </button>
+              </div>
+            `}
+          </div>
+        `);
+
+        document.querySelectorAll("[data-sr-stab]").forEach(b => {
+          b.onclick = () => { sTab = b.dataset.srStab; AudioFX.playClick(); draw(); };
+        });
+
+        if (sTab === "host" && canEdit) {
+          document.querySelectorAll("[data-srs-rmode]").forEach(b => {
+            b.onclick = () => { draft.roomMode = b.dataset.srsRmode; AudioFX.playClick(); draw(); };
+          });
+          document.querySelectorAll("[data-srs-mode]").forEach(b => {
+            b.onclick = () => { draft.mode = b.dataset.srsMode; AudioFX.playClick(); draw(); };
+          });
+          const autoBtn = document.getElementById("srs-auto");
+          if (autoBtn) autoBtn.onclick = () => { draft.autoCycle = !draft.autoCycle; autoBtn.classList.toggle("on", draft.autoCycle); };
+          document.getElementById("srs-save-host").onclick = () => {
+            draft.title = document.getElementById("srs-title").value;
+            draft.focusMin = Number(document.getElementById("srs-fmin").value) || 50;
+            draft.breakMin = Number(document.getElementById("srs-bmin").value) || 5;
+            draft.maxUsers = Number(document.getElementById("srs-maxu").value) || 8;
+            draft.pinnedNote = document.getElementById("srs-pin").value;
+            this.updateRoomSettings(draft);
+            UI.closeModal();
+            if (currentScreen === "study-rooms") renderStudyRooms();
+          };
+        } else if (sTab === "me") {
+          document.getElementById("srs-zen-tog").onclick = () => {
+            state.studyRooms.zenMode = !state.studyRooms.zenMode;
+            saveState();
+            if (state.studyRooms.zenMode) srActiveTab = "arena";
+            draw();
+            if (currentScreen === "study-rooms") renderStudyRooms();
+          };
+          document.getElementById("srs-mutechat-tog").onclick = () => {
+            state.studyRooms.muteChatSound = !state.studyRooms.muteChatSound;
+            saveState();
+            draw();
+          };
+          document.querySelectorAll("[data-srs-amb]").forEach(b => {
+            b.onclick = () => {
+              state.settings.ambientSound = b.dataset.srsAmb;
+              saveState();
+              AudioFX.startAmbient(state.settings.ambientSound);
+              draw();
+            };
+          });
+          document.getElementById("srs-mic-btn").onclick = async () => { await this.toggleMic(); draw(); };
+          document.getElementById("srs-deaf-btn").onclick = () => { this.toggleDeafen(); draw(); };
+          document.getElementById("srs-subj-btn").onclick = () => {
+            UI.closeModal();
+            openQuickSubjectPickerSheet(() => {
+              this.syncMyMember();
+              if (currentScreen === "study-rooms") renderStudyRooms();
+            });
+          };
+        }
+      };
+      draw();
+    },
+
     renderHomeCard() {
       const sr = state.studyRooms || {};
       const connected = this.isConnected();
       const meta = connected ? this.getMeta() : null;
       const peersCount = connected ? this.getUserCount() : 0;
       const coopBonus = connected ? this.getCoopBonusPct() : 0;
-      const remMs = connected && meta?.phase !== "lobby" && meta?.phaseEndsAt
-        ? Math.max(0, meta.phaseEndsAt - Date.now())
-        : (meta?.focusMin || 50) * 60000;
 
       if (connected && meta) {
+        const isOpenRun = meta.roomMode === "open" && meta.phase === "focus" && !this.isPublicFixed;
+        const dispSec = isOpenRun
+          ? Math.floor(Math.max(0, Date.now() - (this.myRoundStartedAt || meta.phaseStartedAt)) / 1000)
+          : Math.ceil((meta.phase === "lobby" ? (meta.focusMin || 50) * 60000 : Math.max(0, (meta.phaseEndsAt || 0) - Date.now())) / 1000);
         return `
           <div class="home-rooms-card live">
-            <div class="flex-between mb-8">
-              <div class="flex-center gap-8">
+            <div class="sr-home-head">
+              <div class="flex-center gap-8" style="min-width:0;">
                 <span class="sr-live-dot"></span>
-                <span class="fw-900" style="font-size:15.5px;">غرفة: ${escapeHtml(meta.title)}</span>
+                <div style="min-width:0;">
+                  <div class="fw-900" style="font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(meta.title)}</div>
+                  <div class="text-xs text-muted">${this.isPublicFixed ? "🔒 غرفة عامة ثابتة" : "🔥 غرفة مباشرة"}</div>
+                </div>
               </div>
               <div class="flex-center gap-8">
-                ${this.unreadChatCount > 0 ? `<span class="pill pill-red text-xs num" style="min-height:24px;">💬 ${this.unreadChatCount} جديد</span>` : ""}
-                <span class="pill pill-green text-xs num" style="min-height:24px;">👥 ${peersCount} أبطال</span>
+                ${this.unreadChatCount > 0 ? `<span class="pill pill-red text-xs num" style="min-height:24px;">💬 ${this.unreadChatCount}</span>` : ""}
+                <span class="sr-online-pill num"><span class="sr-live-dot" style="width:7px;height:7px;"></span> ${peersCount} أونلاين</span>
               </div>
             </div>
             <div class="flex-between text-xs fw-800 mb-12" style="color:#CBD5E1;">
-              <span>${meta.phase === "focus" ? "⚔️ جولة تركيز شغالة" : meta.phase === "break" ? "☕ استراحة جماعية" : "⏳ في اللوبي"} · <strong class="text-gold num">${formatTimeMMSS(Math.ceil(remMs / 1000))}</strong></span>
+              <span>${meta.phase === "focus" ? (isOpenRun ? "♾️ وضع مفتوح شغال" : "⚔️ تركيز شغال") : meta.phase === "break" ? "☕ استراحة" : "⏳ باللوبي"} · <strong class="text-gold num">${formatTimeMMSS(dispSec)}</strong></span>
               <span class="text-green num">${coopBonus > 0 ? `+${coopBonus}% بونص جماعي` : "مستني صحابك"}</span>
             </div>
-            <button class="btn btn-green btn-block" id="home-return-room-btn">ادخل الغرفة المباشرة الآن 🚪</button>
+            <button class="btn btn-green btn-block" id="home-return-room-btn">ارجع للغرفة المباشرة الآن 🚪</button>
           </div>
         `;
       }
 
+      const totPubOnline = StudyRoomsDirectory.getTotalPublicOnline();
       return `
         <div class="home-rooms-card">
-          <div class="flex-between mb-8">
-            <div class="flex-center gap-8">
-              <span class="emoji" style="font-size:22px;">👥</span>
-              <div>
-                <div class="fw-900" style="font-size:15.5px;">غرف المذاكرة المباشرة (P2P)</div>
-                <div class="text-xs text-muted">ذاكر مع صحابك لايف · تحديات · شات · +45% بونص</div>
+          <div class="sr-home-head">
+            <div class="flex-center gap-8" style="min-width:0;">
+              <div class="sr-home-ico"><span class="emoji">👥</span></div>
+              <div style="min-width:0;">
+                <div class="fw-900" style="font-size:15.5px;">غرف المذاكرة المباشرة</div>
+                <div class="text-xs text-muted">تحديات · سلع لحد 3X · غرف عامة ثابتة</div>
               </div>
             </div>
-            <span class="pill pill-blue text-xs" style="min-height:24px;">بدون سيرفر</span>
+            <button class="sr-online-pill" id="home-dir-refresh" title="تحديث عدد المتصلين">
+              <span class="sr-live-dot" style="width:7px;height:7px;"></span>
+              <span class="num" id="sr-dir-total-badge">${totPubOnline} أونلاين</span>
+            </button>
           </div>
 
-          <div class="flex-between gap-8 mb-8">
+          <div class="flex-between gap-8 mb-12">
             <button class="btn btn-primary btn-sm" style="flex:1;" id="home-create-room-btn">أنشئ غرفة 🔥</button>
             <button class="btn btn-secondary btn-sm" style="flex:1;" id="home-join-code-btn">دخول بكود 🔑</button>
           </div>
 
           <div class="sr-preset-scroll">
-            ${PUBLIC_STUDY_ROOMS.map(p => `
-              <button class="sr-preset-pill" data-home-pub-room="${p.code}" data-home-pub-title="${escapeHtml(p.title)}">
-                <span>${p.title}</span>
-              </button>
-            `).join("")}
+            ${PUBLIC_STUDY_ROOMS.map(p => {
+              const cnt = StudyRoomsDirectory.getCount(p.code);
+              return `
+                <button class="sr-preset-card" data-home-pub-room="${p.code}" data-home-pub-title="${escapeHtml(p.title)}">
+                  <div class="flex-between gap-8" style="width:100%;">
+                    <span class="sr-online-pill num" data-pub-online="${p.code}">${cnt} أونلاين</span>
+                    <span class="text-xs text-gold fw-900 num">🔒 ${p.focusMin}د</span>
+                  </div>
+                  <div class="fw-900 text-xs" style="color:#FFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.title}</div>
+                </button>
+              `;
+            }).join("")}
           </div>
 
           ${(sr.totalRoomSessions || 0) > 0 ? `
@@ -37481,42 +38717,83 @@
     }
     const reqAction = currentParams?.action;
     const autoJoinCode = currentParams?.autoJoinCode;
-    const autoJoinTitle = currentParams?.autoJoinTitle;
     if (reqAction === "create" || reqAction === "join") srLobbyTab = reqAction;
     if (currentParams) currentParams = {};
+
+    if (typeof navigator === "undefined" || navigator.onLine !== false) {
+      StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+    }
 
     if (autoJoinCode && !StudyRooms.isConnected() && !StudyRooms.isConnecting) {
       setTimeout(() => {
         StudyRooms.joinRoomByCode(autoJoinCode, {
-          fallbackTitle: autoJoinTitle || "غرفة عامة",
           strategy: state.studyRooms?.lastStrategy || "nostr"
         });
       }, 60);
     }
 
-    // --- الحالة 1: المستخدم غير متصل بغرفة (اللوبي الرئيسي لإنشاء / دخول الغرف) ---
+    // --- الحالة 1: اللوبي (قبل دخول الغرفة) ---
     if (!StudyRooms.isConnected()) {
       const sr = state.studyRooms || {};
       const recents = Array.isArray(sr.recentRooms) ? sr.recentRooms : [];
+      const curRoomMode = sr.defaultRoomMode || "flex";
+      const totOnline = StudyRoomsDirectory.getTotalPublicOnline();
+
       el.innerHTML = `
         <div class="sr-topbar">
           <button class="fs-back-btn" data-back="${srBackScreen || "home"}" aria-label="رجوع">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
           <div class="ex-title"><span>غرف المذاكرة المباشرة</span><span class="emoji">👥</span></div>
-          <span class="pill pill-blue text-xs" style="min-height:30px;">Trystero P2P</span>
+          <button class="sr-online-pill" id="sr-dir-refresh" title="تحديث عدد الأونلاين">
+            <span class="sr-live-dot" style="width:7px;height:7px;"></span>
+            <span class="num" id="sr-dir-total-badge">${totOnline} أونلاين</span>
+          </button>
         </div>
 
-        <div class="fs-card" style="text-align:center;border-color:rgba(56,189,248,0.45);">
+        <div class="sr-lobby-hero">
           <div class="emoji" style="font-size:44px;">🌐</div>
-          <div class="fw-900 text-gold mt-8" style="font-size:18px;">ذاكروا سوا واتحدّوا بعض لايف!</div>
-          <div class="text-xs text-muted mt-8">اتصال مباشر من جهاز لجهاز بدون سيرفرات · بونص جماعي لحد +45% XP وعملات + وحش غرفة عملاق</div>
+          <div class="fw-900 text-gold mt-8" style="font-size:19px;">ذاكر لايف مع صحابك أو في غرف عامة!</div>
+          <div class="text-xs text-muted mt-8">بونص جماعي +45% · سلع الحقيبة لحد 3X (300%) · تحديات وهدايا بالعملات والجواهر</div>
           ${StudyRooms.isConnecting ? `<div class="pill pill-gold mt-12">⏳ بنجهز الاتصال المباشر...</div>` : ""}
           ${StudyRooms.connectError ? `<div class="pill pill-red mt-12" style="white-space:normal;">⚠️ ${escapeHtml(StudyRooms.connectError)}</div>` : ""}
         </div>
 
+        <div class="fs-card" style="border-color:rgba(56,189,248,0.4);">
+          <div class="flex-between mb-12">
+            <div>
+              <div class="fw-900" style="font-size:16px;">🌍 الغرف العامة (جدول ثابت)</div>
+              <div class="text-xs text-muted">توقيت تلقائي موحّد للكل ومحدش بيتحكم فيه</div>
+            </div>
+            <span class="pill pill-purple text-xs" style="min-height:24px;">🔒 ثابتة</span>
+          </div>
+
+          ${PUBLIC_STUDY_ROOMS.map(p => {
+            const cnt = StudyRoomsDirectory.getCount(p.code);
+            const livePub = StudyRooms.getPublicFixedMeta(p, null);
+            return `
+              <div class="sr-pub-card">
+                <div style="flex:1;min-width:0;">
+                  <div class="flex-between gap-8 mb-8">
+                    <div class="fw-900 text-sm">${p.title}</div>
+                    <span class="sr-online-pill num" data-pub-online="${p.code}">${cnt} أونلاين</span>
+                  </div>
+                  <div class="text-xs text-muted">${p.desc}</div>
+                  <div class="flex-center gap-8 mt-8" style="justify-content:flex-start;flex-wrap:wrap;">
+                    <span class="pill pill-gold text-xs num" style="min-height:22px;padding:1px 8px;">🔒 ${p.focusMin} د / ${p.breakMin} د</span>
+                    <span class="pill ${livePub.phase === "focus" ? "pill-red" : "pill-green"} text-xs" style="min-height:22px;padding:1px 8px;">
+                      ${livePub.phase === "focus" ? "⚔️ تركيز الآن" : "☕ راحة الآن"}
+                    </span>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-sm" data-sr-pub="${p.code}" ${StudyRooms.isConnecting ? "disabled" : ""}>ادخل الآن 🚪</button>
+              </div>
+            `;
+          }).join("")}
+        </div>
+
         <div class="segmented mb-12">
-          <button class="seg-btn ${srLobbyTab === "create" ? "active" : ""}" data-sr-ltab="create">🔥 أنشئ غرفة</button>
+          <button class="seg-btn ${srLobbyTab === "create" ? "active" : ""}" data-sr-ltab="create">🔥 أنشئ غرفة خاصة</button>
           <button class="seg-btn ${srLobbyTab === "join" ? "active" : ""}" data-sr-ltab="join">🔑 دخول بكود</button>
         </div>
 
@@ -37528,19 +38805,38 @@
             </div>
 
             <div class="field-group">
-              <label class="field-label">نظام المنافسة في الغرفة</label>
-              <div class="chips-row">
+              <label class="field-label">وضع الغرفة (تحكم المضيف)</label>
+              <div class="sr-mode-grid">
                 ${[
-                  ["coop", "🤝 تعاوني (+بونص)"],
-                  ["versus", "⚔️ سباق تنافسي"],
-                  ["boss_raid", "🐉 غارة وحش"]
-                ].map(([k, lbl]) => `
-                  <button class="chip ${(sr.defaultMode || "coop") === k ? "active-gold" : ""}" style="flex:1;justify-content:center;" data-sr-cmode="${k}">${lbl}</button>
+                  ["strict", "🛡️ صارم", "كشف الخروج"],
+                  ["flex", "✨ مرن", "خروج آمن"],
+                  ["open", "♾️ مفتوح", "حر لحد ساعتين"]
+                ].map(([k, l, sub]) => `
+                  <button class="sr-mode-tile ${curRoomMode === k ? "active" : ""}" data-sr-crmode="${k}">
+                    <span>${l}</span>
+                    <span style="font-size:10px;opacity:0.8;">${sub}</span>
+                  </button>
                 `).join("")}
               </div>
             </div>
 
             <div class="field-group">
+              <label class="field-label">نظام المنافسة</label>
+              <div class="sr-mode-grid">
+                ${[
+                  ["coop", "🤝 تعاوني", "+45% بونص"],
+                  ["versus", "⚔️ سباق", "تحدي نقاط"],
+                  ["boss_raid", "🐉 غارة", "وحش مشترك"]
+                ].map(([k, l, sub]) => `
+                  <button class="sr-mode-tile ${(sr.defaultMode || "coop") === k ? "active" : ""}" data-sr-cmode="${k}">
+                    <span>${l}</span>
+                    <span style="font-size:10px;opacity:0.8;">${sub}</span>
+                  </button>
+                `).join("")}
+              </div>
+            </div>
+
+            <div class="field-group" style="${curRoomMode === "open" ? "opacity:0.45;pointer-events:none;" : ""}">
               <label class="field-label">مدة الجولة (دقائق)</label>
               <div class="chips-row">
                 ${[25, 50, 90].map(m => `
@@ -37560,17 +38856,13 @@
               </div>
             </div>
 
-            <div class="fs-toggle-row">
+            <div class="fs-toggle-row" style="${curRoomMode === "open" ? "opacity:0.45;pointer-events:none;" : ""}">
               <span class="text-sm fw-800">🔄 دورة تلقائية (تركيز ← راحة)</span>
               <button class="fs-toggle on" id="sr-c-auto" role="switch" aria-checked="true"></button>
             </div>
-            <div class="fs-toggle-row">
-              <span class="text-sm fw-800">🛡️ وضع صارم (كشف الخروج من التطبيق)</span>
-              <button class="fs-toggle" id="sr-c-strict" role="switch" aria-checked="false"></button>
-            </div>
 
             <div class="field-group mt-8">
-              <label class="field-label">شبكة الاتصال (لو شبكة معينة تقيلة غيّرها)</label>
+              <label class="field-label">شبكة الاتصال</label>
               <div class="chips-row">
                 <button class="chip ${sr.lastStrategy !== "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="nostr">Nostr (الافتراضي)</button>
                 <button class="chip ${sr.lastStrategy === "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="mqtt">MQTT (بديل سريع)</button>
@@ -37583,7 +38875,7 @@
             </div>
 
             <button class="btn btn-primary btn-block" id="sr-c-submit" ${StudyRooms.isConnecting ? "disabled" : ""}>
-              ${StudyRooms.isConnecting ? "جاري فتح الغرفة... ⏳" : "افتح الغرفة المباشرة 🚀"}
+              ${StudyRooms.isConnecting ? "جاري فتح الغرفة... ⏳" : "افتح الغرفة الخاصة الآن 🚀"}
             </button>
           </div>
         ` : `
@@ -37613,22 +38905,9 @@
           </div>
         `}
 
-        <div class="fs-card">
-          <div class="fw-900 text-sm mb-8">🌍 غرف عامة مفتوحة للمذاكرة فوراً</div>
-          ${PUBLIC_STUDY_ROOMS.map(p => `
-            <div class="flex-between py-4" style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);">
-              <div>
-                <div class="fw-900 text-sm">${p.title}</div>
-                <div class="text-xs text-muted mt-8">${p.focusMin} د تركيز · ${p.mode === "versus" ? "سباق تنافسي ⚔️" : p.mode === "boss_raid" ? "غارة وحش 🐉" : "تعاوني 🤝"}</div>
-              </div>
-              <button class="btn btn-secondary btn-sm" data-sr-pub="${p.code}" ${StudyRooms.isConnecting ? "disabled" : ""}>انضم</button>
-            </div>
-          `).join("")}
-        </div>
-
         ${recents.length > 0 ? `
           <div class="fs-card">
-            <div class="fw-900 text-sm mb-8">🕒 آخر غرف دخلتها</div>
+            <div class="fw-900 text-sm mb-8">🕒 آخر غرف خاصة دخلتها</div>
             ${recents.map(r => `
               <div class="flex-between py-4" style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
                 <div style="min-width:0;flex:1;">
@@ -37642,6 +38921,12 @@
         ` : ""}
       `;
 
+      document.getElementById("sr-dir-refresh").onclick = () => {
+        AudioFX.playClick();
+        StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+        StudyRoomsDirectory.recompute();
+        FX.showToast("🔄 اتحدّث عدد المتصلين الأونلاين!", "success");
+      };
       el.querySelectorAll("[data-sr-ltab]").forEach(b => {
         b.onclick = () => { srLobbyTab = b.dataset.srLtab; AudioFX.playClick(); renderStudyRooms(); };
       });
@@ -37651,21 +38936,32 @@
 
       if (srLobbyTab === "create") {
         let draftMode = sr.defaultMode || "coop";
+        let draftRoomMode = sr.defaultRoomMode || "flex";
         let draftDur = sr.defaultDuration || 50;
         let autoCyc = true;
-        let strictRm = false;
         let devTab = false;
+        el.querySelectorAll("[data-sr-crmode]").forEach(b => {
+          b.onclick = () => {
+            draftRoomMode = b.dataset.srCrmode;
+            state.studyRooms.defaultRoomMode = draftRoomMode;
+            saveState();
+            AudioFX.playClick();
+            renderStudyRooms();
+          };
+        });
         el.querySelectorAll("[data-sr-cmode]").forEach(b => {
           b.onclick = () => {
             draftMode = b.dataset.srCmode;
             state.studyRooms.defaultMode = draftMode;
-            el.querySelectorAll("[data-sr-cmode]").forEach(x => x.classList.toggle("active-gold", x === b));
+            saveState();
+            el.querySelectorAll("[data-sr-cmode]").forEach(x => x.classList.toggle("active", x === b));
           };
         });
         el.querySelectorAll("[data-sr-cdur]").forEach(b => {
           b.onclick = () => {
             draftDur = Number(b.dataset.srCdur);
             state.studyRooms.defaultDuration = draftDur;
+            saveState();
             el.querySelectorAll("[data-sr-cdur]").forEach(x => x.classList.toggle("active", x === b));
           };
         });
@@ -37674,7 +38970,6 @@
           if (btn) btn.onclick = () => { setV(!getV()); btn.classList.toggle("on", getV()); btn.setAttribute("aria-checked", String(getV())); };
         };
         togBtn("sr-c-auto", () => autoCyc, v => { autoCyc = v; });
-        togBtn("sr-c-strict", () => strictRm, v => { strictRm = v; });
         togBtn("sr-c-devtab", () => devTab, v => { devTab = v; });
 
         document.getElementById("sr-c-submit").onclick = () => {
@@ -37688,12 +38983,12 @@
           StudyRooms.createRoom({
             title,
             mode: draftMode,
+            roomMode: draftRoomMode,
             focusMin: draftDur,
             breakMin: sr.defaultBreak || 5,
             maxUsers,
             password,
             autoCycle: autoCyc,
-            strictRoom: strictRm,
             strategy: state.studyRooms.lastStrategy || "nostr",
             devMultiTab: devTab
           });
@@ -37715,13 +39010,7 @@
 
       el.querySelectorAll("[data-sr-pub]").forEach(b => {
         b.onclick = () => {
-          const pub = PUBLIC_STUDY_ROOMS.find(x => x.code === b.dataset.srPub);
-          if (!pub) return;
-          StudyRooms.joinRoomByCode(pub.code, {
-            fallbackTitle: pub.title,
-            fallbackMode: pub.mode,
-            fallbackFocus: pub.focusMin,
-            fallbackBreak: pub.breakMin,
+          StudyRooms.joinRoomByCode(b.dataset.srPub, {
             strategy: state.studyRooms?.lastStrategy || "nostr"
           });
         };
@@ -37750,12 +39039,17 @@
     if (srActiveTab === "chat") {
       StudyRooms.unreadChatCount = 0;
     }
-    const meta = StudyRooms.getMeta() || { title: "غرفة مذاكرة", mode: "coop", focusMin: 50, breakMin: 5, phase: "lobby", roundNum: 0, bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000 };
+    const meta = StudyRooms.getMeta() || { title: "غرفة مذاكرة", mode: "coop", roomMode: "flex", focusMin: 50, breakMin: 5, phase: "lobby", roundNum: 0, bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000 };
     const members = StudyRooms.getMembers();
     const myId = StudyRooms.self?.userId || "__self__";
-    const isAdmin = StudyRooms.isAdmin();
+    const canEdit = StudyRooms.canEditRoom();
     const zen = !!state.studyRooms?.zenMode;
     const coopBonus = StudyRooms.getCoopBonusPct();
+    const beaconPct = StudyRooms.getActiveBeaconPct(meta.roundNum || 0);
+    const bpAb = state.backpack?.activeBuffs || {};
+    const curXpItemPct = Math.min(200, (bpAb.sessionXpPct || 0) + (state.buffs.xp2 ? 100 : 0));
+    const curCoinsItemPct = Math.min(200, bpAb.sessionCoinsPct || 0);
+
     const allPeerIds = new Set(Object.keys(members));
     allPeerIds.add(myId);
     try {
@@ -37780,6 +39074,8 @@
         score: m?.score || 0,
         bossDmg: m?.bossDmg || 0,
         roomStreak: m?.roomStreak || 0,
+        hasBet: !!m?.hasBet,
+        betAmount: m?.betAmount || 0,
         todos: Array.isArray(m?.todos) ? m.todos : [],
         micOn: !!m?.micOn,
         votePollId: m?.votePollId || null,
@@ -37792,14 +39088,20 @@
     const bossHpLeft = Math.max(0, bossMax - totalRoomBossDmg);
     const bossHpPct = Math.max(0, Math.min(100, (bossHpLeft / Math.max(1, bossMax)) * 100));
 
+    const isOpenFocus = !StudyRooms.isPublicFixed && meta.roomMode === "open" && meta.phase === "focus";
+    const openElapsedMs = isOpenFocus ? Math.max(0, Math.min(7200000, Date.now() - (StudyRooms.myRoundStartedAt || meta.phaseStartedAt))) : 0;
     const remMs = meta.phase === "lobby"
       ? (meta.focusMin || 50) * 60000
       : Math.max(0, (meta.phaseEndsAt || 0) - Date.now());
     const totalSec = (meta.phase === "break" ? (meta.breakMin || 5) : (meta.focusMin || 50)) * 60;
-    const ringR = 82;
+    const ringR = 88;
     const ringCirc = 2 * Math.PI * ringR;
-    const ringFrac = meta.phase === "lobby" ? 0 : Math.min(1, Math.max(0, 1 - (remMs / 1000) / Math.max(1, totalSec)));
+    const ringFrac = isOpenFocus
+      ? Math.min(1, openElapsedMs / 7200000)
+      : (meta.phase === "lobby" ? 0 : Math.min(1, Math.max(0, 1 - (remMs / 1000) / Math.max(1, totalSec))));
     const poll = StudyRooms.getPoll();
+    const roomModeLabel = meta.roomMode === "strict" ? "🛡️ صارم" : meta.roomMode === "open" ? "♾️ مفتوح" : "✨ مرن";
+    const giftDrop = StudyRooms.activeGiftDrop && !StudyRooms.activeGiftDrop.claimed && Date.now() < StudyRooms.activeGiftDrop.expiresAt ? StudyRooms.activeGiftDrop : null;
 
     let tabHtml = "";
     if (srActiveTab === "arena") {
@@ -37807,66 +39109,98 @@
         <div class="sr-hero-arena">
           <div class="flex-between mb-8">
             <span class="pill ${meta.phase === "focus" ? "pill-red" : meta.phase === "break" ? "pill-green" : "pill-purple"} text-xs" style="min-height:24px;">
-              ${meta.phase === "focus" ? `⚔️ جولة #${meta.roundNum} شغالة` : meta.phase === "break" ? "☕ استراحة جماعية" : "⏳ في اللوبي"}
+              ${meta.phase === "focus" ? `⚔️ جولة #${meta.roundNum}` : meta.phase === "break" ? "☕ استراحة" : "⏳ باللوبي"}
             </span>
-            <span class="pill pill-gold text-xs num" style="min-height:24px;">
-              ${meta.mode === "versus" ? "⚔️ تنافسي" : meta.mode === "boss_raid" ? "🐉 غارة وحش" : "🤝 تعاوني"} · ${coopBonus > 0 ? `+${coopBonus}% بونص` : "لوحدك"}
+            <span class="pill pill-gold text-xs" style="min-height:24px;">
+              ${StudyRooms.isPublicFixed ? "🔒 جدول ثابت" : roomModeLabel} · ${meta.mode === "versus" ? "⚔️ سباق" : meta.mode === "boss_raid" ? "🐉 غارة" : "🤝 تعاوني"}
             </span>
+          </div>
+
+          <div class="sr-bonus-strip">
+            <span class="pill pill-green text-xs num" style="min-height:22px;padding:1px 8px;">🤝 +${coopBonus}% جماعي</span>
+            ${(curXpItemPct > 0 || curCoinsItemPct > 0) ? `<span class="pill pill-purple text-xs num" style="min-height:22px;padding:1px 8px;">🎒 سلع ${100 + Math.max(curXpItemPct, curCoinsItemPct)}%/300%</span>` : ""}
+            ${beaconPct > 0 ? `<span class="pill pill-gold text-xs num" style="min-height:22px;padding:1px 8px;">🔥 شعلة +${beaconPct}%</span>` : ""}
+            ${StudyRooms.myRoomBet && !StudyRooms.myRoomBet.failed ? `<span class="pill pill-gold text-xs num" style="min-height:22px;padding:1px 8px;">🎯 رهان ${formatNum(StudyRooms.myRoomBet.amount)} 🪙</span>` : ""}
           </div>
 
           <div class="sr-ring-wrap">
-            <svg class="sr-ring-svg" width="188" height="188" viewBox="0 0 188 188">
-              <circle cx="94" cy="94" r="${ringR}" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="10"/>
-              <circle id="sr-ring-prog" cx="94" cy="94" r="${ringR}" fill="none" stroke="${meta.phase === "break" ? "var(--green)" : "var(--gold1)"}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringCirc * (1 - ringFrac)}"/>
+            <svg class="sr-ring-svg" width="204" height="204" viewBox="0 0 204 204">
+              <circle cx="102" cy="102" r="98" fill="none" stroke="rgba(167,139,250,0.16)" stroke-width="1.5" stroke-dasharray="3 7"/>
+              <circle cx="102" cy="102" r="${ringR}" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="10"/>
+              <circle id="sr-ring-prog" cx="102" cy="102" r="${ringR}" fill="none" stroke="${meta.phase === "break" ? "var(--green)" : isOpenFocus ? "#38BDF8" : "var(--gold1)"}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringCirc * (1 - ringFrac)}"/>
             </svg>
-            <div class="text-xs text-muted fw-800">${meta.phase === "break" ? "وقت الراحة" : "وقت التركيز"}</div>
-            <div class="sr-mmss num mt-8" id="sr-timer-mmss">${formatTimeMMSS(Math.ceil(remMs / 1000))}</div>
-            <div class="text-xs text-gold fw-800 mt-8">🔥 سلسلتي بالغرفة: <span class="num">${StudyRooms.myRoomStreak}</span></div>
+            <div class="text-xs text-muted fw-800">${meta.phase === "break" ? "استراحة قصيرة" : isOpenFocus ? "تصاعدي مفتوح ♾️" : "تركيز متزامن"}</div>
+            <div class="sr-mmss num mt-8" id="sr-timer-mmss">${isOpenFocus ? formatTimeMMSS(Math.floor(openElapsedMs / 1000)) : formatTimeMMSS(Math.ceil(remMs / 1000))}</div>
+            <div class="text-xs text-gold fw-800 mt-8">🔥 سلسلتي: <span class="num">${StudyRooms.myRoomStreak}</span></div>
           </div>
 
-          ${isAdmin ? `
+          ${isOpenFocus && StudyRooms.myRoundRewarded !== meta.roundNum ? `
+            <button class="btn btn-green btn-block mt-8" id="sr-claim-open">✅ احسب نقاطي الآن (${Math.floor(openElapsedMs / 60000)} د)</button>
+          ` : ""}
+
+          ${canEdit ? `
             <div class="flex-between gap-8 mt-8">
               ${meta.phase === "focus"
                 ? `<button class="btn btn-secondary btn-sm" style="flex:1;" id="sr-break-btn">☕ ابدأ راحة (${meta.breakMin} د)</button>
                    <button class="btn btn-danger btn-sm" id="sr-stop-btn">⏹️ إيقاف</button>`
-                : `<button class="btn btn-primary btn-sm" style="flex:1;" id="sr-start-btn">⚔️ ابدأ جولة (${meta.focusMin} د)</button>
+                : `<button class="btn btn-primary btn-sm" style="flex:1;" id="sr-start-btn">${meta.roomMode === "open" ? "♾️ ابدأ جولة مفتوحة" : `⚔️ ابدأ جولة (${meta.focusMin} د)`}</button>
                    ${meta.phase === "break" ? `<button class="btn btn-ghost btn-sm" id="sr-stop-btn">لوبي</button>` : ""}`}
             </div>
-            ${meta.phase === "lobby" ? `
-              <div class="chips-row mt-8" style="justify-content:center;">
-                ${[25, 50, 90].map(d => `<button class="chip ${meta.focusMin === d ? "active-gold" : ""}" style="min-height:30px;padding:2px 10px;font-size:12px;" data-sr-setdur="${d}">${d} د</button>`).join("")}
-              </div>
-            ` : ""}
-          ` : `<div class="text-xs text-muted mt-8">⏳ الهوست بيتحكم في توقيت الجولات المتزامنة</div>`}
+          ` : StudyRooms.isPublicFixed ? `
+            <div class="text-xs text-muted mt-8">🔒 غرفة عامة ثابتة — الجدول شغال تلقائياً للكل بدون أي تحكم</div>
+          ` : `<div class="text-xs text-muted mt-8">⏳ المضيف يتحكم في بدء الجولات</div>`}
 
-          <!-- وحش الغرفة المشترك -->
           <div class="sr-boss-box">
             <div class="flex-between mb-8">
               <span class="fw-900 text-sm">${meta.bossEmoji || "👹"} ${escapeHtml(meta.bossName || "عملاق التشتّت")} <span class="text-xs text-muted">(جولة ${meta.bossRounds || 1})</span></span>
               <span class="text-xs fw-900 text-red num">${formatNum(bossHpLeft)} / ${formatNum(bossMax)} HP</span>
             </div>
             <div class="progress-track lg"><div class="progress-fill red" style="width:${bossHpPct}%;"></div></div>
-            <div class="text-xs text-muted mt-8">ضربات كل الأعضاء بتتجمع وتديكم +500 🪙 ونجمة ⭐ عند الهزيمة!</div>
           </div>
         </div>
 
-        <!-- الملاحظة المثبتة في الغرفة -->
-        <div class="fs-card sr-zen-hide" style="padding:12px;">
-          <div class="flex-between mb-8">
-            <span class="fw-900 text-xs text-gold">📌 لوحة الغرفة المثبتة</span>
-            ${isAdmin ? `<button class="text-xs text-gold fw-800" id="sr-edit-pin">تعديل ✏️</button>` : ""}
+        ${giftDrop ? `
+          <div class="sr-gift-banner">
+            <div class="flex-center gap-8">
+              <span class="emoji" style="font-size:32px;">🎁</span>
+              <div>
+                <div class="fw-900 text-sm text-gold">مطر هدايا من ${escapeHtml(giftDrop.senderName)}!</div>
+                <div class="text-xs text-muted">هدية +${giftDrop.amount} 🪙 مجانية ليك</div>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="sr-claim-gift-btn">التقط +${giftDrop.amount} 🪙</button>
           </div>
+        ` : ""}
+
+        <div class="sr-quick-tools">
+          <button class="sr-tool-card ${curXpItemPct > 0 || curCoinsItemPct > 0 ? "lit" : ""}" id="sr-open-bp3x">
+            <span class="emoji" style="font-size:24px;">🎒</span>
+            <span class="fw-900 text-xs">مقويات 3X</span>
+            <span class="text-xs text-gold num">${100 + Math.max(curXpItemPct, curCoinsItemPct)}%/300%</span>
+          </button>
+          <button class="sr-tool-card ${StudyRooms.myRoomBet || beaconPct > 0 ? "lit" : ""}" id="sr-open-fun">
+            <span class="emoji" style="font-size:24px;">🎉</span>
+            <span class="fw-900 text-xs">متعة ومنافسة</span>
+            <span class="text-xs text-muted">رهان · شعلة · ضربة</span>
+          </button>
+          <button class="sr-tool-card" id="sr-pick-subj">
+            <span class="emoji" style="font-size:24px;">📘</span>
+            <span class="fw-900 text-xs">المادة النشطة</span>
+            <span class="text-xs text-gold" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(getActiveSubject()?.name || "اختار")}</span>
+          </button>
+        </div>
+
+        <div class="fs-card sr-zen-hide" style="padding:11px 13px;">
+          <div class="fw-900 text-xs text-gold mb-8">📌 لوحة الغرفة</div>
           <div class="text-xs fw-700">${escapeHtml(meta.pinnedNote || "شدّوا حيلكم يا أبطال!")}</div>
         </div>
 
-        <!-- قائمة مهامي في الجلسة -->
         <div class="fs-card">
           <div class="flex-between mb-8">
-            <span class="fw-900 text-sm">✅ مهامي في الجلسة (<span class="num">${StudyRooms.localTodos.filter(t => t.done).length}/${StudyRooms.localTodos.length}</span>)</span>
-            <button class="text-xs text-gold fw-800" id="sr-pick-subj">📘 ${escapeHtml(getActiveSubject()?.name || "مادة")}</button>
+            <span class="fw-900 text-sm">✅ مهامي في الجولة (<span class="num">${StudyRooms.localTodos.filter(t => t.done).length}/${StudyRooms.localTodos.length}</span>)</span>
           </div>
           <div class="flex-between gap-8 mb-8">
-            <input class="input" id="sr-todo-inp" maxlength="48" placeholder="اكتب هدفك في الجلسة دي..." style="min-height:40px;font-size:13px;" />
+            <input class="input" id="sr-todo-inp" maxlength="48" placeholder="اكتب هدفك في الجولة دي..." style="min-height:40px;font-size:13px;" />
             <button class="btn btn-primary btn-sm" id="sr-todo-add" style="min-height:40px;">+ أضف</button>
           </div>
           ${StudyRooms.localTodos.map((t, idx) => `
@@ -37878,16 +39212,6 @@
               <button class="text-xs text-red fw-900" data-sr-tododel="${idx}" style="padding:2px 6px;">✕</button>
             </div>
           `).join("")}
-        </div>
-
-        <!-- صوت محيطي هادئ -->
-        <div class="fs-card sr-zen-hide">
-          <div class="fw-900 text-xs text-muted mb-8">🎧 أصوات التركيز الهادئة</div>
-          <div class="chips-row">
-            ${[["mute", "🔇 صمت"], ["rain", "🌧️ مطر"], ["cafe", "☕ مقهى"]].map(([k, l]) => `
-              <button class="chip ${state.settings.ambientSound === k ? "active" : ""}" style="flex:1;justify-content:center;min-height:34px;" data-sr-amb="${k}">${l}</button>
-            `).join("")}
-          </div>
         </div>
       `;
     } else if (srActiveTab === "peers") {
@@ -37910,7 +39234,7 @@
           </div>
         </div>
 
-        <div class="fw-900 text-sm mb-8">🏆 لوحة الصدارة الحية (${peersArr.length}/${meta.maxUsers || 12})</div>
+        <div class="fw-900 text-sm mb-8">🏆 لوحة الصدارة الحية (${peersArr.length}/${meta.maxUsers || 24})</div>
         ${peersArr.map((p, idx) => {
           const pingMs = StudyRooms.peersPing[p.uid];
           const doneTodos = p.todos.filter(x => x.done).length;
@@ -37922,6 +39246,7 @@
                 <div class="fw-900 text-sm" style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
                   <span>${escapeHtml(p.name)}</span>
                   ${p.isMe ? `<span class="pill pill-gold text-xs" style="min-height:18px;padding:1px 6px;font-size:10px;">أنت</span>` : ""}
+                  ${p.hasBet ? `<span class="pill pill-purple text-xs num" style="min-height:18px;padding:1px 6px;font-size:10px;">🎯 ${formatNum(p.betAmount)}</span>` : ""}
                   ${p.micOn ? `<span title="المايك شغال">🎙️</span>` : ""}
                   ${statusBadge(p.status)}
                 </div>
@@ -38018,25 +39343,25 @@
             <div class="fw-900 text-sm" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(meta.title)}</div>
             <div class="text-xs text-green fw-800 num"><span class="sr-live-dot"></span> ${peersArr.length} أونلاين</div>
           </div>
-          <button class="btn ${zen ? "btn-primary" : "btn-ghost"} btn-sm" id="sr-zen-btn" style="min-height:34px;padding:4px 10px;font-size:11.5px;">
-            ${zen ? "☀️ عادي" : "🧘 هادئ"}
-          </button>
+          <div class="sr-top-actions">
+            <button class="icon-btn" id="sr-open-settings" style="width:38px;height:38px;" aria-label="إعدادات الغرفة" title="إعدادات الغرفة">⚙️</button>
+            <button class="icon-btn" id="sr-leave-btn" style="width:38px;height:38px;color:var(--red);" aria-label="خروج من الغرفة" title="خروج">🚪</button>
+          </div>
         </div>
 
-        <div class="sr-code-bar sr-zen-hide">
-          <div style="min-width:0;flex:1;">
-            <div class="text-xs text-muted">كود الغرفة للمشاركة:</div>
-            <div class="fw-900 text-gold text-xs num" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(StudyRooms.roomCode)}</div>
+        ${!StudyRooms.isPublicFixed ? `
+          <div class="sr-hud-strip sr-zen-hide">
+            <div style="min-width:0;flex:1;">
+              <div class="text-xs text-muted">كود الدعوة:</div>
+              <div class="fw-900 text-gold text-xs num" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(StudyRooms.roomCode)}</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="sr-copy-link" style="min-height:32px;padding:3px 12px;font-size:11.5px;">🔗 نسخ رابط الدعوة</button>
           </div>
-          <div class="flex-center gap-8">
-            <button class="btn btn-secondary btn-sm" id="sr-copy-link" style="min-height:32px;padding:3px 10px;font-size:11.5px;">🔗 نسخ الدعوة</button>
-            <button class="btn btn-danger btn-sm" id="sr-leave-btn" style="min-height:32px;padding:3px 10px;font-size:11.5px;">خروج</button>
-          </div>
-        </div>
+        ` : ""}
 
         <div class="segmented mb-12 sr-zen-hide">
           <button class="seg-btn ${srActiveTab === "arena" ? "active" : ""}" data-sr-tab="arena">⏱️ الساحة</button>
-          <button class="seg-btn ${srActiveTab === "peers" ? "active" : ""}" data-sr-tab="peers">🏆 المنافسون (${peersArr.length})</button>
+          <button class="seg-btn ${srActiveTab === "peers" ? "active" : ""}" data-sr-tab="peers">🏆 الأبطال (${peersArr.length})</button>
           <button class="seg-btn ${srActiveTab === "chat" ? "active" : ""}" data-sr-tab="chat">
             💬 الشات ${StudyRooms.unreadChatCount > 0 ? `<span class="sr-unread-badge num">${StudyRooms.unreadChatCount > 99 ? "99+" : StudyRooms.unreadChatCount}</span>` : ""}
           </button>
@@ -38050,23 +39375,23 @@
       b.onclick = () => { srActiveTab = b.dataset.srTab; AudioFX.playClick(); renderStudyRooms(); };
     });
 
-    document.getElementById("sr-zen-btn").onclick = () => {
-      state.studyRooms.zenMode = !state.studyRooms.zenMode;
-      saveState();
+    document.getElementById("sr-open-settings").onclick = () => {
       AudioFX.playClick();
-      if (state.studyRooms.zenMode) srActiveTab = "arena";
-      renderStudyRooms();
+      StudyRooms.openSettingsModal();
     };
 
-    document.getElementById("sr-copy-link").onclick = async () => {
-      const shareUrl = `${window.location.origin}${window.location.pathname}?room=${encodeURIComponent(StudyRooms.roomCode)}`;
-      try {
-        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(shareUrl);
-        FX.showToast("اتنسخ رابط الدعوة! ابعته لصحابك 📋", "success");
-      } catch {
-        FX.showToast(`الكود: ${StudyRooms.roomCode}`, "success");
-      }
-    };
+    const copyBtn = document.getElementById("sr-copy-link");
+    if (copyBtn) {
+      copyBtn.onclick = async () => {
+        const shareUrl = `${window.location.origin}${window.location.pathname}?room=${encodeURIComponent(StudyRooms.roomCode)}`;
+        try {
+          if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(shareUrl);
+          FX.showToast("اتنسخ رابط الدعوة! ابعته لصحابك 📋", "success");
+        } catch {
+          FX.showToast(`الكود: ${StudyRooms.roomCode}`, "success");
+        }
+      };
+    }
 
     document.getElementById("sr-leave-btn").onclick = () => {
       UI.confirmModal({
@@ -38083,6 +39408,9 @@
     };
 
     if (srActiveTab === "arena") {
+      const claimOpenBtn = document.getElementById("sr-claim-open");
+      if (claimOpenBtn) claimOpenBtn.onclick = () => StudyRooms.claimOpenRoundEarly();
+
       const startBtn = document.getElementById("sr-start-btn");
       if (startBtn) startBtn.onclick = () => StudyRooms.startRound();
       const breakBtn = document.getElementById("sr-break-btn");
@@ -38090,31 +39418,21 @@
       const stopBtn = document.getElementById("sr-stop-btn");
       if (stopBtn) stopBtn.onclick = () => StudyRooms.stopPhaseToLobby();
 
-      el.querySelectorAll("[data-sr-setdur]").forEach(b => {
-        b.onclick = () => {
-          if (!isAdmin) return;
-          const cur = StudyRooms.getMeta() || {};
-          StudyRooms.metaState.set({ ...cur, focusMin: Number(b.dataset.srSetdur) });
-          AudioFX.playClick();
-        };
-      });
-
-      const editPin = document.getElementById("sr-edit-pin");
-      if (editPin) {
-        editPin.onclick = () => {
-          UI.openModal(`
-            <h3 class="fw-900 mb-8">📌 تعديل الملاحظة المثبتة</h3>
-            <input class="input" id="sr-pin-inp" maxlength="90" value="${escapeHtml(meta.pinnedNote || "")}" />
-            <button class="btn btn-primary btn-block mt-12" id="sr-pin-save">تثبيت ✓</button>
-          `);
-          document.getElementById("sr-pin-save").onclick = () => {
-            const val = document.getElementById("sr-pin-inp").value.trim().slice(0, 90);
-            StudyRooms.metaState.set({ ...meta, pinnedNote: val });
-            UI.closeModal();
-          };
+      const claimGiftBtn = document.getElementById("sr-claim-gift-btn");
+      if (claimGiftBtn) {
+        claimGiftBtn.onclick = () => {
+          if (StudyRooms.claimActiveGiftDrop()) renderStudyRooms();
         };
       }
 
+      document.getElementById("sr-open-bp3x").onclick = () => {
+        AudioFX.playClick();
+        StudyRooms.openBackpack3XSheet();
+      };
+      document.getElementById("sr-open-fun").onclick = () => {
+        AudioFX.playClick();
+        StudyRooms.openFunModal();
+      };
       document.getElementById("sr-pick-subj").onclick = () => {
         openQuickSubjectPickerSheet(() => {
           StudyRooms.syncMyMember();
@@ -38127,7 +39445,7 @@
         const val = inp?.value.trim();
         if (!val) return;
         if (StudyRooms.localTodos.length >= 5) {
-          FX.showToast("أقصى عدد للمهام 5 مهام في الجلسة ✓", "warn");
+          FX.showToast("أقصى عدد للمهام 5 مهام في الجولة ✓", "warn");
           return;
         }
         StudyRooms.localTodos.push({ text: val, done: false });
@@ -38158,15 +39476,6 @@
           renderStudyRooms();
         };
       });
-
-      el.querySelectorAll("[data-sr-amb]").forEach(b => {
-        b.onclick = () => {
-          state.settings.ambientSound = b.dataset.srAmb;
-          saveState();
-          AudioFX.startAmbient(state.settings.ambientSound);
-          renderStudyRooms();
-        };
-      });
     } else if (srActiveTab === "peers") {
       document.getElementById("sr-mic-btn").onclick = () => StudyRooms.toggleMic();
       document.getElementById("sr-deaf-btn").onclick = () => StudyRooms.toggleDeafen();
@@ -38187,7 +39496,7 @@
         card.onclick = () => {
           const p = peersArr.find(x => x.uid === card.dataset.srPeer);
           if (!p) return;
-          const canMod = isAdmin && !p.isMe && !StudyRooms.isPublicOpen;
+          const canMod = canEdit && !p.isMe;
           UI.openSheet(`
             <div style="text-align:center;">
               <div class="emoji" style="font-size:48px;">${p.heroEmoji}</div>
