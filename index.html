@@ -9367,6 +9367,22 @@
       margin-bottom: 10px;
       flex-wrap: wrap;
     }
+    .sr-unread-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: #EF4444;
+      color: #FFFFFF;
+      font-size: 10.5px;
+      font-weight: 900;
+      margin-right: 4px;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -36497,6 +36513,7 @@
     deafened: false,
     peerAudioEls: {},
     fileProgressPct: 0,
+    unreadChatCount: 0,
     _sessionStatsSnapshot: null,
 
     async loadLib(strategy = "nostr") {
@@ -36565,7 +36582,14 @@
     },
 
     getUserCount() {
-      return Math.max(1, Object.keys(this.getMembers()).length);
+      const ids = new Set(Object.keys(this.getMembers()));
+      if (this.self?.userId) ids.add(this.self.userId);
+      try {
+        if (this.room && typeof this.room.getUsers === "function") {
+          for (const u of this.room.getUsers()) ids.add(u);
+        }
+      } catch { /* ignore */ }
+      return Math.max(1, ids.size);
     },
 
     getCoopBonusPct() {
@@ -36636,8 +36660,6 @@
         };
         if (password && password.trim()) cfg.password = password.trim();
 
-        const room = mod.joinRoom(cfg, baseSlug);
-        const selfInfo = await room.getSelf();
         const initialMeta = {
           title: String(title || `غرفة ${state.profile.name || "الأبطال"}`).trim().slice(0, 36),
           mode,
@@ -36659,8 +36681,14 @@
           hasPassword: !!(password && password.trim())
         };
 
-        this._attachRoom({ room, selfInfo, isPublicOpen: false, initialMeta, strategy });
-        this.recordRecentRoom(selfInfo.roomId, initialMeta.title, mode, initialMeta.hasPassword);
+        const room = mod.joinRoom(cfg, baseSlug);
+        this._attachRoom({ room, selfInfo: null, isPublicOpen: false, initialMeta, strategy });
+        const selfInfo = await room.getSelf();
+        if (this.room !== room) return false;
+        this.self = selfInfo;
+        this.roomCode = selfInfo?.roomId || baseSlug;
+        this.syncMyMember();
+        this.recordRecentRoom(this.roomCode, initialMeta.title, mode, initialMeta.hasPassword);
         AudioFX.playSuccess();
         FX.showToast(`🔥 اتفتحت غرفتك «${initialMeta.title}»! انسخ الكود وادعي صحابك`, "success");
         return true;
@@ -36709,8 +36737,6 @@
         }
         if (password && password.trim()) cfg.password = password.trim();
 
-        const room = mod.joinRoom(cfg, code);
-        const selfInfo = await room.getSelf();
         const preset = PUBLIC_STUDY_ROOMS.find(p => p.code === code);
         const initialMeta = hasRolesSuffix ? null : {
           title: preset?.title || fallbackTitle || "غرفة مذاكرة مفتوحة",
@@ -36733,9 +36759,15 @@
           hasPassword: !!(password && password.trim())
         };
 
-        this._attachRoom({ room, selfInfo, isPublicOpen: !hasRolesSuffix, initialMeta, strategy });
+        const room = mod.joinRoom(cfg, code);
+        this._attachRoom({ room, selfInfo: { roomId: code, userId: null, isAdmin: !hasRolesSuffix }, isPublicOpen: !hasRolesSuffix, initialMeta, strategy });
+        const selfInfo = await room.getSelf();
+        if (this.room !== room) return false;
+        this.self = selfInfo;
+        this.roomCode = selfInfo?.roomId || code;
+        this.syncMyMember();
         const metaNow = this.getMeta();
-        this.recordRecentRoom(selfInfo.roomId || code, metaNow?.title || preset?.title || "غرفة مذاكرة", metaNow?.mode || fallbackMode, !!(password && password.trim()));
+        this.recordRecentRoom(this.roomCode, metaNow?.title || preset?.title || "غرفة مذاكرة", metaNow?.mode || fallbackMode, !!(password && password.trim()));
         AudioFX.playSuccess();
         FX.showToast("🚪 دخلت الغرفة بنجاح! مستنيين صحابك يجمعوا", "success");
         return true;
@@ -36757,6 +36789,7 @@
       this.roomCode = selfInfo?.roomId || "";
       this.messages = [];
       this.peersPing = {};
+      this.unreadChatCount = 0;
       this.myRoundRewarded = 0;
       this.myRoundStartedAt = 0;
       this.myRoomMin = 0;
@@ -36769,7 +36802,9 @@
       this.myVoteChoice = -1;
       state.studyRooms.lastStrategy = strategy;
 
-      this.memberState = room.makeUserState("member", this.buildMemberPayload());
+      const initPayload = this.buildMemberPayload();
+      this.memberState = room.makeUserState("member", initPayload);
+      this.memberState.set(initPayload);
       this.metaState = isPublicOpen
         ? room.makeState("meta", initialMeta)
         : (initialMeta ? room.makeState("meta", initialMeta) : room.makeState("meta", { phase: "lobby", title: "غرفة مذاكرة", focusMin: 50, breakMin: 5, roundNum: 0, bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000, bossRounds: 1, bossDefeatedCount: 0, mode: "coop" }));
@@ -36789,8 +36824,26 @@
       }
 
       const refreshUI = () => {
-        if (currentScreen === "study-rooms") renderStudyRooms();
-        else if (currentScreen === "home") renderHome();
+        if (currentScreen === "study-rooms") {
+          const actEl = document.activeElement;
+          const actId = actEl && (actEl.id === "sr-chat-inp" || actEl.id === "sr-todo-inp" || actEl.id === "sr-pin-inp") ? actEl.id : null;
+          const savedVal = actId ? actEl.value : "";
+          const selStart = actId ? actEl.selectionStart : null;
+          const selEnd = actId ? actEl.selectionEnd : null;
+          renderStudyRooms();
+          if (actId) {
+            const restored = document.getElementById(actId);
+            if (restored) {
+              restored.value = savedVal;
+              restored.focus();
+              if (selStart !== null && selEnd !== null) {
+                try { restored.setSelectionRange(selStart, selEnd); } catch {}
+              }
+            }
+          }
+        } else if (currentScreen === "home") {
+          renderHome();
+        }
       };
 
       this.unsubs.push(
@@ -36799,13 +36852,17 @@
             const name = this.getMembers()[userId]?.name || "بطل جديد";
             this.pushSystemMsg(`👋 ${name} دخل الغرفة!`);
             AudioFX.playTick();
+            this.syncMyMember();
             if (this.micOn && this.micStream && typeof room.addStream === "function") {
               try { room.addStream(this.micStream, { target: userId }); } catch {}
             }
           }
           if (typeof room.ping === "function" && userId !== this.self?.userId) {
             Promise.resolve(room.ping(userId)).then(ms => {
-              if (Number.isFinite(Number(ms))) this.peersPing[userId] = Math.round(Number(ms));
+              if (Number.isFinite(Number(ms))) {
+                this.peersPing[userId] = Math.round(Number(ms));
+                refreshUI();
+              }
             }).catch(() => {});
           }
           refreshUI();
@@ -36853,7 +36910,7 @@
           refreshUI();
         }),
 
-        this.memberState.onChange(() => refreshUI()),
+        this.memberState.onChange(() => refreshUI(), { replay: true }),
         this.metaState.onChange((next) => {
           if (next && next.title) {
             this.recordRecentRoom(this.roomCode, next.title, next.mode || "coop", !!next.hasPassword);
@@ -36891,7 +36948,11 @@
             at: data.at || Date.now()
           });
           if (this.messages.length > 80) this.messages.shift();
-          if (!state.studyRooms?.zenMode && userId !== this.self?.userId) AudioFX.playClick();
+          const isFromOther = userId !== this.self?.userId;
+          if (isFromOther && (currentScreen !== "study-rooms" || srActiveTab !== "chat")) {
+            this.unreadChatCount += 1;
+          }
+          if (!state.studyRooms?.zenMode && isFromOther) AudioFX.playClick();
           refreshUI();
         }),
 
@@ -36930,6 +36991,9 @@
             at: Date.now()
           });
           if (this.messages.length > 80) this.messages.shift();
+          if (userId !== this.self?.userId && (currentScreen !== "study-rooms" || srActiveTab !== "chat")) {
+            this.unreadChatCount += 1;
+          }
           AudioFX.playSuccess();
           FX.showToast(`📎 ${sender} شارك ملف «${fileName}» في الشات!`, "success");
           refreshUI();
@@ -37321,6 +37385,7 @@
       this.isPublicOpen = false;
       this.messages = [];
       this.peersPing = {};
+      this.unreadChatCount = 0;
 
       if (!silent && (summary.sessions > 0 || summary.mins >= 10)) {
         UI.openModal(`
@@ -37359,7 +37424,10 @@
                 <span class="sr-live-dot"></span>
                 <span class="fw-900" style="font-size:15.5px;">غرفة: ${escapeHtml(meta.title)}</span>
               </div>
-              <span class="pill pill-green text-xs num" style="min-height:24px;">👥 ${peersCount} أبطال</span>
+              <div class="flex-center gap-8">
+                ${this.unreadChatCount > 0 ? `<span class="pill pill-red text-xs num" style="min-height:24px;">💬 ${this.unreadChatCount} جديد</span>` : ""}
+                <span class="pill pill-green text-xs num" style="min-height:24px;">👥 ${peersCount} أبطال</span>
+              </div>
             </div>
             <div class="flex-between text-xs fw-800 mb-12" style="color:#CBD5E1;">
               <span>${meta.phase === "focus" ? "⚔️ جولة تركيز شغالة" : meta.phase === "break" ? "☕ استراحة جماعية" : "⏳ في اللوبي"} · <strong class="text-gold num">${formatTimeMMSS(Math.ceil(remMs / 1000))}</strong></span>
@@ -37679,31 +37747,45 @@
     }
 
     // --- الحالة 2: داخل الغرفة المباشرة ---
+    if (srActiveTab === "chat") {
+      StudyRooms.unreadChatCount = 0;
+    }
     const meta = StudyRooms.getMeta() || { title: "غرفة مذاكرة", mode: "coop", focusMin: 50, breakMin: 5, phase: "lobby", roundNum: 0, bossName: "عملاق التشتّت", bossEmoji: "👹", bossMaxHp: 6000 };
     const members = StudyRooms.getMembers();
-    const myId = StudyRooms.self?.userId;
+    const myId = StudyRooms.self?.userId || "__self__";
     const isAdmin = StudyRooms.isAdmin();
     const zen = !!state.studyRooms?.zenMode;
     const coopBonus = StudyRooms.getCoopBonusPct();
-    const peersArr = Object.entries(members).map(([uidKey, m]) => ({
-      uid: uidKey,
-      isMe: uidKey === myId,
-      name: m?.name || "بطل",
-      heroEmoji: m?.heroEmoji || "⚔️",
-      level: m?.level || 1,
-      streak: m?.streak || 0,
-      subject: m?.subject || "مذاكرة",
-      status: m?.status || "ready",
-      roomMin: m?.roomMin || 0,
-      roomSessions: m?.roomSessions || 0,
-      score: m?.score || 0,
-      bossDmg: m?.bossDmg || 0,
-      roomStreak: m?.roomStreak || 0,
-      todos: Array.isArray(m?.todos) ? m.todos : [],
-      micOn: !!m?.micOn,
-      votePollId: m?.votePollId || null,
-      voteChoice: m?.voteChoice ?? -1
-    })).sort((a, b) => (b.score - a.score) || (b.roomMin - a.roomMin));
+    const allPeerIds = new Set(Object.keys(members));
+    allPeerIds.add(myId);
+    try {
+      if (StudyRooms.room && typeof StudyRooms.room.getUsers === "function") {
+        for (const u of StudyRooms.room.getUsers()) allPeerIds.add(u);
+      }
+    } catch { /* ignore */ }
+    const peersArr = Array.from(allPeerIds).map((uidKey) => {
+      const isMe = uidKey === myId;
+      const m = members[uidKey] || (isMe ? StudyRooms.buildMemberPayload() : null);
+      return {
+        uid: uidKey,
+        isMe,
+        name: m?.name || "بطل متصل...",
+        heroEmoji: m?.heroEmoji || "⚔️",
+        level: m?.level || 1,
+        streak: m?.streak || 0,
+        subject: m?.subject || "مذاكرة",
+        status: m?.status || "ready",
+        roomMin: m?.roomMin || 0,
+        roomSessions: m?.roomSessions || 0,
+        score: m?.score || 0,
+        bossDmg: m?.bossDmg || 0,
+        roomStreak: m?.roomStreak || 0,
+        todos: Array.isArray(m?.todos) ? m.todos : [],
+        micOn: !!m?.micOn,
+        votePollId: m?.votePollId || null,
+        voteChoice: m?.voteChoice ?? -1
+      };
+    }).sort((a, b) => (b.score - a.score) || (b.roomMin - a.roomMin));
 
     const totalRoomBossDmg = peersArr.reduce((acc, p) => acc + p.bossDmg, 0);
     const bossMax = meta.bossMaxHp || 6000;
@@ -37955,7 +38037,9 @@
         <div class="segmented mb-12 sr-zen-hide">
           <button class="seg-btn ${srActiveTab === "arena" ? "active" : ""}" data-sr-tab="arena">⏱️ الساحة</button>
           <button class="seg-btn ${srActiveTab === "peers" ? "active" : ""}" data-sr-tab="peers">🏆 المنافسون (${peersArr.length})</button>
-          <button class="seg-btn ${srActiveTab === "chat" ? "active" : ""}" data-sr-tab="chat">💬 الشات</button>
+          <button class="seg-btn ${srActiveTab === "chat" ? "active" : ""}" data-sr-tab="chat">
+            💬 الشات ${StudyRooms.unreadChatCount > 0 ? `<span class="sr-unread-badge num">${StudyRooms.unreadChatCount > 99 ? "99+" : StudyRooms.unreadChatCount}</span>` : ""}
+          </button>
         </div>
 
         ${tabHtml}
