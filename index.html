@@ -37,6 +37,7 @@
   <!-- Optional visual enhancement libraries (pinned versions, async non-blocking fallback) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" async onerror="window.__animeFailed=true"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" async onerror="window.__confettiFailed=true"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" async onerror="window.__supabaseFailed=true"></script>
 
   <style>
     /* =====================================================
@@ -1107,7 +1108,7 @@
     /* --- 6.2 #kingdom --- */
     .kingdom-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin-bottom: 14px;
     }
@@ -1837,7 +1838,7 @@
     /* --- 6.15 #trophies --- */
     .trophies-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
       margin-top: 12px;
     }
@@ -9546,6 +9547,68 @@
       .sr-ring-wrap { width: 184px; height: 184px; }
       .sr-mmss { font-size: 34px; }
     }
+
+    /* Online League & Real Players UI */
+    .lg-sync-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 16px;
+      background: rgba(10, 14, 34, 0.72);
+      border: 1px solid rgba(56, 189, 248, 0.34);
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .lg-sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .lg-sync-dot.online { background: #34D399; box-shadow: 0 0 8px #34D399; }
+    .lg-sync-dot.syncing { background: #FBBF24; box-shadow: 0 0 8px #FBBF24; }
+    .lg-sync-dot.offline { background: #94A3B8; }
+    .lg-sync-dot.error { background: #F87171; }
+    .lg-real-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #7DD3FC;
+    }
+    .lg-bot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: #CBD5E1;
+    }
+    .lg-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .lg-outside-card {
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-top: 10px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(88, 28, 135, 0.28));
+      border: 1.5px solid rgba(255, 215, 106, 0.65);
+    }
   </style>
 </head>
 <body>
@@ -9749,6 +9812,9 @@
   const STORAGE_KEY = "ADEL_STUDYGAME_2026__state_v1";
   const BACKUP_KEY = "ADEL_STUDYGAME_2026__state_v1_prev";
   const CORRUPT_PREFIX = "ADEL_STUDYGAME_2026__corrupt_";
+  const CLOUD_CACHE_KEY = "ADEL_STUDYGAME_2026__cloud_cache_v1";
+  const SUPABASE_URL = "https://uuhnupzgrovtrvpxgfxr.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_f4FlUeHcgXYY7n0Ph43pSg_Sa2x_jrs";
   const SCHEMA_VERSION = 2;
   const APP_VERSION = "2.0.0";
 
@@ -11814,6 +11880,11 @@
         lastDailyGiftDay: null,
         lastWeeklyGiftWeek: null
       },
+      cloud: {
+        userId: "",
+        lastSyncAt: 0,
+        lastSyncHash: ""
+      },
       activeSession: null,
       lastResult: null,
       pendingFlexDialog: null,
@@ -12282,6 +12353,13 @@
     s.shop.consumables = Object.assign({}, def.shop.consumables, stripProto(s.shop.consumables));
     s.shop.consumables.shield = Math.max(0, Math.min(maxShCapMig, Math.round(fin(s.shop.consumables.shield, 0))));
     s.shop.consumables.xp2 = Math.max(0, Math.min(10, Math.round(fin(s.shop.consumables.xp2, 0))));
+    s.shop.consumables.spin = Math.max(0, Math.min(99, Math.round(fin(s.shop.consumables.spin, 0))));
+    const rawCloudMig = stripProto(cleanRaw.cloud);
+    s.cloud = {
+      userId: typeof rawCloudMig.userId === "string" ? rawCloudMig.userId.slice(0, 64) : "",
+      lastSyncAt: Math.max(0, Math.round(fin(rawCloudMig.lastSyncAt, 0))),
+      lastSyncHash: typeof rawCloudMig.lastSyncHash === "string" ? rawCloudMig.lastSyncHash.slice(0, 64) : ""
+    };
     s.achievements = Object.assign({}, def.achievements, stripProto(cleanRaw.achievements));
     if (!s.achievements.unlocked || typeof s.achievements.unlocked !== "object") s.achievements.unlocked = {};
     if (!Array.isArray(s.achievements.claimed)) s.achievements.claimed = [];
@@ -12981,6 +13059,7 @@
         try { localStorage.setItem(BACKUP_KEY, prev); } catch { /* ignore backup quota */ }
       }
       localStorage.setItem(STORAGE_KEY, serialized);
+      if (typeof CloudLeague !== "undefined") CloudLeague.onStateSaved();
     } catch {
       try {
         for (let i = localStorage.length - 1; i >= 0; i--) {
@@ -14351,8 +14430,12 @@
     return getKingdomBaseIncomePerHour();
   }
 
+  function getKingdomCapHours() {
+    return CONFIG.KINGDOM_BASE_CAP_HOURS + getKingdomBonus("capHours") + getWonderBonus("capHours") + (isEliteClubActive() ? 4 : 0);
+  }
+
   function getKingdomAccumulatedCoins() {
-    const capHours = CONFIG.KINGDOM_BASE_CAP_HOURS + getKingdomBonus("capHours") + getWonderBonus("capHours") + (isEliteClubActive() ? 4 : 0);
+    const capHours = getKingdomCapHours();
     const baseRate = getKingdomBaseIncomePerHour();
     const maxCapCoins = Math.floor(baseRate * capHours);
     const banked = Math.min(maxCapCoins, state.kingdom?.bankedCoins || 0);
@@ -17007,14 +17090,14 @@
     const xpBonus = 1 + getKingdomBonus("xp") + getWonderBonus("xp") + getResearchBonus("xp") + rbXpBonus + heroXpBonus + effectiveBpXp + glowCoinXp + (cpAura.xpBonus || 0) + (citBonus.scholarXpPct || 0) + (hasPotion ? 0.15 : 0) + (eliteActive ? 0.35 : 0) + eternalXp + examXp + luxXp;
     const dmgBonus = 1 + getKingdomBonus("damage") + getWonderBonus("damage") + getResearchBonus("damage") + getResearchBonus("eventDamage") + getRebirthRelicBonus("damage") + treeB.dmgMult + flowInfo.dmgBonus + merchDmg + bpDmg + glowDmg + heroDmgBonus + (cpAura.dmgBonus || 0) + (hasSword ? 0.20 : 0) + (eliteActive ? 0.20 : 0) + firstStrikeDmg + sovMult + luxDmg;
 
-    let baseCoinsOnly = Math.round(m * 20 * streakMult * coinBonusBase * factor * festCoinsMult);
-    let coins = Math.round(m * 20 * streakMult * coinBonus * factor * festCoinsMult);
+    let baseCoinsOnly = Math.round(m * 100 * streakMult * coinBonusBase * factor * festCoinsMult);
+    let coins = Math.round(m * 100 * streakMult * coinBonus * factor * festCoinsMult);
     if (hasScroll) {
       baseCoinsOnly *= 2;
       coins *= 2;
     }
     const eliteBonusCoins = eliteActive ? Math.max(0, coins - baseCoinsOnly) : 0;
-    let xp = Math.round(m * 1.2 * streakMult * xpBonus * factor * festXpMult);
+    let xp = Math.round(m * 6 * streakMult * xpBonus * factor * festXpMult);
     if (xp2Active && !inRoom) xp *= 2;
     const damage = Math.round(m * 20 * dmgBonus);
 
@@ -19274,14 +19357,20 @@
     const today = getTodayKey();
     const curWeek = getWeekKey();
     const freeAvail = state.wheel.lastFreeDay !== today;
+    const earnedSpins = state.shop.consumables.spin || 0;
     const extraUsed = state.wheel.extraUsedDay === today ? state.wheel.extraUsedCount : 0;
 
     if (isReroll) {
       if (!hasLevelFeature("perk_wheel_reroll") || state.wheel.freeRerollWeekKey === curWeek) return;
       state.wheel.freeRerollWeekKey = curWeek;
     } else if (!isExtra) {
-      if (!freeAvail) return;
-      state.wheel.lastFreeDay = today;
+      if (freeAvail) {
+        state.wheel.lastFreeDay = today;
+      } else if (earnedSpins > 0) {
+        state.shop.consumables.spin = earnedSpins - 1;
+      } else {
+        return;
+      }
     } else {
       if (extraUsed >= CONFIG.WHEEL_EXTRA_MAX) return;
       if (state.wallet.gems < CONFIG.WHEEL_EXTRA_COST) return;
@@ -19437,6 +19526,325 @@
       }
     }, 4600);
   }
+
+  // --- Cloud Online League (Supabase Free-Tier Optimized + Anonymous Auth) ---
+  const CLOUD_COLUMNS = "id,name,avatar,hero,frame,title,tier,level,xp,daily_key,daily_xp,week_key,weekly_xp,total_minutes,total_sessions,coins,longest_streak,current_streak,kingdom_level,kingdom_power,bosses_defeated,companion_stage,favorite_subject,motto,pinned_ach,achievements_count,is_studying,legacy_50,legacy_100,updated_at";
+  const CloudLeague = {
+    client: null,
+    authPromise: null,
+    syncPromise: null,
+    syncDebounceTimer: null,
+    inFlightFetch: {},
+    cache: {},
+    playersById: {},
+    lastManualRefreshAt: 0,
+    lastSyncError: "",
+    status: "idle",
+
+    loadLocalCache() {
+      if (!storageAvailable) return;
+      try {
+        const raw = localStorage.getItem(CLOUD_CACHE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && parsed.boards) {
+          this.cache = parsed.boards;
+          for (const b of Object.values(this.cache)) {
+            for (const row of (b?.rows || [])) {
+              if (row && row.id) this.playersById[row.id] = row;
+            }
+          }
+        }
+      } catch { /* ignore cache parse error */ }
+    },
+
+    saveLocalCache() {
+      if (!storageAvailable) return;
+      try {
+        const trimmed = {};
+        for (const k of Object.keys(this.cache)) {
+          const entry = this.cache[k];
+          if (entry && Array.isArray(entry.rows)) {
+            trimmed[k] = { at: entry.at || 0, rows: entry.rows.slice(0, 50) };
+          }
+        }
+        localStorage.setItem(CLOUD_CACHE_KEY, JSON.stringify({ updatedAt: Date.now(), boards: trimmed }));
+      } catch { /* ignore quota */ }
+    },
+
+    async waitForSdk(maxWaitMs = 5500) {
+      if (window.supabase && typeof window.supabase.createClient === "function") return window.supabase;
+      const start = Date.now();
+      while (Date.now() - start < maxWaitMs) {
+        if (window.supabase && typeof window.supabase.createClient === "function") return window.supabase;
+        await new Promise(r => setTimeout(r, 120));
+      }
+      return (window.supabase && typeof window.supabase.createClient === "function") ? window.supabase : null;
+    },
+
+    async getClient() {
+      if (this.client) return this.client;
+      const sdk = await this.waitForSdk();
+      if (!sdk) return null;
+      this.client = sdk.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false,
+          storageKey: "ADEL_STUDYGAME_2026__sb_auth"
+        }
+      });
+      return this.client;
+    },
+
+    async ensureAuth() {
+      if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        this.status = "offline";
+        return null;
+      }
+      if (this.authPromise) return this.authPromise;
+      this.authPromise = (async () => {
+        try {
+          const sb = await this.getClient();
+          if (!sb) {
+            this.status = "offline";
+            return null;
+          }
+          const { data: sessData } = await sb.auth.getSession();
+          let user = sessData?.session?.user || null;
+          if (!user) {
+            const { data: anonData, error: anonErr } = await sb.auth.signInAnonymously();
+            if (anonErr) {
+              this.lastSyncError = anonErr.message || "auth_error";
+              this.status = "error";
+              return null;
+            }
+            user = anonData?.user || null;
+          }
+          if (user?.id && state?.cloud && state.cloud.userId !== user.id) {
+            state.cloud.userId = user.id;
+            saveState();
+          }
+          return user;
+        } catch (err) {
+          this.lastSyncError = err?.message || "auth_exception";
+          this.status = "error";
+          return null;
+        } finally {
+          this.authPromise = null;
+        }
+      })();
+      return this.authPromise;
+    },
+
+    buildSyncPayload(userId) {
+      const today = getTodayKey();
+      const curWeek = getWeekKey();
+      const hero = HEROES.find(h => h.id === state.profile?.hero) || HEROES[1];
+      const kLv = getKingdomLevel();
+      const kPower = kLv * 10 + (state.progress?.bossesDefeatedCount || 0) * 15;
+      const unlockedAchs = Object.keys(state.achievements?.unlocked || {});
+      const pinnedAch = state.profile?.pinnedAchievementId || unlockedAchs[unlockedAchs.length - 1] || "";
+
+      let favSubj = getActiveSubject()?.name || "مذاكرة عامة";
+      let maxSubMin = 0;
+      for (const [sn, st] of Object.entries(state.subjectStats || {})) {
+        if ((st?.totalMinutes || 0) > maxSubMin) {
+          maxSubMin = st.totalMinutes;
+          favSubj = sn;
+        }
+      }
+
+      const isStudying = !!(state.activeSession && !state.activeSession.isRest) ||
+        (typeof StudyRooms !== "undefined" && StudyRooms.isConnected() && StudyRooms.getMeta()?.phase === "focus");
+
+      return {
+        id: userId,
+        name: String(state.profile?.name || "بطل جديد").trim().slice(0, 20) || "بطل جديد",
+        avatar: hero.emoji,
+        hero: hero.id,
+        frame: String(state.shop?.equippedFrame || "").slice(0, 32),
+        title: String(getLevelTitle(state.progress?.level || 1)).slice(0, 40),
+        tier: state.league?.tier || "bronze",
+        level: Math.max(1, Math.round(state.progress?.level || 1)),
+        xp: Math.max(0, Math.round(state.progress?.xp || 0)),
+        daily_key: today,
+        daily_xp: Math.max(0, Math.round(getDailyUserXP(today))),
+        week_key: curWeek,
+        weekly_xp: Math.max(0, Math.round(getWeeklyUserXP())),
+        total_minutes: Math.max(0, Math.round(state.progress?.totalMinutes || 0)),
+        total_sessions: Math.max(0, Math.round(state.progress?.totalSessions || 0)),
+        coins: Math.max(0, Math.round(state.wallet?.coins || 0)),
+        longest_streak: Math.max(0, Math.round(state.progress?.longestStreak || 0)),
+        current_streak: Math.max(0, Math.round(state.streak?.current || 0)),
+        kingdom_level: Math.max(1, Math.round(kLv)),
+        kingdom_power: Math.max(0, Math.round(kPower)),
+        bosses_defeated: Math.max(0, Math.round(state.progress?.bossesDefeatedCount || 0)),
+        companion_stage: Math.max(1, Math.min(4, Math.round(state.companion?.stage || 1))),
+        favorite_subject: String(favSubj || "مذاكرة عامة").slice(0, 24),
+        motto: String(state.profile?.motto || "").slice(0, 60),
+        pinned_ach: String(pinnedAch || "").slice(0, 32),
+        achievements_count: unlockedAchs.length,
+        is_studying: isStudying,
+        legacy_50: !!state.rebirth?.legacyLv50,
+        legacy_100: !!state.rebirth?.legacyLv100,
+        updated_at: new Date().toISOString()
+      };
+    },
+
+    async syncProfile(force = false) {
+      if (!state) return false;
+      if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        this.status = "offline";
+        return false;
+      }
+      if (this.syncPromise) return this.syncPromise;
+      this.syncPromise = (async () => {
+        try {
+          const user = await this.ensureAuth();
+          if (!user?.id) return false;
+          const payload = this.buildSyncPayload(user.id);
+          const { updated_at, ...hashTarget } = payload;
+          const sig = String(hashStr(JSON.stringify(hashTarget)));
+          const age = Date.now() - (state.cloud?.lastSyncAt || 0);
+          if (!force && state.cloud?.lastSyncHash === sig && age < 15 * 60000) {
+            this.status = "online";
+            return true;
+          }
+          const sb = await this.getClient();
+          if (!sb) return false;
+          this.status = "syncing";
+          const { error } = await sb.from("league_players").upsert(payload, { onConflict: "id" });
+          if (error) {
+            this.lastSyncError = error.message || "upsert_failed";
+            this.status = "error";
+            return false;
+          }
+          state.cloud.userId = user.id;
+          state.cloud.lastSyncAt = Date.now();
+          state.cloud.lastSyncHash = sig;
+          this.playersById[user.id] = payload;
+          this.status = "online";
+          this.lastSyncError = "";
+          saveState();
+          return true;
+        } catch (err) {
+          this.lastSyncError = err?.message || "sync_failed";
+          this.status = "error";
+          return false;
+        } finally {
+          this.syncPromise = null;
+        }
+      })();
+      return this.syncPromise;
+    },
+
+    scheduleSync(immediate = false) {
+      if (!state) return;
+      clearTimeout(this.syncDebounceTimer);
+      this.syncDebounceTimer = setTimeout(() => {
+        this.syncProfile(!!immediate);
+      }, immediate ? 250 : 2500);
+    },
+
+    onStateSaved() {
+      if (!state || !state.profile?.createdAt) return;
+      const payload = this.buildSyncPayload(state.cloud?.userId || "local");
+      const { updated_at, id, ...hashTarget } = payload;
+      const curSig = String(hashStr(JSON.stringify({ id: state.cloud?.userId || "", ...hashTarget })));
+      if (curSig !== state.cloud?.lastSyncHash) {
+        this.scheduleSync(false);
+      }
+    },
+
+    ensureReadyAndSync(force = false) {
+      this.ensureAuth().then(user => {
+        if (user?.id) this.syncProfile(force);
+      });
+    },
+
+    getBoardKey(tab, rankCat = "level") {
+      if (tab === "daily") return "daily";
+      if (tab === "weekly") return "weekly";
+      return `rank_${rankCat || "level"}`;
+    },
+
+    getCachedBoard(boardKey) {
+      return this.cache[boardKey]?.rows || [];
+    },
+
+    async fetchBoard(boardKey, force = false) {
+      if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        this.status = "offline";
+        return this.getCachedBoard(boardKey);
+      }
+      const cached = this.cache[boardKey];
+      const now = Date.now();
+      if (!force && cached && (now - (cached.at || 0)) < 90000) {
+        return cached.rows || [];
+      }
+      if (force && (now - this.lastManualRefreshAt) < 12000) {
+        const waitSec = Math.ceil((12000 - (now - this.lastManualRefreshAt)) / 1000);
+        FX.showToast(`الترتيب متحدث لسه — استنى ${waitSec} ثواني عشان نحافظ على سرعة السيرفر ⏳`, "warn");
+        return this.getCachedBoard(boardKey);
+      }
+      if (this.inFlightFetch[boardKey]) return this.inFlightFetch[boardKey];
+
+      this.inFlightFetch[boardKey] = (async () => {
+        try {
+          await this.ensureAuth();
+          const sb = await this.getClient();
+          if (!sb) return this.getCachedBoard(boardKey);
+          if (force) this.lastManualRefreshAt = Date.now();
+          this.status = "syncing";
+
+          let q = sb.from("league_players").select(CLOUD_COLUMNS);
+          if (boardKey === "daily") {
+            q = q.eq("daily_key", getTodayKey()).order("daily_xp", { ascending: false }).limit(50);
+          } else if (boardKey === "weekly") {
+            q = q.eq("week_key", getWeekKey()).order("weekly_xp", { ascending: false }).limit(50);
+          } else if (boardKey === "rank_hours") {
+            q = q.order("total_minutes", { ascending: false }).limit(50);
+          } else if (boardKey === "rank_sessions") {
+            q = q.order("total_sessions", { ascending: false }).limit(50);
+          } else if (boardKey === "rank_coins") {
+            q = q.order("coins", { ascending: false }).limit(50);
+          } else if (boardKey === "rank_streak") {
+            q = q.order("longest_streak", { ascending: false }).limit(50);
+          } else if (boardKey === "rank_power") {
+            q = q.order("kingdom_power", { ascending: false }).limit(50);
+          } else {
+            q = q.order("level", { ascending: false }).order("xp", { ascending: false }).limit(50);
+          }
+
+          const { data, error } = await q;
+          if (error) {
+            this.lastSyncError = error.message || "fetch_failed";
+            this.status = "error";
+            return this.getCachedBoard(boardKey);
+          }
+
+          const rows = Array.isArray(data) ? data.slice(0, 50) : [];
+          this.cache[boardKey] = { at: Date.now(), rows };
+          for (const r of rows) {
+            if (r && r.id) this.playersById[r.id] = r;
+          }
+          this.saveLocalCache();
+          this.status = "online";
+          this.lastSyncError = "";
+          if (currentScreen === "league") renderLeague();
+          return rows;
+        } catch (err) {
+          this.lastSyncError = err?.message || "fetch_exception";
+          this.status = "error";
+          return this.getCachedBoard(boardKey);
+        } finally {
+          delete this.inFlightFetch[boardKey];
+        }
+      })();
+      return this.inFlightFetch[boardKey];
+    }
+  };
 
   // --- League Bots Persistent Profiles & Human Simulation ---
   function getBotArchetype(idx) {
@@ -19692,58 +20100,90 @@
     if (changed) saveState();
   }
 
-  function computeMultiRankings(category = "level") {
+  function computeMultiRankings(category = "level", onlyReal = false) {
     const today = getTodayKey();
     const nowMs = Date.now();
-    const rows = LEAGUE_NAMES.map((name, idx) => {
-      const bot = ensureBotProfile(idx);
-      const simToday = simulateHumanBotDay(idx, today, nowMs, false);
-      const totalMin = (bot.totalMinutes || 0) + simToday.minutes;
-      const totalSess = (bot.totalSessions || 0) + simToday.sessions;
-      const coinsNow = (bot.coins || 0) + (simToday.coins || 0);
-      let lv = bot.level || 1;
-      let xpPool = (bot.xp || 0) + (simToday.xp || 0);
-      while (xpPool >= xpNeeded(lv)) {
-        xpPool -= xpNeeded(lv);
-        lv += 1;
-      }
-      const bestStreak = Math.max(bot.longestStreak || 0, (bot.currentStreak || 0) + (simToday.sessions > 0 ? 1 : 0));
-      const powerScore = (bot.kingdomLevel || 1) * 10 + (bot.bossesDefeated || 0) * 15;
+    const myCloudId = state.cloud?.userId || "";
+    const rows = [];
 
-      let sortVal = lv * 100000 + xpPool;
-      let dispVal = `Lv ${lv}`;
-      if (category === "hours") {
-        sortVal = totalMin;
-        dispVal = `${formatDecimal(totalMin / 60)} س`;
-      } else if (category === "sessions") {
-        sortVal = totalSess;
-        dispVal = `${formatNum(totalSess)} جلسة`;
-      } else if (category === "coins") {
-        sortVal = coinsNow;
-        dispVal = `${formatNum(coinsNow)} 🪙`;
-      } else if (category === "streak") {
-        sortVal = bestStreak;
-        dispVal = `${bestStreak} يوم`;
-      } else if (category === "power") {
-        sortVal = powerScore;
-        dispVal = `${formatNum(powerScore)} ⚡`;
-      }
+    if (!onlyReal) {
+      LEAGUE_NAMES.forEach((name, idx) => {
+        const bot = ensureBotProfile(idx);
+        const simToday = simulateHumanBotDay(idx, today, nowMs, false);
+        const totalMin = (bot.totalMinutes || 0) + simToday.minutes;
+        const totalSess = (bot.totalSessions || 0) + simToday.sessions;
+        const coinsNow = (bot.coins || 0) + (simToday.coins || 0);
+        let lv = bot.level || 1;
+        let xpPool = (bot.xp || 0) + (simToday.xp || 0);
+        while (xpPool >= xpNeeded(lv)) {
+          xpPool -= xpNeeded(lv);
+          lv += 1;
+        }
+        const bestStreak = Math.max(bot.longestStreak || 0, (bot.currentStreak || 0) + (simToday.sessions > 0 ? 1 : 0));
+        const powerScore = (bot.kingdomLevel || 1) * 10 + (bot.bossesDefeated || 0) * 15;
 
-      return {
-        id: bot.id,
-        botIdx: idx,
-        name: bot.name,
-        avatar: bot.avatar,
-        level: lv,
-        coins: coinsNow,
-        usedBoost: simToday.usedBoostToday,
-        boostLabel: simToday.boostLabel,
-        isStudyingNow: simToday.isStudyingNow,
+        let sortVal = lv * 100000 + xpPool;
+        let dispVal = `Lv ${lv}`;
+        if (category === "hours") { sortVal = totalMin; dispVal = `${formatDecimal(totalMin / 60)} س`; }
+        else if (category === "sessions") { sortVal = totalSess; dispVal = `${formatNum(totalSess)} جلسة`; }
+        else if (category === "coins") { sortVal = coinsNow; dispVal = `${formatNum(coinsNow)} 🪙`; }
+        else if (category === "streak") { sortVal = bestStreak; dispVal = `${bestStreak} يوم`; }
+        else if (category === "power") { sortVal = powerScore; dispVal = `${formatNum(powerScore)} ⚡`; }
+
+        rows.push({
+          id: bot.id,
+          botIdx: idx,
+          name: bot.name,
+          avatar: bot.avatar,
+          level: lv,
+          coins: coinsNow,
+          usedBoost: simToday.usedBoostToday,
+          boostLabel: simToday.boostLabel,
+          isStudyingNow: simToday.isStudyingNow,
+          sortVal,
+          dispVal,
+          isReal: false,
+          isMe: false
+        });
+      });
+    }
+
+    const cloudRows = CloudLeague.getCachedBoard(`rank_${category}`);
+    for (const cr of cloudRows) {
+      if (!cr || !cr.id || (myCloudId && cr.id === myCloudId)) continue;
+      const rLv = cr.level || 1;
+      const rXp = cr.xp || 0;
+      const rMin = cr.total_minutes || 0;
+      const rSess = cr.total_sessions || 0;
+      const rCoins = cr.coins || 0;
+      const rStreak = cr.longest_streak || 0;
+      const rPower = cr.kingdom_power || ((cr.kingdom_level || 1) * 10);
+
+      let sortVal = rLv * 100000 + rXp;
+      let dispVal = `Lv ${rLv}`;
+      if (category === "hours") { sortVal = rMin; dispVal = `${formatDecimal(rMin / 60)} س`; }
+      else if (category === "sessions") { sortVal = rSess; dispVal = `${formatNum(rSess)} جلسة`; }
+      else if (category === "coins") { sortVal = rCoins; dispVal = `${formatNum(rCoins)} 🪙`; }
+      else if (category === "streak") { sortVal = rStreak; dispVal = `${rStreak} يوم`; }
+      else if (category === "power") { sortVal = rPower; dispVal = `${formatNum(rPower)} ⚡`; }
+
+      const activeRecently = !!cr.is_studying && cr.updated_at && (nowMs - new Date(cr.updated_at).getTime()) < 90 * 60000;
+      rows.push({
+        id: `real_${cr.id}`,
+        realId: cr.id,
+        name: cr.name || "بطل",
+        avatar: cr.avatar || "⚔️",
+        title: cr.title || "",
+        level: rLv,
+        coins: rCoins,
+        usedBoost: false,
+        isStudyingNow: activeRecently,
         sortVal,
         dispVal,
+        isReal: true,
         isMe: false
-      };
-    });
+      });
+    }
 
     const hero = HEROES.find(h => h.id === state.profile.hero) || HEROES[1];
     const myLv = state.progress.level || 1;
@@ -19761,22 +20201,27 @@
     else if (category === "streak") { mySort = myStreak; myDisp = `${myStreak} يوم`; }
     else if (category === "power") { mySort = myPower; myDisp = `${formatNum(myPower)} ⚡`; }
 
-    rows.push({
+    const meRow = {
       id: "me",
       name: state.profile.name || "أنت",
       avatar: hero.emoji,
       level: myLv,
       coins: myCoins,
       usedBoost: false,
-      isStudyingNow: !!state.activeSession,
+      isStudyingNow: !!(state.activeSession && !state.activeSession.isRest),
       sortVal: mySort,
       dispVal: myDisp,
+      isReal: true,
       isMe: true
-    });
+    };
+    rows.push(meRow);
 
     rows.sort((a, b) => b.sortVal - a.sortVal);
     rows.forEach((r, i) => { r.rank = i + 1; });
-    return rows;
+    const top50 = rows.slice(0, 50);
+    top50.meRow = meRow;
+    top50.totalPoolCount = rows.length;
+    return top50;
   }
 
   // --- League ---
@@ -19787,7 +20232,7 @@
       const dKey = addDaysToKey(wk, i);
       const h = state.history[dKey];
       if (h) {
-        total += typeof h.xp === "number" ? h.xp : Math.round(h.min * 1.2 * getStreakMultiplier());
+        total += typeof h.xp === "number" ? h.xp : Math.round(h.min * 6 * getStreakMultiplier());
       }
     }
     return hasLevelFeature("perk_league_aura10") ? Math.round(total * 1.1) : total;
@@ -19811,101 +20256,169 @@
     return xpSum;
   }
 
-  function computeLeagueStandings(hoursBack = 0) {
+  function computeLeagueStandings(hoursBack = 0, onlyReal = false) {
     const wk = state.league.weekKey;
     const weekStartMs = parseDateKey(wk).getTime();
-    const nowMs = Math.max(weekStartMs, Date.now() - hoursBack * 3600000);
+    const nowRealMs = Date.now();
+    const nowMs = Math.max(weekStartMs, nowRealMs - hoursBack * 3600000);
     const todayKey = getTodayKey(new Date(nowMs));
+    const myCloudId = state.cloud?.userId || "";
+    const rows = [];
 
-    const rows = LEAGUE_NAMES.map((name, idx) => {
-      const bot = ensureBotProfile(idx);
-      let xp = 0;
-      let isStudyingNow = false;
-      let lastSessionMin = 0;
-      for (let d = 0; d < 7; d++) {
-        const dk = addDaysToKey(wk, d);
-        const dayStartMs = weekStartMs + d * 86400000;
-        if (dayStartMs > nowMs) break;
-        const sim = simulateHumanBotDay(idx, dk, nowMs, false);
-        xp += sim.xp;
-        if (dk === todayKey) {
-          isStudyingNow = sim.isStudyingNow;
-          lastSessionMin = sim.lastSessionMin;
+    if (!onlyReal) {
+      LEAGUE_NAMES.forEach((name, idx) => {
+        const bot = ensureBotProfile(idx);
+        let xp = 0;
+        let isStudyingNow = false;
+        let lastSessionMin = 0;
+        for (let d = 0; d < 7; d++) {
+          const dk = addDaysToKey(wk, d);
+          const dayStartMs = weekStartMs + d * 86400000;
+          if (dayStartMs > nowMs) break;
+          const sim = simulateHumanBotDay(idx, dk, nowMs, false);
+          xp += sim.xp;
+          if (dk === todayKey) {
+            isStudyingNow = sim.isStudyingNow;
+            lastSessionMin = sim.lastSessionMin;
+          }
         }
+        rows.push({
+          id: bot.id,
+          botIdx: idx,
+          name: bot.name,
+          avatar: bot.avatar,
+          xp,
+          approxLevel: bot.level,
+          isStudyingNow,
+          lastSessionMin,
+          isReal: false,
+          isMe: false
+        });
+      });
+    }
+
+    if (hoursBack === 0) {
+      const cloudRows = CloudLeague.getCachedBoard("weekly");
+      for (const cr of cloudRows) {
+        if (!cr || !cr.id || (myCloudId && cr.id === myCloudId)) continue;
+        if (cr.week_key && cr.week_key !== wk) continue;
+        const activeRecently = !!cr.is_studying && cr.updated_at && (nowRealMs - new Date(cr.updated_at).getTime()) < 90 * 60000;
+        rows.push({
+          id: `real_${cr.id}`,
+          realId: cr.id,
+          name: cr.name || "بطل",
+          avatar: cr.avatar || "⚔️",
+          title: cr.title || "",
+          xp: Math.max(0, Number(cr.weekly_xp) || 0),
+          approxLevel: cr.level || 1,
+          coins: cr.coins || 0,
+          isStudyingNow: activeRecently,
+          lastSessionMin: 0,
+          isReal: true,
+          isMe: false
+        });
       }
-      return {
-        id: bot.id,
-        botIdx: idx,
-        name: bot.name,
-        avatar: bot.avatar,
-        xp,
-        approxLevel: bot.level,
-        isStudyingNow,
-        lastSessionMin,
-        isMe: false
-      };
-    });
+    }
 
     const hero = HEROES.find(h => h.id === state.profile.hero) || HEROES[1];
-    rows.push({
+    const meRow = {
       id: "me",
       name: state.profile.name || "أنت",
       avatar: hero.emoji,
       xp: getWeeklyUserXP(),
       approxLevel: state.progress.level,
-      isStudyingNow: !!state.activeSession,
+      isStudyingNow: !!(state.activeSession && !state.activeSession.isRest),
       lastSessionMin: 0,
+      isReal: true,
       isMe: true
-    });
+    };
+    rows.push(meRow);
 
     rows.sort((a, b) => b.xp - a.xp);
     rows.forEach((r, i) => { r.rank = i + 1; });
-    return rows;
+    const top50 = rows.slice(0, 50);
+    top50.meRow = meRow;
+    top50.totalPoolCount = rows.length;
+    return top50;
   }
 
   function getDailyUserXP(dayKey = state.league?.daily?.dateKey || getTodayKey()) {
     const h = state.history[dayKey];
     if (!h) return 0;
-    const base = typeof h.xp === "number" ? h.xp : Math.round(h.min * 1.2 * getStreakMultiplier());
+    const base = typeof h.xp === "number" ? h.xp : Math.round(h.min * 6 * getStreakMultiplier());
     return hasLevelFeature("perk_league_aura10") ? Math.round(base * 1.1) : base;
   }
 
-  function computeDailyLeagueStandings(hoursBack = 0) {
+  function computeDailyLeagueStandings(hoursBack = 0, onlyReal = false) {
     const dObj = state.league?.daily || { dateKey: getTodayKey(), seed: getTodayKey() };
     const dayStartMs = parseDateKey(dObj.dateKey).getTime();
-    const nowMs = Math.max(dayStartMs, Date.now() - hoursBack * 3600000);
+    const nowRealMs = Date.now();
+    const nowMs = Math.max(dayStartMs, nowRealMs - hoursBack * 3600000);
+    const myCloudId = state.cloud?.userId || "";
+    const rows = [];
 
-    const rows = LEAGUE_NAMES.slice(0, 19).map((name, idx) => {
-      const bot = ensureBotProfile(idx);
-      const sim = simulateHumanBotDay(idx, dObj.dateKey, nowMs, true);
-      return {
-        id: bot.id,
-        botIdx: idx,
-        name: bot.name,
-        avatar: bot.avatar,
-        xp: sim.xp,
-        approxLevel: bot.level,
-        isStudyingNow: sim.isStudyingNow,
-        lastSessionMin: sim.lastSessionMin,
-        isMe: false
-      };
-    });
+    if (!onlyReal) {
+      LEAGUE_NAMES.slice(0, 19).forEach((name, idx) => {
+        const bot = ensureBotProfile(idx);
+        const sim = simulateHumanBotDay(idx, dObj.dateKey, nowMs, true);
+        rows.push({
+          id: bot.id,
+          botIdx: idx,
+          name: bot.name,
+          avatar: bot.avatar,
+          xp: sim.xp,
+          approxLevel: bot.level,
+          isStudyingNow: sim.isStudyingNow,
+          lastSessionMin: sim.lastSessionMin,
+          isReal: false,
+          isMe: false
+        });
+      });
+    }
+
+    if (hoursBack === 0) {
+      const cloudRows = CloudLeague.getCachedBoard("daily");
+      for (const cr of cloudRows) {
+        if (!cr || !cr.id || (myCloudId && cr.id === myCloudId)) continue;
+        if (cr.daily_key && cr.daily_key !== dObj.dateKey) continue;
+        const activeRecently = !!cr.is_studying && cr.updated_at && (nowRealMs - new Date(cr.updated_at).getTime()) < 90 * 60000;
+        rows.push({
+          id: `real_${cr.id}`,
+          realId: cr.id,
+          name: cr.name || "بطل",
+          avatar: cr.avatar || "⚔️",
+          title: cr.title || "",
+          xp: Math.max(0, Number(cr.daily_xp) || 0),
+          approxLevel: cr.level || 1,
+          coins: cr.coins || 0,
+          isStudyingNow: activeRecently,
+          lastSessionMin: 0,
+          isReal: true,
+          isMe: false
+        });
+      }
+    }
 
     const hero = HEROES.find(h => h.id === state.profile.hero) || HEROES[1];
-    rows.push({
+    const meRow = {
       id: "me",
       name: state.profile.name || "أنت",
       avatar: hero.emoji,
       xp: getDailyUserXP(dObj.dateKey),
       approxLevel: state.progress.level,
-      isStudyingNow: !!state.activeSession,
+      isStudyingNow: !!(state.activeSession && !state.activeSession.isRest),
       lastSessionMin: 0,
+      isReal: true,
       isMe: true
-    });
+    };
+    rows.push(meRow);
 
     rows.sort((a, b) => b.xp - a.xp);
     rows.forEach((r, i) => { r.rank = i + 1; });
-    return rows;
+    const top50 = rows.slice(0, 50);
+    top50.meRow = meRow;
+    top50.totalPoolCount = rows.length;
+    return top50;
   }
 
   function settleDailyLeague(newDateKey) {
@@ -19914,7 +20427,7 @@
     const oldDay = dObj.dateKey;
     const oldUserXp = getDailyUserXP(oldDay);
     const standings = computeDailyLeagueStandings(0);
-    const me = standings.find(r => r.isMe);
+    const me = standings.meRow || standings.find(r => r.isMe);
     const rank = me ? me.rank : 20;
     const tierObj = LEAGUE_TIERS.find(t => t.id === state.league.tier) || LEAGUE_TIERS[0];
     const tierScale = 1 + (tierObj.order - 1) * 0.25;
@@ -19929,7 +20442,7 @@
     }
 
     standings.forEach(r => {
-      if (r.isMe) return;
+      if (r.isMe || r.isReal || r.botIdx == null) return;
       const bot = ensureBotProfile(r.botIdx);
       if (!bot.bestDailyRank || r.rank < bot.bestDailyRank) bot.bestDailyRank = r.rank;
       if (r.rank <= 3) bot.podiums += 1;
@@ -19966,7 +20479,7 @@
 
   function settleLeagueWeek(newWeekKey) {
     const standings = computeLeagueStandings(0);
-    const me = standings.find(r => r.isMe);
+    const me = standings.meRow || standings.find(r => r.isMe);
     const rank = me ? me.rank : 15;
     const tierIdx = LEAGUE_TIERS.findIndex(t => t.id === state.league.tier);
     const curTier = LEAGUE_TIERS[Math.max(0, tierIdx)];
@@ -20036,13 +20549,14 @@
     }
 
     standings.forEach(r => {
-      if (r.isMe) return;
+      if (r.isMe || r.isReal || r.botIdx == null) return;
       const bot = ensureBotProfile(r.botIdx);
       bot.weeksPlayed = (bot.weeksPlayed || 0) + 1;
       if (!bot.bestWeeklyRank || r.rank < bot.bestWeeklyRank) bot.bestWeeklyRank = r.rank;
       if (r.rank <= 3) bot.podiums += 1;
       checkBotAchievements(bot);
     });
+    CloudLeague.scheduleSync(true);
 
     addMailboxMessage({
       cat: "league",
@@ -20252,8 +20766,12 @@
     }
     const candidates = SHOP_CATALOG.filter(x =>
       !x.consumable &&
+      !x.stackable &&
+      !x.revealAtLevel &&
+      x.currency !== "crystals" &&
       (x.rarity === "rare" || x.rarity === "legendary") &&
       !state.shop.owned.includes(x.id) &&
+      (!x.minRebirth || (state.rebirth?.count || 0) >= x.minRebirth) &&
       (!x.minLevel || state.progress.level >= x.minLevel)
     );
     if (!candidates.length) return null;
@@ -20343,9 +20861,10 @@
         }
         state.companion.equippedAccessory = item.accId;
       }
-      if (customPrice !== null && state.shop.dailyDeal?.dateKey === getTodayKey() && state.shop.dailyDeal?.itemId === item.id) {
-        state.shop.dailyDeal.bought = true;
-      }
+    }
+
+    if (customPrice !== null && state.shop.dailyDeal?.dateKey === getTodayKey() && state.shop.dailyDeal?.itemId === item.id) {
+      state.shop.dailyDeal.bought = true;
     }
 
     AudioFX.playCoin();
@@ -20898,21 +21417,21 @@
       if (xpRes.sageShards > 0) shardsGained += xpRes.sageShards;
 
       const chestTypeEarned = state.buffs.wizardNextRareChest ? "rare" : "random";
+      const chestDrops = sess.isOpenMode ? Math.max(2, openSessionsAwarded * 2) : 2;
       let chestEarned = false;
-      if (sess.isOpenMode) {
-        if (sess.minutes >= CONFIG.CHEST_MIN_MINUTES) {
-          const chestDrops = Math.max(1, Math.floor(sess.minutes / 30));
-          for (let cIdx = 0; cIdx < chestDrops; cIdx++) {
-            if (addChestToQueue(cIdx === 0 ? chestTypeEarned : "random")) chestEarned = true;
-          }
+      let chestsEarnedCount = 0;
+      for (let cIdx = 0; cIdx < chestDrops; cIdx++) {
+        if (addChestToQueue(cIdx === 0 ? chestTypeEarned : "random")) {
+          chestEarned = true;
+          chestsEarnedCount += 1;
         }
-      } else if (sess.minutes >= CONFIG.CHEST_MIN_MINUTES) {
-        chestEarned = addChestToQueue(chestTypeEarned);
       }
       if (chestEarned && chestTypeEarned === "rare" && state.buffs.wizardNextRareChest) {
         state.buffs.wizardNextRareChest = false;
         FX.showToast("🧙‍♂️ صحوة الساحر كشفتلك صندوق نادر مضمون!", "reward");
       }
+      const wheelSpinsEarned = sess.isOpenMode ? Math.max(1, openSessionsAwarded) : 1;
+      state.shop.consumables.spin = Math.min(99, (state.shop.consumables.spin || 0) + wheelSpinsEarned);
 
       const hadEquippedArsenal = (state.arsenal?.equipped?.length || 0) > 0;
       const satBeforeSession = Number(state.kingdom?.satisfaction ?? 60);
@@ -21137,6 +21656,8 @@
         healthCapped: preview.healthCapped,
         xpRes,
         chestEarned,
+        chestsEarnedCount,
+        wheelSpinsEarned,
         companionRes,
         flowInfo,
         isPureSession,
@@ -21167,6 +21688,7 @@
       }
       EventBus.emit("sessionCompleted", { minutes: sess.minutes });
       checkAchievements();
+      CloudLeague.scheduleSync(true);
 
       const autoRebirthTriggered = checkAndRunAutoRebirth({ from: "home", noNavigate: true });
       if (autoRebirthTriggered) {
@@ -21191,6 +21713,8 @@
           streakNow: state.streak.current,
           streakIncreased,
           chestEarned,
+          chestsEarnedCount,
+          wheelSpinsEarned,
           bossDefeatedInfo,
           leveledUpTo: xpRes.leveledUp ? state.progress.level : null,
           unlockedFeatures: xpRes.unlockedFeatures || [],
@@ -21268,7 +21792,8 @@
     if (d.shardsGained > 0) rewardLines.push(`💠 شظايا الأثير: +${d.shardsGained} شظية`);
     if (d.shieldBroken) rewardLines.push("🔷 كسرت الدرع البلوري للوحش!");
     if (d.fuelAddedHrs > 0) rewardLines.push(`⛽ وقود المملكة: +${d.fuelAddedHrs} ساعة تشغيل`);
-    if (d.chestEarned) rewardLines.push("🎁 كسبت صندوق جديد في طابور الصناديق");
+    if (d.chestEarned) rewardLines.push(`🎁🎁 كسبت ${d.chestsEarnedCount || 2} صناديق هدية في طابور الصناديق`);
+    if (d.wheelSpinsEarned > 0) rewardLines.push(`🎡 كسبت +${d.wheelSpinsEarned} لفة مجانية في عجلة الحظ`);
     if (d.companionRes?.evolved) {
       rewardLines.push(`${d.companionRes.badgeEmoji} ${escapeHtml(state.companion.name)} اتطور للمرحلة ${d.companionRes.stage}: ${d.companionRes.stageName}!`);
     } else if (!d.isRest) {
@@ -21669,6 +22194,7 @@
         FX.confetti(true);
         FX.showToast("🎉 أهلاً بيك! خدت 500 🪙 هدية البداية", "reward");
         saveState(true);
+        CloudLeague.scheduleSync(true);
         navigate("home");
       };
     }
@@ -22008,7 +22534,7 @@
     }
 
     // 10. قرب امتلاء سقف تراكم أرباح المملكة (≥ 85%)
-    const capHrs = CONFIG.KINGDOM_BASE_CAP_HOURS + getKingdomBonus("capHours");
+    const capHrs = getKingdomCapHours();
     const elapsedHrs = Math.max(0, (nowMs - (state.kingdom?.lastCollect || nowMs)) / 3600000);
     const pendingKingdomCoins = getKingdomAccumulatedCoins();
     if (pendingKingdomCoins > 0 && elapsedHrs >= capHrs * 0.85) {
@@ -22030,7 +22556,7 @@
     const weekRemDays = (getWeekEndMs(state.league.weekKey) - nowMs) / 86400000;
     if (state.league.tier !== "bronze" && weekRemDays <= 2) {
       const stList = standingsNowOverride || computeLeagueStandings(0);
-      const wkRank = stList.find(r => r.isMe)?.rank || 1;
+      const wkRank = (stList.meRow || stList.find(r => r.isMe))?.rank || 1;
       if (wkRank >= 26) {
         duties.push({
           id: "league_relegation",
@@ -22187,6 +22713,8 @@
 
     const chestCount = state.chests.queue.length;
     const wheelFree = state.wheel.lastFreeDay !== today;
+    const earnedWheelSpins = state.shop.consumables.spin || 0;
+    const wheelReadyCount = (wheelFree ? 1 : 0) + earnedWheelSpins;
     const msToMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
     const hhLeft = pad2(Math.floor(msToMidnight / 3600000));
     const mmLeft = pad2(Math.floor((msToMidnight % 3600000) / 60000));
@@ -22197,8 +22725,8 @@
     const pendingCoins = getKingdomAccumulatedCoins();
     const standingsNow = computeLeagueStandings(0);
     const standingsOld = computeLeagueStandings(6);
-    const myRank = standingsNow.find(r => r.isMe)?.rank || 1;
-    const oldRank = standingsOld.find(r => r.isMe)?.rank || myRank;
+    const myRank = (standingsNow.meRow || standingsNow.find(r => r.isMe))?.rank || 1;
+    const oldRank = (standingsOld.meRow || standingsOld.find(r => r.isMe))?.rank || myRank;
     const rankArrow = myRank < oldRank ? `<span class="text-green">▲</span>` : myRank > oldRank ? `<span class="text-red">▼</span>` : `<span class="text-muted">•</span>`;
     const curLeagueTier = LEAGUE_TIERS.find(t => t.id === state.league.tier) || LEAGUE_TIERS[0];
 
@@ -22506,14 +23034,14 @@
             : `<span class="btn btn-secondary btn-sm btn-block">اشترِ صندوق</span>`}
         </div>
 
-        <div class="glass-card home-card-v2 ${wheelFree ? "hc-green" : "hc-purple"} bento-tile-v2" data-go="wheel" role="button" tabindex="0">
+        <div class="glass-card home-card-v2 ${wheelReadyCount > 0 ? "hc-green" : "hc-purple"} bento-tile-v2" data-go="wheel" role="button" tabindex="0">
           <div class="bento-head-row">
             <span class="bento-head-title">عجلة الحظ</span>
-            <span class="pill ${wheelFree ? "pill-green" : "pill-muted"} text-xs" style="min-height:20px;font-size:10px;padding:1px 7px;">${wheelFree ? "مجانية" : "بكرة"}</span>
+            <span class="pill ${wheelReadyCount > 0 ? "pill-green" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${wheelReadyCount > 0 ? (wheelReadyCount > 1 ? `×${wheelReadyCount} مجانية` : "مجانية") : "بكرة"}</span>
           </div>
           <div class="bento-pedestal">${svgIcon("wheel", 34)}</div>
-          <div class="text-xs text-muted num" style="font-size:11px;">${wheelFree ? "لفّتك اليوم جاهزة!" : `عودة بعد ${hhLeft}:${mmLeft}`}</div>
-          ${wheelFree
+          <div class="text-xs text-muted num" style="font-size:11px;">${wheelFree ? (earnedWheelSpins > 0 ? `اليومية + ${earnedWheelSpins} من جلساتك` : "لفّتك اليوم جاهزة!") : earnedWheelSpins > 0 ? `معاك ${earnedWheelSpins} لفة من جلساتك!` : `عودة بعد ${hhLeft}:${mmLeft}`}</div>
+          ${wheelReadyCount > 0
             ? `<span class="btn btn-green btn-sm btn-block">لف العجلة 🎡</span>`
             : `<span class="btn btn-ghost btn-sm btn-block">شوف الجوايز</span>`}
         </div>
@@ -23274,7 +23802,7 @@
     const targetSess = state.settings.dailySessionsTarget || 4;
     const curIdx = (todayH.sessions % targetSess) + 1;
     const preview = sess.isRest ? { coins: 0, streakMult: 1 } : calculateSessionPreview(isOpen ? 30 : sess.minutes, false);
-    const hasXp2 = !!state.buffs.xp2 || (state.shop.consumables.xp2 || 0) > 0;
+    const hasXp2 = !!state.buffs.xp2;
     const mult = (preview.streakMult * (hasXp2 ? 2 : 1)).toFixed(1).replace(/\.0$/, "");
     const circ = 2 * Math.PI * 112;
     const tStyleMeta = TIMER_STYLES_CATALOG.find(t => t.id === state.themes?.activeTimerStyle) || TIMER_STYLES_CATALOG[0];
@@ -23754,12 +24282,22 @@
       ${r.chestEarned ? `
         <div class="glass-card gold-border mb-12 flex-between">
           <div>
-            <div class="fw-900">🎁 حصلت على صندوق!</div>
-            <div class="text-xs text-muted">افتحه لاكتشاف مكافآتك</div>
+            <div class="fw-900">🎁🎁 حصلت على ${r.chestsEarnedCount || 2} صناديق هدية!</div>
+            <div class="text-xs text-muted">افتحهم لاكتشاف مكافآتك</div>
           </div>
-          <button class="btn btn-primary btn-sm" id="vic-open-chest">افتح الصندوق</button>
+          <button class="btn btn-primary btn-sm" id="vic-open-chest">افتح الصناديق</button>
         </div>
-      ` : `<p class="text-xs text-muted mb-12" style="text-align:center;">جلسات 25 دقيقة فأكثر تمنحك صندوقًا 🎁</p>`}
+      ` : ``}
+
+      ${(r.wheelSpinsEarned || 0) > 0 ? `
+        <div class="glass-card mb-12 flex-between" style="border-color:rgba(52,211,153,0.5);">
+          <div>
+            <div class="fw-900 text-green">🎡 حصلت على +${r.wheelSpinsEarned} لفة عجلة حظ!</div>
+            <div class="text-xs text-muted">إجمالي لفاتك المتاحة الآن: <span class="num text-gold">${(state.wheel.lastFreeDay !== getTodayKey() ? 1 : 0) + (state.shop.consumables.spin || 0)}</span></div>
+          </div>
+          <button class="btn btn-green btn-sm" data-go="wheel">لف العجلة 🎡</button>
+        </div>
+      ` : ``}
 
       <div class="flex-between gap-8 mb-12">
         <button class="btn btn-ghost" style="flex:1;" id="vic-rest">☕ استراحة ${restMin} دقائق</button>
@@ -24319,6 +24857,8 @@
     const el = document.getElementById("screen-wheel");
     const today = getTodayKey();
     const freeAvail = state.wheel.lastFreeDay !== today;
+    const earnedSpins = state.shop.consumables.spin || 0;
+    const hasAnyFreeSpin = freeAvail || earnedSpins > 0;
     const extraUsed = state.wheel.extraUsedDay === today ? state.wheel.extraUsedCount : 0;
     const extraLeft = CONFIG.WHEEL_EXTRA_MAX - extraUsed;
     const canAffordExtra = state.wallet.gems >= CONFIG.WHEEL_EXTRA_COST;
@@ -24345,12 +24885,11 @@
       return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
     };
 
-    const wheelDefsSvg = `<defs>${WHEEL_SECTORS.map((_, i) => {
+    const sectors = getWheelSectorsForEra();
+    const wheelDefsSvg = `<defs>${sectors.map((_, i) => {
       const [c1, c2] = sectorColors[i % sectorColors.length];
       return `<radialGradient id="whG${i}" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></radialGradient>`;
     }).join("")}</defs>`;
-
-    const sectors = getWheelSectorsForEra();
     const curEra = getCurrentEra();
     const eraCnt = state.rebirth?.count || 0;
 
@@ -24412,7 +24951,7 @@
             </svg>
           </div>
         </div>
-        <button class="wheel-pro-hub" id="wheel-hub-btn" ${wheelSpinning || (!freeAvail && (extraLeft <= 0 || !canAffordExtra)) ? "disabled" : ""}>لف</button>
+        <button class="wheel-pro-hub" id="wheel-hub-btn" ${wheelSpinning || (!hasAnyFreeSpin && (extraLeft <= 0 || !canAffordExtra)) ? "disabled" : ""}>لف</button>
       </div>
 
       <div class="glass-card mb-12 flex-between" style="justify-content:space-around;padding:12px;">
@@ -24434,8 +24973,18 @@
         `}
       </div>
 
-      <button class="btn btn-primary btn-block mb-8" id="wheel-free-btn" ${!freeAvail || wheelSpinning ? "disabled" : ""}>
-        ${freeAvail ? `${svgIcon("wheel", 18)} لف العجلة مجانًا` : "✓ استهلكت اللفة المجانية اليوم"}
+      ${earnedSpins > 0 ? `
+        <div class="pill pill-green mb-8" style="width:100%;justify-content:center;">
+          🎁 معاك <strong class="num">${earnedSpins}</strong> لفات مجانية من جلسات المذاكرة!
+        </div>
+      ` : ""}
+
+      <button class="btn btn-primary btn-block mb-8" id="wheel-free-btn" ${!hasAnyFreeSpin || wheelSpinning ? "disabled" : ""}>
+        ${freeAvail
+          ? `${svgIcon("wheel", 18)} لف العجلة مجانًا${earnedSpins > 0 ? ` (اليومية + ${earnedSpins} من الجلسات)` : ""}`
+          : earnedSpins > 0
+            ? `${svgIcon("wheel", 18)} لف العجلة بلفة الجلسة (متاح ${earnedSpins})`
+            : "✓ استهلكت اللفة المجانية اليوم"}
       </button>
 
       <button class="btn btn-secondary btn-block" id="wheel-extra-btn" ${extraLeft <= 0 || !canAffordExtra || wheelSpinning ? "disabled" : ""}>
@@ -24445,14 +24994,14 @@
             ? `ينقصك ${CONFIG.WHEEL_EXTRA_COST - state.wallet.gems} 💎`
             : `🔄 لفّة إضافية بـ 💎 ${CONFIG.WHEEL_EXTRA_COST}`}
       </button>
-      <p class="text-xs text-muted mt-8" style="text-align:center;">متبقي <span class="text-gold fw-900 num">${extraLeft}</span> لفات إضافية اليوم</p>
+      <p class="text-xs text-muted mt-8" style="text-align:center;">متبقي <span class="text-gold fw-900 num">${extraLeft}</span> لفات إضافية بالجواهر اليوم</p>
     `;
 
     el.querySelectorAll("[data-w-info]").forEach(b => b.onclick = () => FX.showToast(b.dataset.wInfo, "success"));
     document.getElementById("wheel-free-btn").onclick = () => runWithLoader(() => spinWheel(false), "بندوّر عجلة الحظ...", 450);
     document.getElementById("wheel-extra-btn").onclick = () => runWithLoader(() => spinWheel(true), "بندوّر عجلة الحظ...", 450);
     document.getElementById("wheel-hub-btn").onclick = () => {
-      if (freeAvail) runWithLoader(() => spinWheel(false), "بندوّر عجلة الحظ...", 450);
+      if (hasAnyFreeSpin) runWithLoader(() => spinWheel(false), "بندوّر عجلة الحظ...", 450);
       else if (extraLeft > 0 && canAffordExtra) runWithLoader(() => spinWheel(true), "بندوّر عجلة الحظ...", 450);
     };
   }
@@ -25223,7 +25772,7 @@
     const expHr = getKingdomExpensesPerHour();
     const taxRate = Number(kd.taxRate || 0);
     const taxSliderPct = (taxRate / 30) * 100;
-    const capHrs = CONFIG.KINGDOM_BASE_CAP_HOURS + getKingdomBonus("capHours");
+    const capHrs = getKingdomCapHours();
     const elapsedHrs = Math.min(capHrs, Math.max(0, (Date.now() - (kd.lastCollect || Date.now())) / 3600000));
     const accPct = Math.min(100, (elapsedHrs / capHrs) * 100);
     const mult = getKingdomSatisfactionMult();
@@ -25767,11 +26316,73 @@
   // --- 8.2 #league ---
   let leagueShowAll = false;
   let rankingCategory = "level";
+  let leagueOnlyReal = false;
+  let leagueSearch = "";
 
   function renderLeague() {
     const el = document.getElementById("screen-league");
     const curTierIdx = LEAGUE_TIERS.findIndex(t => t.id === state.league.tier);
     const curTier = LEAGUE_TIERS[Math.max(0, curTierIdx)];
+    const activeBoardKey = CloudLeague.getBoardKey(leagueTab, rankingCategory);
+
+    CloudLeague.ensureReadyAndSync(false);
+    CloudLeague.fetchBoard(activeBoardKey, false);
+
+    const statusDotCls = CloudLeague.status === "online" ? "online"
+      : CloudLeague.status === "syncing" ? "syncing"
+        : CloudLeague.status === "error" ? "error" : "offline";
+    const statusText = CloudLeague.status === "online" ? "🟢 متصل أونلاين مباشر"
+      : CloudLeague.status === "syncing" ? "⏳ جاري التزامن..."
+        : CloudLeague.status === "error" ? "⚠️ مزامنة محلية مؤقتة"
+          : "📡 وضع محلي (أوفلاين)";
+
+    const renderSyncBarHtml = (poolCount, realCount) => `
+      <div class="lg-sync-bar">
+        <div class="flex-center gap-8" style="min-width:0;">
+          <span class="lg-sync-dot ${statusDotCls}"></span>
+          <span class="text-xs fw-800">${statusText}</span>
+          <span class="pill pill-blue text-xs num" style="min-height:20px;padding:1px 7px;">🌐 ${realCount} حقيقي</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="lg-cloud-refresh" style="min-height:28px;padding:2px 10px;font-size:11px;">🔄 تحديث</button>
+      </div>
+      <div class="lg-filter-bar">
+        <input class="sh-search-inp" id="lg-search-inp" type="search" placeholder="🔍 ابحث في أول ${poolCount} لاعب..." value="${escapeHtml(leagueSearch)}" style="min-height:36px;" />
+        <button class="chip ${leagueOnlyReal ? "active-gold" : ""}" id="lg-real-toggle" style="min-height:36px;padding:4px 10px;font-size:11.5px;">${leagueOnlyReal ? "🌐 الحقيقيين فقط" : "الكل + الحقيقيين"}</button>
+      </div>
+    `;
+
+    const bindCloudHeaderEvents = () => {
+      const refBtn = document.getElementById("lg-cloud-refresh");
+      if (refBtn) {
+        refBtn.onclick = async () => {
+          AudioFX.playClick();
+          await CloudLeague.syncProfile(true);
+          await CloudLeague.fetchBoard(activeBoardKey, true);
+          renderLeague();
+        };
+      }
+      const realTog = document.getElementById("lg-real-toggle");
+      if (realTog) {
+        realTog.onclick = () => {
+          leagueOnlyReal = !leagueOnlyReal;
+          AudioFX.playClick();
+          renderLeague();
+        };
+      }
+      const srch = document.getElementById("lg-search-inp");
+      if (srch) {
+        srch.oninput = (e) => {
+          leagueSearch = e.target.value;
+          const pos = srch.selectionStart || leagueSearch.length;
+          renderLeague();
+          const newInp = document.getElementById("lg-search-inp");
+          if (newInp) {
+            newInp.focus();
+            try { newInp.setSelectionRange(pos, pos); } catch {}
+          }
+        };
+      }
+    };
 
     if (leagueTab === "rankings") {
       const rankCats = [
@@ -25782,9 +26393,14 @@
         { id: "streak", label: "🔥 السلسلة" },
         { id: "power", label: "🏰 القوة" }
       ];
-      const list = computeMultiRankings(rankingCategory);
-      const meRow = list.find(r => r.isMe);
-      const shownList = leagueShowAll ? list : list.slice(0, 15);
+      const list = computeMultiRankings(rankingCategory, leagueOnlyReal);
+      const meRow = list.meRow || list.find(r => r.isMe);
+      const meInTop50 = list.some(r => r.isMe);
+      const realCount = list.filter(r => r.isReal && !r.isMe).length;
+      const q = leagueSearch.trim().toLowerCase();
+      const filteredList = q ? list.filter(r => String(r.name || "").toLowerCase().includes(q)) : list;
+      const shownList = leagueShowAll ? filteredList : filteredList.slice(0, 15);
+
       el.innerHTML = `
         <div class="lg-hero-card">
           <div class="lg-hero-top">
@@ -25792,10 +26408,10 @@
               <div class="lg-tier-emblem"><span class="emoji">🏅</span></div>
               <div>
                 <h2 class="fw-900" style="font-size:21px;">التصنيفات الشاملة</h2>
-                <div class="text-xs text-muted fw-700 mt-8">مقارنة تراكمية حية في كل الجوانب</div>
+                <div class="text-xs text-muted fw-700 mt-8">أعلى 50 لاعب أونلاين + أبطال القلعة</div>
               </div>
             </div>
-            <span class="pill pill-gold text-xs num">مركزك #${meRow ? meRow.rank : "—"}</span>
+            <span class="pill pill-gold text-xs num">${meInTop50 && meRow ? `مركزك #${meRow.rank}` : "خارج أول 50"}</span>
           </div>
           <div class="segmented mb-8">
             <button class="seg-btn" data-lg-tab="daily">📅 اليومي</button>
@@ -25807,29 +26423,47 @@
           </div>
         </div>
 
+        ${renderSyncBarHtml(list.length, realCount)}
+
         <div id="league-list">
-          ${shownList.map(r => `
+          ${!shownList.length ? `<div class="glass-card empty-state"><div class="empty-emoji">🔍</div><div class="fw-900">مفيش لاعبين بالاسم ده في أول 50</div></div>` : shownList.map(r => `
             <div class="lg-row-v2 ${r.isMe ? "me" : ""}" data-lg-user="${r.id}">
               <span class="lg-rank-badge num" style="${r.rank <= 3 ? "background:var(--gold1);color:#1A1104;" : ""}">${r.rank}</span>
               <span class="emoji" style="font-size:26px;flex-shrink:0;">${r.avatar}</span>
               <div style="flex:1;min-width:0;">
                 <div class="fw-800 text-sm" style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
                   <span>${escapeHtml(r.name)}</span>
-                  ${r.isMe ? `<span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span>` : `<span class="text-xs text-muted num">Lv${r.level}</span>`}
+                  ${r.isMe ? `<span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span>` : r.isReal ? `<span class="lg-real-badge">🌐 حقيقي</span>` : `<span class="lg-bot-badge">افتراضي</span>`}
+                  <span class="text-xs text-muted num">Lv${r.level}</span>
                   ${!r.isMe && r.usedBoost ? `<span class="lg-bot-econ-pill">⚡ مقوّي</span>` : ""}
                 </div>
-                ${!r.isMe ? `<div class="text-xs text-muted num mt-8">🪙 ${formatNum(r.coins)} ${r.isStudyingNow ? "· 🟢 يذاكر الآن" : ""}</div>` : ""}
+                ${!r.isMe ? `<div class="text-xs text-muted num mt-8">🪙 ${formatNum(r.coins || 0)} ${r.isStudyingNow ? "· 🟢 يذاكر الآن" : ""}</div>` : ""}
               </div>
               <div class="fw-900 text-gold text-sm num">${r.dispVal}</div>
             </div>
           `).join("")}
         </div>
 
-        <button class="btn btn-ghost btn-block mt-8" id="lg-toggle-all">
-          ${leagueShowAll ? "عرض أول 15 فقط ▲" : `عرض جميع المتنافسين (${list.length}) ▼`}
-        </button>
+        ${!meInTop50 && meRow ? `
+          <div class="lg-outside-card">
+            <div class="text-xs text-gold fw-900 mb-8">📌 ترتيبك الحالي خارج لوحة أول 50 — ذاكر عشان تدخل التوب 50!</div>
+            <div class="lg-row-v2 me" style="margin-bottom:0;" data-lg-user="me">
+              <span class="lg-rank-badge num">+50</span>
+              <span class="emoji" style="font-size:26px;">${meRow.avatar}</span>
+              <div style="flex:1;min-width:0;"><div class="fw-900 text-sm">${escapeHtml(meRow.name)} <span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span></div></div>
+              <span class="fw-900 text-gold text-sm num">${meRow.dispVal}</span>
+            </div>
+          </div>
+        ` : ""}
+
+        ${filteredList.length > 15 ? `
+          <button class="btn btn-ghost btn-block mt-8" id="lg-toggle-all">
+            ${leagueShowAll ? "عرض أول 15 فقط ▲" : `عرض أول ${filteredList.length} متنافس (حد أقصى 50) ▼`}
+          </button>
+        ` : ""}
       `;
 
+      bindCloudHeaderEvents();
       el.querySelectorAll("[data-lg-tab]").forEach(b => {
         b.onclick = () => { leagueTab = b.dataset.lgTab; AudioFX.playClick(); renderLeague(); };
       });
@@ -25838,20 +26472,21 @@
       });
       el.querySelectorAll("[data-lg-user]").forEach(row => {
         row.onclick = () => {
-          const u = list.find(x => x.id === row.dataset.lgUser);
+          const u = list.find(x => x.id === row.dataset.lgUser) || (row.dataset.lgUser === "me" ? meRow : null);
           if (!u) return;
           AudioFX.playClick();
           if (u.isMe) navigate("profile");
           else navigate("bot-profile", { botId: u.id, rank: u.rank, xpNow: u.level * 100, isDaily: false });
         };
       });
-      document.getElementById("lg-toggle-all").onclick = () => { leagueShowAll = !leagueShowAll; renderLeague(); };
+      const tgBtn = document.getElementById("lg-toggle-all");
+      if (tgBtn) tgBtn.onclick = () => { leagueShowAll = !leagueShowAll; renderLeague(); };
       return;
     }
 
     const isDaily = leagueTab === "daily";
-    const standings = isDaily ? computeDailyLeagueStandings(0) : computeLeagueStandings(0);
-    const oldStandings = isDaily ? computeDailyLeagueStandings(3) : computeLeagueStandings(6);
+    const standings = isDaily ? computeDailyLeagueStandings(0, leagueOnlyReal) : computeLeagueStandings(0, leagueOnlyReal);
+    const oldStandings = isDaily ? computeDailyLeagueStandings(3, leagueOnlyReal) : computeLeagueStandings(6, leagueOnlyReal);
     const oldRankMap = Object.fromEntries(oldStandings.map(r => [r.id, r.rank]));
 
     const now = new Date();
@@ -25862,13 +26497,17 @@
     const mins = Math.floor((remMs % 3600000) / 60000);
 
     const top1 = standings[0], top2 = standings[1], top3 = standings[2];
-    const me = standings.find(r => r.isMe);
+    const me = standings.meRow || standings.find(r => r.isMe);
+    const meInTop50 = standings.some(r => r.isMe);
+    const realCount = standings.filter(r => r.isReal && !r.isMe).length;
     const totalPool = standings.length;
-    const listEnd = leagueShowAll ? totalPool : 10;
-    const rows = standings.slice(3, listEnd);
+    const q = leagueSearch.trim().toLowerCase();
+    const rowsSource = q ? standings.filter(r => String(r.name || "").toLowerCase().includes(q)) : standings.slice(3);
+    const listEnd = leagueShowAll || q ? rowsSource.length : 12;
+    const rows = rowsSource.slice(0, listEnd);
     const tierScale = 1 + (curTier.order - 1) * 0.25;
 
-    const myRank = me ? me.rank : totalPool;
+    const myRank = meInTop50 && me ? me.rank : 51;
     const targetRankRow = myRank > 10 ? standings[9] : myRank > 1 ? standings[myRank - 2] : null;
     const xpGap = targetRankRow && me ? Math.max(0, targetRankRow.xp - me.xp + 1) : 0;
     const zoneLabel = myRank <= 3
@@ -25913,7 +26552,7 @@
         <div class="lg-my-strip">
           <div>
             <div class="text-xs text-muted">مركزك</div>
-            <div class="fw-900 text-gold num mt-8" style="font-size:18px;">#${myRank}</div>
+            <div class="fw-900 text-gold num mt-8" style="font-size:18px;">${meInTop50 ? `#${myRank}` : "+50"}</div>
           </div>
           <div>
             <div class="text-xs text-muted">نقاطك</div>
@@ -25924,8 +26563,10 @@
             <div class="fw-900 text-green num mt-8" style="font-size:14px;">${myRank === 1 ? "المتصدر 👑" : `+${formatNum(xpGap)} XP`}</div>
           </div>
         </div>
-        <div class="text-xs text-muted mt-8" style="text-align:center;">ⓘ المنافسون افتراضيون بيتنافسوا معاك بجلسات واقعية</div>
+        <div class="text-xs text-muted mt-8" style="text-align:center;">🌐 ترتيب أونلاين حي يجمع اللاعبين الحقيقيين وأبطال القلعة (حد أقصى 50)</div>
       </div>
+
+      ${renderSyncBarHtml(totalPool, realCount)}
 
       ${(() => {
         const rm = state.league?.rescueMission;
@@ -25981,28 +26622,33 @@
         `;
       })()}
 
-      <!-- منصة التتويج المحسنة -->
-      <div class="lg-podium-v2">
-        <div class="lg-pod-card p2" data-lg-user="${top2.id}">
-          <span class="lg-pod-rank num">2</span>
-          <div style="font-size:32px;">${top2.avatar}</div>
-          <div class="text-xs fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top2.name)}${top2.isMe ? " ⭐" : ""}</div>
-          <span class="pill pill-muted text-xs num" style="min-height:22px;padding:1px 8px;">${formatNum(top2.xp)} XP</span>
+      ${!q && top1 ? `
+        <div class="lg-podium-v2">
+          ${top2 ? `
+            <div class="lg-pod-card p2" data-lg-user="${top2.id}">
+              <span class="lg-pod-rank num">2</span>
+              <div style="font-size:32px;">${top2.avatar}</div>
+              <div class="text-xs fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top2.name)}${top2.isMe ? " ⭐" : top2.isReal ? " 🌐" : ""}</div>
+              <span class="pill pill-muted text-xs num" style="min-height:22px;padding:1px 8px;">${formatNum(top2.xp)} XP</span>
+            </div>
+          ` : `<div></div>`}
+          <div class="lg-pod-card p1" data-lg-user="${top1.id}">
+            <div style="font-size:20px;line-height:1;">👑</div>
+            <span class="lg-pod-rank num">1</span>
+            <div style="font-size:40px;">${top1.avatar}</div>
+            <div class="text-sm fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top1.name)}${top1.isMe ? " ⭐" : top1.isReal ? " 🌐" : ""}</div>
+            <span class="pill pill-gold text-xs num" style="min-height:24px;padding:2px 10px;">${formatNum(top1.xp)} XP</span>
+          </div>
+          ${top3 ? `
+            <div class="lg-pod-card p3" data-lg-user="${top3.id}">
+              <span class="lg-pod-rank num">3</span>
+              <div style="font-size:30px;">${top3.avatar}</div>
+              <div class="text-xs fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top3.name)}${top3.isMe ? " ⭐" : top3.isReal ? " 🌐" : ""}</div>
+              <span class="pill pill-muted text-xs num" style="min-height:22px;padding:1px 8px;">${formatNum(top3.xp)} XP</span>
+            </div>
+          ` : `<div></div>`}
         </div>
-        <div class="lg-pod-card p1" data-lg-user="${top1.id}">
-          <div style="font-size:20px;line-height:1;">👑</div>
-          <span class="lg-pod-rank num">1</span>
-          <div style="font-size:40px;">${top1.avatar}</div>
-          <div class="text-sm fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top1.name)}${top1.isMe ? " ⭐" : ""}</div>
-          <span class="pill pill-gold text-xs num" style="min-height:24px;padding:2px 10px;">${formatNum(top1.xp)} XP</span>
-        </div>
-        <div class="lg-pod-card p3" data-lg-user="${top3.id}">
-          <span class="lg-pod-rank num">3</span>
-          <div style="font-size:30px;">${top3.avatar}</div>
-          <div class="text-xs fw-900" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(top3.name)}${top3.isMe ? " ⭐" : ""}</div>
-          <span class="pill pill-muted text-xs num" style="min-height:22px;padding:1px 8px;">${formatNum(top3.xp)} XP</span>
-        </div>
-      </div>
+      ` : ""}
 
       <div class="lg-zone-banner up">
         <span>${isDaily ? "🎁 منطقة المكافآت اليومية" : "▲ منطقة الصعود للدرجة الأعلى"}</span>
@@ -26010,11 +26656,11 @@
       </div>
 
       <div id="league-list">
-        ${rows.map(r => {
+        ${!rows.length && q ? `<div class="glass-card empty-state"><div class="empty-emoji">🔍</div><div class="fw-900">مفيش لاعبين بالاسم ده في أول 50</div></div>` : rows.map(r => {
           const oldR = oldRankMap[r.id] || r.rank;
           const arrow = r.rank < oldR ? `<span class="text-green fw-900">▲</span>` : r.rank > oldR ? `<span class="text-red fw-900">▼</span>` : `<span class="text-muted">•</span>`;
-          const dropZoneLine = !isDaily && r.rank === 26
-            ? `<div class="lg-zone-banner down"><span>▼ منطقة الهبوط</span><span class="num">آخر 5 مراكز</span></div>`
+          const dropZoneLine = !q && !isDaily && r.rank === 26
+            ? `<div class="lg-zone-banner down"><span>▼ منطقة الهبوط</span><span class="num">آخر المراكز في الجدول</span></div>`
             : "";
           return `
             ${dropZoneLine}
@@ -26024,10 +26670,17 @@
               <div style="flex:1;min-width:0;">
                 <div class="fw-800 text-sm" style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
                   <span>${escapeHtml(r.name)}</span>
-                  ${r.isMe ? `<span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span>` : `<span class="text-xs text-muted num">Lv${r.approxLevel || 1}</span>`}
+                  ${r.isMe ? `<span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span>` : r.isReal ? `<span class="lg-real-badge">🌐 حقيقي</span>` : `<span class="lg-bot-badge">افتراضي</span>`}
+                  <span class="text-xs text-muted num">Lv${r.approxLevel || 1}</span>
                   ${r.isMe && state.rebirth?.legacyLv100 ? `<span class="rb-legacy-badge">☀️ 100</span>` : r.isMe && state.rebirth?.legacyLv50 ? `<span class="rb-legacy-badge">🏅 50</span>` : ""}
                 </div>
-                ${!r.isMe ? (() => {
+                ${!r.isMe && r.isReal ? `
+                  <div class="mt-8" style="margin-top:3px;display:flex;gap:4px;flex-wrap:wrap;align-items:center;">
+                    ${r.isStudyingNow ? `<span class="bot-status-pill">🟢 يذاكر الآن</span>` : `<span class="bot-status-pill idle">🌐 متصل</span>`}
+                    <span class="lg-bot-econ-pill num">🪙 ${formatNum(r.coins || 0)}</span>
+                    ${r.title ? `<span class="text-xs text-muted">${escapeHtml(r.title)}</span>` : ""}
+                  </div>
+                ` : !r.isMe ? (() => {
                   const botObj = ensureBotProfile(r.botIdx);
                   const simD = simulateHumanBotDay(r.botIdx, getTodayKey(), Date.now(), isDaily);
                   return `
@@ -26048,21 +26701,28 @@
         }).join("")}
       </div>
 
-      ${!leagueShowAll && me && me.rank > 10 ? `
-        <div class="lg-row-v2 me mt-8" data-lg-user="me">
-          <span class="lg-rank-badge num">${me.rank}</span>
-          <span class="emoji" style="font-size:26px;">${me.avatar}</span>
-          <div style="flex:1;min-width:0;">
-            <div class="fw-900 text-sm">${escapeHtml(me.name)} <span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span></div>
+      ${!meInTop50 && me ? `
+        <div class="lg-outside-card">
+          <div class="text-xs text-gold fw-900 mb-8">📌 ترتيبك خارج أول 50 لاعب — خلّص جلسة عشان تطلع في الترتيب!</div>
+          <div class="lg-row-v2 me" style="margin-bottom:0;" data-lg-user="me">
+            <span class="lg-rank-badge num">+50</span>
+            <span class="emoji" style="font-size:26px;">${me.avatar}</span>
+            <div style="flex:1;min-width:0;">
+              <div class="fw-900 text-sm">${escapeHtml(me.name)} <span class="pill pill-gold" style="min-height:19px;font-size:10px;padding:1px 7px;">أنت</span></div>
+            </div>
+            <span class="fw-900 text-sm num">${formatNum(me.xp)} XP</span>
           </div>
-          <span class="fw-900 text-sm num">${formatNum(me.xp)} XP</span>
         </div>
       ` : ""}
 
-      <button class="btn btn-ghost btn-block mt-8" id="lg-toggle-all">
-        ${leagueShowAll ? "عرض أول 10 فقط ▲" : `عرض باقي المنافسين (${totalPool}) ▼`}
-      </button>
+      ${rowsSource.length > 12 && !q ? `
+        <button class="btn btn-ghost btn-block mt-8" id="lg-toggle-all">
+          ${leagueShowAll ? "عرض أول 15 فقط ▲" : `عرض أول ${totalPool} متنافس (حد أقصى 50) ▼`}
+        </button>
+      ` : ""}
     `;
+
+    bindCloudHeaderEvents();
 
     el.querySelectorAll("[data-lg-tab]").forEach(b => {
       b.onclick = () => {
@@ -26081,7 +26741,7 @@
 
     el.querySelectorAll("[data-lg-user]").forEach(row => {
       row.onclick = () => {
-        const u = standings.find(x => x.id === row.dataset.lgUser);
+        const u = standings.find(x => x.id === row.dataset.lgUser) || (row.dataset.lgUser === "me" ? me : null);
         if (!u) return;
         AudioFX.playClick();
         if (u.isMe) {
@@ -26101,10 +26761,13 @@
       lgMemBtn.onclick = () => { AudioFX.playClick(); navigate("league-membership"); };
     }
 
-    document.getElementById("lg-toggle-all").onclick = () => {
-      leagueShowAll = !leagueShowAll;
-      renderLeague();
-    };
+    const tgBtn = document.getElementById("lg-toggle-all");
+    if (tgBtn) {
+      tgBtn.onclick = () => {
+        leagueShowAll = !leagueShowAll;
+        renderLeague();
+      };
+    }
   }
 
   // --- 8.3 #quests ---
@@ -26825,8 +27488,8 @@
     }
 
     const sample = calculateSessionPreview(60, false);
-    const baseCoins = 1200;
-    const baseXp = 72;
+    const baseCoins = 6000;
+    const baseXp = 360;
     const baseDmg = 1200;
     const netCoinsPct = Math.max(0, Math.round(((sample.coins / baseCoins) - 1) * 100));
     const netXpPct = Math.max(0, Math.round(((sample.xp / baseXp) - 1) * 100));
@@ -28126,7 +28789,8 @@
     const isMonthly = reportTab === "monthly";
     const today = getTodayKey();
     const curTier = LEAGUE_TIERS.find(t => t.id === state.league.tier) || LEAGUE_TIERS[0];
-    const myRank = computeLeagueStandings(0).find(r => r.isMe)?.rank || 1;
+    const repSt = computeLeagueStandings(0);
+    const myRank = (repSt.meRow || repSt.find(r => r.isMe))?.rank || 1;
 
     if (isMonthly) {
       const endKey = addDaysToKey(today, -reportMonthOffset * 30);
@@ -36317,11 +36981,109 @@
     });
   }
 
-  // --- 8.26 #bot-profile (ملف المنافس المتراكم) ---
+  // --- 8.26 #bot-profile (ملف المنافس — حقيقي أو افتراضي) ---
   function renderBotProfile() {
     const el = document.getElementById("screen-bot-profile");
-    const botId = currentParams?.botId || "bot_0";
-    const idx = Math.max(0, Number(String(botId).replace("bot_", "")) || 0);
+    const rawId = String(currentParams?.botId || "bot_0");
+
+    if (rawId.startsWith("real_")) {
+      const realId = rawId.slice(5);
+      const rp = CloudLeague.playersById[realId];
+      if (!rp) {
+        FX.showToast("بيانات اللاعب ده مش محملة دلوقتي — حدّث الدوري الأول 🔄", "warn");
+        navigate("league");
+        return;
+      }
+      const rLv = rp.level || 1;
+      const rXp = rp.xp || 0;
+      const need = xpNeeded(rLv);
+      const xpPct = Math.min(100, Math.round((rXp / Math.max(1, need)) * 100));
+      const heroObj = HEROES.find(h => h.id === rp.hero) || HEROES[1];
+      const frameItem = SHOP_CATALOG.find(x => x.id === rp.frame) || SPECIAL_FRAMES_META[rp.frame];
+      const frameCls = frameItem ? frameItem.frameClass : "";
+      const pinnedAch = rp.pinned_ach ? ACHIEVEMENTS_CATALOG.find(a => a.id === rp.pinned_ach) : null;
+      const myHours = formatDecimal((state.progress.totalMinutes || 0) / 60);
+      const playerHours = formatDecimal((rp.total_minutes || 0) / 60);
+      const activeNow = !!rp.is_studying && rp.updated_at && (Date.now() - new Date(rp.updated_at).getTime()) < 90 * 60000;
+      const tierObj = LEAGUE_TIERS.find(t => t.id === rp.tier) || LEAGUE_TIERS[0];
+
+      el.innerHTML = `
+        <div class="ex-header">
+          <button class="fs-back-btn" data-back="league" aria-label="رجوع">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="ex-title"><span>ملف اللاعب</span><span class="emoji">🌐</span></div>
+          <span class="pill pill-gold text-xs num">#${currentParams?.rank || "—"}</span>
+        </div>
+
+        <div class="glass-card purple-banner mb-12" style="text-align:center;">
+          <div class="avatar-wrap ${frameCls}" style="width:86px;height:86px;margin:0 auto 10px;">
+            <div class="avatar-core" style="font-size:44px;"><span class="emoji">${escapeHtml(rp.avatar || heroObj.emoji)}</span></div>
+          </div>
+          <h2 class="fw-900" style="font-size:24px;">${escapeHtml(rp.name || "بطل")}</h2>
+          ${rp.motto ? `<div class="text-xs fw-700 mt-8" style="color:#E2E8F0;">«${escapeHtml(rp.motto)}»</div>` : ""}
+          <div class="flex-center gap-8 mt-8" style="flex-wrap:wrap;">
+            <span class="lg-real-badge">🌐 لاعب حقيقي</span>
+            <span class="pill pill-gold text-xs">${escapeHtml(rp.title || "بطل القلعة")}</span>
+            <span class="pill pill-purple text-xs">${heroObj.emoji} ${heroObj.name}</span>
+            ${rp.legacy_100 ? `<span class="rb-legacy-badge">☀️ 100</span>` : rp.legacy_50 ? `<span class="rb-legacy-badge">🏅 50</span>` : ""}
+            ${activeNow ? `<span class="bot-status-pill">🟢 يذاكر الآن</span>` : ""}
+          </div>
+          <div class="text-sm fw-800 mt-8">المستوى <span class="text-gold num">${rLv}</span> · المادة: <strong class="text-gold">${escapeHtml(rp.favorite_subject || "مذاكرة عامة")}</strong></div>
+          <div style="max-width:280px;margin:10px auto 0;">
+            <div class="progress-track"><div class="progress-fill" style="width:${xpPct}%;"></div></div>
+            <div class="text-xs text-muted num mt-8">${formatNum(rXp)} / ${formatNum(need)} XP</div>
+          </div>
+        </div>
+
+        ${pinnedAch ? `
+          <div class="glass-card gold-border mb-12 flex-between">
+            <div class="flex-center gap-8">
+              <span class="emoji" style="font-size:32px;">${pinnedAch.emoji}</span>
+              <div>
+                <div class="text-xs text-gold fw-900">📌 وسام الشرف المثبّت</div>
+                <div class="fw-900 text-sm">${escapeHtml(pinnedAch.title)}</div>
+              </div>
+            </div>
+            <span class="pill pill-purple text-xs num">🏆 ${rp.achievements_count || 0} إنجاز</span>
+          </div>
+        ` : ""}
+
+        <div class="bento-2x2 mb-12" style="margin-bottom:12px;">
+          <div class="glass-card" style="text-align:center;padding:12px;">
+            <div class="text-xs text-muted">⏱️ إجمالي المذاكرة</div>
+            <div class="fw-900 text-gold num mt-8" style="font-size:22px;">${playerHours} س</div>
+            <div class="text-xs text-muted num mt-8">إنت: ${myHours} س</div>
+          </div>
+          <div class="glass-card" style="text-align:center;padding:12px;">
+            <div class="text-xs text-muted">🎯 إجمالي الجلسات</div>
+            <div class="fw-900 text-purple num mt-8" style="font-size:22px;">${formatNum(rp.total_sessions || 0)}</div>
+            <div class="text-xs text-muted num mt-8">إنت: ${formatNum(state.progress.totalSessions)}</div>
+          </div>
+          <div class="glass-card" style="text-align:center;padding:12px;">
+            <div class="text-xs text-muted">🪙 العملات / الدوري</div>
+            <div class="fw-900 text-gold num mt-8" style="font-size:18px;">${formatNum(rp.coins || 0)}</div>
+            <div class="text-xs text-muted mt-8">${tierObj.emoji} ${tierObj.name}</div>
+          </div>
+          <div class="glass-card" style="text-align:center;padding:12px;">
+            <div class="text-xs text-muted">🏰 المملكة / السلسلة</div>
+            <div class="fw-900 text-green num mt-8" style="font-size:17px;">Lv${rp.kingdom_level || 1} · 🔥${rp.longest_streak || 0}</div>
+            <div class="text-xs text-muted num mt-8">⚔️ ${rp.bosses_defeated || 0} وحوش</div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="bp-challenge-real">⚔️ ابدأ جلسة وتحدّى ${escapeHtml(rp.name || "البطل")}!</button>
+      `;
+
+      document.getElementById("bp-challenge-real").onclick = () => {
+        AudioFX.playClick();
+        startFocusSession(state.settings.lastMinutes || 50, false);
+      };
+      return;
+    }
+
+    const botId = rawId;
+    const idx = Math.max(0, Number(botId.replace("bot_", "")) || 0);
     const bot = ensureBotProfile(idx);
     const today = getTodayKey();
     const simToday = simulateHumanBotDay(idx, today, Date.now(), !!currentParams?.isDaily);
@@ -39672,7 +40434,7 @@
     if (!state) return;
     const today = getTodayKey();
     const homeHasChest = (state.chests?.queue?.length || 0) > 0;
-    const homeHasWheel = state.wheel?.lastFreeDay !== today;
+    const homeHasWheel = state.wheel?.lastFreeDay !== today || (state.shop?.consumables?.spin || 0) > 0;
     const homeHasMail = getMailboxUnreadCount() > 0;
     const homeBadge = document.getElementById("nav-badge-home");
     if (homeBadge) {
@@ -40472,7 +41234,7 @@
           try { fn(); } catch { /* safe */ }
         }
       }, 420);
-    }, 6000);
+    }, 2900);
   }
 
   function initApp() {
@@ -40481,12 +41243,14 @@
 
     try {
       state = loadState();
+      CloudLeague.loadLocalCache();
       syncUnlockedTitles();
       applyAppearanceSettings();
       startSplashSequence();
       runWhenSplashDone(() => {
         sendOneTimeWelcomeNotification();
         check10PmNoStudyNotification();
+        CloudLeague.ensureReadyAndSync(false);
       });
 
       checkClockIntegrity(false);
@@ -40859,7 +41623,12 @@
       updatedAt: Date.now()
     };
 
-    await writePwaConfigToIDB(payload);
+    const { updatedAt, ...sigObj } = payload;
+    const pwaSig = String(hashStr(JSON.stringify(sigObj)));
+    if (window.__lastPwaSyncSig !== pwaSig) {
+      window.__lastPwaSyncSig = pwaSig;
+      await writePwaConfigToIDB(payload);
+    }
 
     if (pwaSwReg && pwaSwReg.active) {
       pwaSwReg.active.postMessage({ type: "SYNC_NOTIFICATIONS", payload });
@@ -41034,7 +41803,6 @@
   });
   setInterval(() => {
     syncPwaNotifications();
-    check10PmNoStudyNotification();
   }, 30000);
 
   // تسجيل الـ Service Worker
