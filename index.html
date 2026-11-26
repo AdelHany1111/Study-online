@@ -3894,6 +3894,355 @@
       gap: 6px;
     }
 
+    /* --- Kingdom Command Center v3 --- */
+    .kd-v3-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 24px;
+      background: linear-gradient(155deg, rgba(76, 29, 149, 0.42) 0%, rgba(15, 19, 40, 0.92) 100%);
+      border: 1px solid rgba(167, 139, 250, 0.32);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+    .kd-v3-head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .kd-v3-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+    }
+    .kd-v3-crest {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(255, 215, 106, 0.24), rgba(109, 40, 217, 0.45));
+      border: 1.5px solid rgba(255, 215, 106, 0.52);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(245, 166, 35, 0.22);
+    }
+    .kd-v3-eff-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 36px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(60, 40, 118, 0.88), rgba(24, 16, 56, 0.94));
+      border: 1.5px solid rgba(196, 181, 253, 0.45);
+      color: #F3E8FF;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .kd-v3-res-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .kd-v3-res-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 34px;
+      padding: 4px 5px;
+      border-radius: 13px;
+      background: rgba(10, 12, 28, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      font-size: 12px;
+      font-weight: 900;
+      min-width: 0;
+    }
+    .kd-v3-res-btn .num {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .kd-v3-res-btn.coins { border-color: rgba(255, 215, 106, 0.4); color: var(--gold1); }
+    .kd-v3-res-btn.gems { border-color: rgba(77, 163, 255, 0.4); color: #93C5FD; }
+    .kd-v3-res-btn.ether { border-color: rgba(192, 132, 252, 0.45); color: #E9D5FF; }
+    .kd-v3-res-btn.rate { border-color: rgba(52, 211, 153, 0.45); color: #6EE7B7; }
+
+    .kd-v3-panorama {
+      position: relative;
+      border-radius: 26px;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1.5px solid rgba(196, 181, 253, 0.42);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+    .kd-v3-panorama.sky-rain {
+      background: linear-gradient(180deg, #0F2442 0%, #171E47 55%, #0D1024 100%);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+    .kd-v3-panorama.sky-sand {
+      background: linear-gradient(180deg, #431D14 0%, #2D162C 55%, #120D1F 100%);
+      border-color: rgba(251, 146, 60, 0.55);
+    }
+    .kd-v3-panorama.sky-night {
+      background: linear-gradient(180deg, #1E1148 0%, #13133A 55%, #0B0D20 100%);
+      border-color: rgba(167, 139, 250, 0.5);
+    }
+    .kd-v3-panorama.sky-spring {
+      background: linear-gradient(180deg, #3B164F 0%, #241748 55%, #101028 100%);
+      border-color: rgba(244, 114, 182, 0.5);
+    }
+    .kd-v3-panorama.sky-angry {
+      background: linear-gradient(180deg, #4A111D 0%, #281024 55%, #100B1B 100%);
+      border-color: rgba(248, 113, 113, 0.68);
+    }
+    .kd-v3-pan-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 3;
+      margin-bottom: 8px;
+    }
+    .kd-v3-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(8, 10, 26, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #F8FAFC;
+    }
+    .kd-v3-stage-svg {
+      width: 100%;
+      height: 132px;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+    .kd-v3-bldgs-dock {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 6px;
+      position: relative;
+      z-index: 3;
+    }
+    .kd-v3-bldg-spot {
+      padding: 7px 4px;
+      border-radius: 14px;
+      background: rgba(8, 10, 26, 0.72);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-align: center;
+      min-width: 0;
+    }
+    .kd-v3-bldg-spot-name {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #E2E8F0;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kd-v3-alert {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 13px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, rgba(153, 27, 27, 0.56), rgba(32, 14, 34, 0.94));
+      border: 1.5px solid rgba(248, 113, 113, 0.72);
+      box-shadow: 0 8px 24px rgba(153, 27, 27, 0.25);
+    }
+    .kd-v3-alert.warn {
+      background: linear-gradient(135deg, rgba(146, 64, 14, 0.48), rgba(26, 18, 46, 0.94));
+      border-color: rgba(251, 191, 36, 0.68);
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.18);
+    }
+
+    .kd-v3-ops-card {
+      border-radius: 24px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: linear-gradient(175deg, rgba(36, 26, 78, 0.78) 0%, rgba(14, 14, 36, 0.96) 100%);
+      border: 1.5px solid rgba(167, 139, 250, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    .kd-v3-vault-box {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(8, 10, 26, 0.65);
+      border: 1px solid rgba(255, 215, 106, 0.35);
+      margin-bottom: 10px;
+    }
+    .kd-v3-split-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .kd-v3-metric-box {
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(8, 10, 26, 0.56);
+      border: 1px solid rgba(167, 139, 250, 0.24);
+      min-width: 0;
+    }
+    .kd-v3-sat-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      background: rgba(8, 10, 26, 0.56);
+      border: 1px solid rgba(167, 139, 250, 0.24);
+      cursor: pointer;
+    }
+    .kd-v3-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(14, 12, 36, 0.88);
+      border: 1.5px solid rgba(167, 139, 250, 0.36);
+      margin-bottom: 12px;
+    }
+    .kd-v3-tab-btn {
+      min-height: 40px;
+      border-radius: 999px;
+      padding: 4px 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      position: relative;
+      white-space: nowrap;
+    }
+    .kd-v3-tab-btn.active {
+      background: linear-gradient(180deg, #FFE074 0%, #F59E0B 100%);
+      color: #1A1104;
+      font-weight: 900;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.42);
+    }
+    .kd-v3-tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #EF4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.85);
+      flex-shrink: 0;
+    }
+    .kd-v3-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .kd-v3-tile {
+      position: relative;
+      border-radius: 22px;
+      padding: 13px 10px;
+      min-height: 134px;
+      background: linear-gradient(175deg, rgba(38, 28, 84, 0.82), rgba(14, 13, 36, 0.96));
+      border: 1.5px solid rgba(167, 139, 250, 0.36);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      gap: 6px;
+      min-width: 0;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .kd-v3-tile.alert {
+      border-color: rgba(248, 113, 113, 0.72);
+      box-shadow: 0 0 18px rgba(239, 68, 68, 0.2);
+    }
+    .kd-v3-tile.lit {
+      border-color: rgba(255, 215, 106, 0.65);
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.18);
+    }
+    .kd-v3-tile-ico {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14), rgba(14, 12, 38, 0.9));
+      border: 1px solid rgba(196, 181, 253, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+    .kd-v3-tile-sub {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kd-v3-eff-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    #app.hand-left .kd-v3-head-row {
+      flex-direction: row-reverse;
+    }
+    #app.high-contrast .kd-v3-panorama,
+    #app.high-contrast .kd-v3-ops-card,
+    #app.high-contrast .kd-v3-tile {
+      border-width: 2px;
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+    @media (max-width: 380px) {
+      .kd-v3-res-grid { gap: 4px; }
+      .kd-v3-res-btn { font-size: 11px; padding: 3px; }
+      .kd-v3-tab-btn { font-size: 11px; padding: 4px; }
+      .kd-v3-bldgs-dock { gap: 4px; }
+      .kd-v3-bldg-spot { padding: 5px 2px; }
+      .kd-v3-split-metrics { grid-template-columns: 1fr; }
+    }
+
     /* Treasury Screen (Image 1) */
     .tr-bal-card {
       border-radius: 24px;
@@ -9569,9 +9918,22 @@
       flex-shrink: 0;
     }
     .lg-sync-dot.online { background: #34D399; box-shadow: 0 0 8px #34D399; }
-    .lg-sync-dot.syncing { background: #FBBF24; box-shadow: 0 0 8px #FBBF24; }
+    .lg-sync-dot.syncing { background: #FBBF24; box-shadow: 0 0 8px #FBBF24; animation: navBadgePulse 1.1s infinite; }
     .lg-sync-dot.offline { background: #94A3B8; }
     .lg-sync-dot.error { background: #F87171; }
+    .lg-last-update-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(167, 139, 250, 0.28);
+      color: #CBD5E1;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
     .lg-real-badge {
       display: inline-flex;
       align-items: center;
@@ -9608,6 +9970,268 @@
       margin-top: 10px;
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(88, 28, 135, 0.28));
       border: 1.5px solid rgba(255, 215, 106, 0.65);
+    }
+
+    /* =====================================================
+       20. HOME SCREEN V3 (COMMAND CENTER REDESIGN)
+       ===================================================== */
+    .home-v3-hud {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 26px;
+      background:
+        radial-gradient(95% 130px at 90% -20px, rgba(255, 215, 106, 0.2), transparent 72%),
+        radial-gradient(85% 120px at 10% 110%, rgba(56, 189, 248, 0.14), transparent 72%),
+        linear-gradient(155deg, rgba(64, 36, 142, 0.56) 0%, rgba(15, 19, 42, 0.95) 100%);
+      border: 1.5px solid rgba(196, 181, 253, 0.34);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      overflow: hidden;
+    }
+    .home-v3-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .home-v3-greeting {
+      font-size: 11px;
+      font-weight: 800;
+      color: #C4B5FD;
+      letter-spacing: 0.2px;
+      margin-bottom: 1px;
+    }
+    .home-v3-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .home-v3-icon-btn {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(196, 181, 253, 0.34);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+    }
+    .home-v3-icon-btn.cart {
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.38), rgba(91, 33, 182, 0.58));
+      border-color: rgba(196, 181, 253, 0.55);
+      color: #FFE074;
+    }
+    .home-v3-wallet {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .home-v3-coin-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 4px;
+      min-height: 48px;
+      border-radius: 15px;
+      background: rgba(8, 11, 26, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      min-width: 0;
+    }
+    .home-v3-coin-tile.gold { border-color: rgba(255, 215, 106, 0.42); color: var(--gold1); }
+    .home-v3-coin-tile.blue { border-color: rgba(77, 163, 255, 0.42); color: #93C5FD; }
+    .home-v3-coin-tile.ether { border-color: rgba(192, 132, 252, 0.45); color: #E9D5FF; }
+    .home-v3-coin-tile.fire { border-color: rgba(255, 138, 61, 0.45); color: #FDBA74; }
+    .home-v3-coin-tile.urgent { border-color: rgba(248, 113, 113, 0.85); animation: pulseRed 1.4s infinite; }
+    .home-v3-coin-val {
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.1;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .home-v3-coin-lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .home-v3-telemetry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 8px 10px;
+      border-radius: 16px;
+      background: rgba(7, 10, 24, 0.62);
+      border: 1px solid rgba(167, 139, 250, 0.22);
+    }
+    .home-v3-mult-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, 0.26), rgba(245, 166, 35, 0.24));
+      border: 1px solid rgba(255, 215, 106, 0.45);
+      color: #FDE68A;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    /* Smart Daily Cockpit */
+    .home-cockpit {
+      border-radius: 22px;
+      padding: 12px 13px;
+      margin-bottom: 12px;
+      background: linear-gradient(155deg, rgba(24, 28, 62, 0.88), rgba(11, 14, 32, 0.96));
+      border: 1.5px solid rgba(255, 215, 106, 0.34);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .home-cockpit-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .home-cockpit-chips {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+      margin-top: 9px;
+    }
+    .home-cockpit-chips::-webkit-scrollbar { display: none; }
+    .cockpit-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 32px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(196, 181, 253, 0.34);
+      color: #F8FAFC;
+      font-size: 11.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cockpit-chip.gold {
+      background: linear-gradient(180deg, rgba(255, 215, 106, 0.22), rgba(245, 158, 11, 0.18));
+      border-color: rgba(255, 215, 106, 0.65);
+      color: #FDE68A;
+    }
+    .cockpit-chip.green {
+      background: rgba(16, 185, 129, 0.18);
+      border-color: rgba(52, 211, 153, 0.6);
+      color: #6EE7B7;
+    }
+    .cockpit-chip.urgent {
+      background: rgba(220, 38, 38, 0.24);
+      border-color: rgba(248, 113, 113, 0.72);
+      color: #FECACA;
+    }
+
+    /* Battle Arena V3 Enhancements */
+    .home-mode-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 32px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(15, 18, 42, 0.8);
+      border: 1px solid rgba(196, 181, 253, 0.38);
+      color: #E2E8F0;
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+    .home-smart-hint-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 8px auto 0;
+      padding: 3px 11px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.42);
+      color: #BAE6FD;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .home-rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .home-reward-pill {
+      padding: 6px 4px;
+      border-radius: 13px;
+      background: rgba(8, 10, 26, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .home-bldg-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      width: 100%;
+    }
+    .home-bldg-mini-item {
+      background: rgba(8, 10, 26, 0.62);
+      border: 1px solid rgba(167, 139, 250, 0.24);
+      border-radius: 10px;
+      padding: 5px 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 10px;
+      font-weight: 800;
+      min-width: 0;
+    }
+    .home-v3-bento-card {
+      height: 100%;
+    }
+    #app.hand-left .home-v3-top-row,
+    #app.hand-left .home-cockpit-top {
+      flex-direction: row-reverse;
+    }
+    #app.high-contrast .home-v3-hud,
+    #app.high-contrast .home-cockpit {
+      border-width: 2px;
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+    @media (max-width: 380px) {
+      .home-v3-hud { padding: 11px; }
+      .home-v3-icon-btn { width: 32px; height: 32px; border-radius: 10px; }
+      .home-v3-actions { gap: 4px; }
+      .home-v3-wallet { gap: 4px; }
+      .home-v3-coin-tile { padding: 5px 2px; min-height: 44px; }
+      .home-v3-coin-val { font-size: 11.5px; }
+      .home-rewards-grid { gap: 4px; }
+      .home-reward-pill { font-size: 10.5px; }
     }
   </style>
 </head>
@@ -11321,6 +11945,17 @@
     return (Number(n) || 0).toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
   }
 
+  function formatCompactNum(n) {
+    const val = Math.round(Number(n) || 0);
+    if (val >= 1000000) {
+      return `${(val / 1000000).toFixed(val >= 10000000 ? 1 : 2).replace(/\.0+$/, "").replace(/(\.\d)0$/, "$1")}M`;
+    }
+    if (val >= 100000) {
+      return `${Math.round(val / 1000)}K`;
+    }
+    return formatNum(val);
+  }
+
   function formatDateAr(dateOrKey, opts = { day: "numeric", month: "short" }) {
     const d = typeof dateOrKey === "string" ? parseDateKey(dateOrKey) : dateOrKey;
     try {
@@ -11552,7 +12187,8 @@
         hidden: []
       },
       studyRooms: {
-        lastStrategy: "nostr",
+        transportVersion: 2,
+        lastStrategy: "supabase",
         recentRooms: [],
         zenMode: false,
         muteChatSound: false,
@@ -11737,6 +12373,7 @@
         rescueMission: null,
         bots: {},
         history: [],
+        boardUpdatedAt: {},
         daily: {
           dateKey: today,
           seed: `${today}_bronze_${Math.floor(Math.random() * 100000)}`,
@@ -12060,8 +12697,12 @@
     }
     if (!Array.isArray(s.homeLayout.hidden)) s.homeLayout.hidden = [];
     const rawSr = stripProto(cleanRaw.studyRooms);
+    const srMigratedV2 = Number(rawSr.transportVersion || 0) >= 2;
     s.studyRooms = {
-      lastStrategy: rawSr.lastStrategy === "mqtt" ? "mqtt" : "nostr",
+      transportVersion: 2,
+      lastStrategy: !srMigratedV2
+        ? "supabase"
+        : (["supabase", "nostr", "mqtt"].includes(rawSr.lastStrategy) ? rawSr.lastStrategy : "supabase"),
       recentRooms: Array.isArray(rawSr.recentRooms)
         ? rawSr.recentRooms
           .filter(r => r && typeof r === "object" && typeof r.code === "string" && r.code.trim())
@@ -12307,6 +12948,12 @@
     if (!Array.isArray(s.season.claimed)) s.season.claimed = [];
     s.league = Object.assign({}, def.league, stripProto(cleanRaw.league));
     if (!Array.isArray(s.league.history)) s.league.history = [];
+    const rawBoardUpd = stripProto(s.league.boardUpdatedAt);
+    s.league.boardUpdatedAt = {};
+    for (const bk of Object.keys(rawBoardUpd)) {
+      const ts = Math.round(fin(rawBoardUpd[bk], 0));
+      if (ts > 0) s.league.boardUpdatedAt[bk] = ts;
+    }
     if (s.league.rescueMission && typeof s.league.rescueMission === "object") {
       const rm = stripProto(s.league.rescueMission);
       if (rm.fromTier && rm.toTier && Number.isFinite(Number(rm.expiresAt))) {
@@ -19263,8 +19910,8 @@
       return 0;
     }
     const taxHr = getKingdomTaxIncomePerHour();
-    const totalHr = Math.max(1, getKingdomIncomePerHour());
-    const taxShare = Math.round((amt * taxHr) / totalHr);
+    const grossPotentialHr = Math.max(1, getKingdomBaseIncomePerHour() + getKingdomExpensesPerHour());
+    const taxShare = Math.min(amt, Math.max(0, Math.round((amt * taxHr) / grossPotentialHr)));
     const bldgShare = Math.max(0, amt - taxShare);
     if (!state.kingdom.incomeSources) state.kingdom.incomeSources = { study: 0, taxes: 0, buildings: 0, performance: 0 };
     state.kingdom.incomeSources.taxes += taxShare;
@@ -19529,15 +20176,16 @@
 
   // --- Cloud Online League (Supabase Free-Tier Optimized + Anonymous Auth) ---
   const CLOUD_COLUMNS = "id,name,avatar,hero,frame,title,tier,level,xp,daily_key,daily_xp,week_key,weekly_xp,total_minutes,total_sessions,coins,longest_streak,current_streak,kingdom_level,kingdom_power,bosses_defeated,companion_stage,favorite_subject,motto,pinned_ach,achievements_count,is_studying,legacy_50,legacy_100,updated_at";
+  const LEAGUE_AUTO_REFRESH_MS = 60 * 60 * 1000;
   const CloudLeague = {
     client: null,
     authPromise: null,
     syncPromise: null,
     syncDebounceTimer: null,
     inFlightFetch: {},
+    lastAttemptAt: {},
     cache: {},
     playersById: {},
-    lastManualRefreshAt: 0,
     lastSyncError: "",
     status: "idle",
 
@@ -19773,19 +20421,62 @@
       return this.cache[boardKey]?.rows || [];
     },
 
+    getLastUpdatedAt(boardKey) {
+      const cacheAt = Number(this.cache[boardKey]?.at || 0);
+      const stateAt = Number(state?.league?.boardUpdatedAt?.[boardKey] || 0);
+      return Math.max(cacheAt, stateAt);
+    },
+
+    shouldAutoRefresh(boardKey) {
+      const lastAt = this.getLastUpdatedAt(boardKey);
+      if (!lastAt) return true;
+      return (Date.now() - lastAt) > LEAGUE_AUTO_REFRESH_MS;
+    },
+
+    formatLastUpdated(ts) {
+      const n = Number(ts || 0);
+      if (!n) return "لسه متحدثش";
+      try {
+        const dt = new Date(n);
+        const timeStr = new Intl.DateTimeFormat("ar-EG-u-nu-latn", { hour: "numeric", minute: "2-digit" }).format(dt);
+        if (getTodayKey(dt) === getTodayKey()) return `النهاردة ${timeStr}`;
+        const dateStr = new Intl.DateTimeFormat("ar-EG-u-nu-latn", { day: "numeric", month: "short" }).format(dt);
+        return `${dateStr} · ${timeStr}`;
+      } catch {
+        return "الآن";
+      }
+    },
+
+    autoUpdateIfNeeded(boardKey) {
+      if (!this.shouldAutoRefresh(boardKey)) {
+        if (typeof navigator !== "undefined" && navigator.onLine === false) this.status = "offline";
+        else if (this.status === "idle") this.status = "online";
+        return false;
+      }
+      if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        this.status = "offline";
+        return false;
+      }
+      if (this.inFlightFetch[boardKey]) return false;
+      const now = Date.now();
+      if ((now - (this.lastAttemptAt[boardKey] || 0)) < 15000) return false;
+      this.lastAttemptAt[boardKey] = now;
+      this.status = "syncing";
+      (async () => {
+        await this.syncProfile(false);
+        await this.fetchBoard(boardKey, false);
+      })();
+      return true;
+    },
+
     async fetchBoard(boardKey, force = false) {
       if (typeof navigator !== "undefined" && navigator.onLine === false) {
         this.status = "offline";
         return this.getCachedBoard(boardKey);
       }
-      const cached = this.cache[boardKey];
       const now = Date.now();
-      if (!force && cached && (now - (cached.at || 0)) < 90000) {
-        return cached.rows || [];
-      }
-      if (force && (now - this.lastManualRefreshAt) < 12000) {
-        const waitSec = Math.ceil((12000 - (now - this.lastManualRefreshAt)) / 1000);
-        FX.showToast(`الترتيب متحدث لسه — استنى ${waitSec} ثواني عشان نحافظ على سرعة السيرفر ⏳`, "warn");
+      const lastAt = this.getLastUpdatedAt(boardKey);
+      if (!force && lastAt > 0 && (now - lastAt) <= LEAGUE_AUTO_REFRESH_MS) {
         return this.getCachedBoard(boardKey);
       }
       if (this.inFlightFetch[boardKey]) return this.inFlightFetch[boardKey];
@@ -19794,8 +20485,10 @@
         try {
           await this.ensureAuth();
           const sb = await this.getClient();
-          if (!sb) return this.getCachedBoard(boardKey);
-          if (force) this.lastManualRefreshAt = Date.now();
+          if (!sb) {
+            this.status = "offline";
+            return this.getCachedBoard(boardKey);
+          }
           this.status = "syncing";
 
           let q = sb.from("league_players").select(CLOUD_COLUMNS);
@@ -19821,22 +20514,30 @@
           if (error) {
             this.lastSyncError = error.message || "fetch_failed";
             this.status = "error";
+            if (currentScreen === "league") renderLeague({ skipAutoRefresh: true });
             return this.getCachedBoard(boardKey);
           }
 
           const rows = Array.isArray(data) ? data.slice(0, 50) : [];
-          this.cache[boardKey] = { at: Date.now(), rows };
+          const updatedTs = Date.now();
+          this.cache[boardKey] = { at: updatedTs, rows };
+          if (state?.league) {
+            if (!state.league.boardUpdatedAt) state.league.boardUpdatedAt = {};
+            state.league.boardUpdatedAt[boardKey] = updatedTs;
+            saveState();
+          }
           for (const r of rows) {
             if (r && r.id) this.playersById[r.id] = r;
           }
           this.saveLocalCache();
           this.status = "online";
           this.lastSyncError = "";
-          if (currentScreen === "league") renderLeague();
+          if (currentScreen === "league") renderLeague({ skipAutoRefresh: true });
           return rows;
         } catch (err) {
           this.lastSyncError = err?.message || "fetch_exception";
           this.status = "error";
+          if (currentScreen === "league") renderLeague({ skipAutoRefresh: true });
           return this.getCachedBoard(boardKey);
         } finally {
           delete this.inFlightFetch[boardKey];
@@ -21142,9 +21843,9 @@
     const preview = isRest ? null : calculateSessionPreview(isOpenMode ? 30 : effMinutes, false);
     const dmgPerMin = preview ? Math.round((preview.baseSessionDamage ?? preview.damage) / (isOpenMode ? 30 : effMinutes)) : 0;
     const cleanNote = String(sessionNote !== null ? sessionNote : pendingSessionNote || "").trim().slice(0, 60);
-    pendingSessionNote = "";
 
     const beginSessionNow = () => {
+      pendingSessionNote = "";
       isStartingSession = false;
       const nowMs = Date.now();
       state.activeSession = {
@@ -22340,17 +23041,19 @@
     const actBet = state.selfBet?.active;
     if (actBet && !actBet.daysDone.includes(today)) {
       const remMin = Math.max(0, actBet.dailyMin - (todayH.min || 0));
-      duties.push({
-        id: "self_bet",
-        icon: "🤝",
-        urgency: remMin > 0 && now.getHours() >= 18 ? "crit" : "warn",
-        title: "التزام عقد الرهان على نفسك",
-        desc: `فاضلك ${remMin} د النهاردة وإلا هتخسر الوديعة (${formatNum(actBet.deposit)} 🪙).`,
-        costCoins: 0,
-        riskCoins: actBet.deposit,
-        actionLabel: "تفاصيل العقد",
-        go: "self-bet"
-      });
+      if (remMin > 0) {
+        duties.push({
+          id: "self_bet",
+          icon: "🤝",
+          urgency: now.getHours() >= 18 ? "crit" : "warn",
+          title: "التزام عقد الرهان على نفسك",
+          desc: `فاضلك ${remMin} د النهاردة وإلا هتخسر الوديعة (${formatNum(actBet.deposit)} 🪙).`,
+          costCoins: 0,
+          riskCoins: actBet.deposit,
+          actionLabel: "تفاصيل العقد",
+          go: "self-bet"
+        });
+      }
     }
 
     // 3. خطر انكسار السلسلة أو استعادتها
@@ -22535,14 +23238,16 @@
 
     // 10. قرب امتلاء سقف تراكم أرباح المملكة (≥ 85%)
     const capHrs = getKingdomCapHours();
-    const elapsedHrs = Math.max(0, (nowMs - (state.kingdom?.lastCollect || nowMs)) / 3600000);
+    const maxVaultCoins = Math.max(1, Math.floor(getKingdomBaseIncomePerHour() * capHrs));
     const pendingKingdomCoins = getKingdomAccumulatedCoins();
-    if (pendingKingdomCoins > 0 && elapsedHrs >= capHrs * 0.85) {
+    const vaultFillRatio = pendingKingdomCoins / maxVaultCoins;
+    if (pendingKingdomCoins > 0 && vaultFillRatio >= 0.85) {
+      const vaultFull = vaultFillRatio >= 0.99;
       duties.push({
         id: "kingdom_cap",
         icon: "🏦",
-        urgency: elapsedHrs >= capHrs ? "crit" : "warn",
-        title: elapsedHrs >= capHrs ? "خزينة المملكة اتملت على الآخر!" : "أرباح المملكة قربت تقف عند السقف",
+        urgency: vaultFull ? "crit" : "warn",
+        title: vaultFull ? "خزينة المملكة اتملت على الآخر!" : "أرباح المملكة قربت تقف عند السقف",
         desc: `في ${formatNum(pendingKingdomCoins)} 🪙 مستنياك تجمعها عشان الأرباح الجديدة ما تضيعش.`,
         costCoins: 0,
         riskCoins: 0,
@@ -22677,11 +23382,18 @@
     const mask = (v) => hideNums ? "•••" : v;
 
     const now = new Date();
-    const hoursLeft = 24 - now.getHours() - now.getMinutes() / 60;
+    const hrNow = now.getHours();
+    const greetingText = hrNow < 12 ? "صباح الفل والتركيز ☀️" : hrNow < 17 ? "نهارك سعيد يا بطل ⚡" : hrNow < 21 ? "مساء الإنجاز 🔥" : "سهرة مذاكرة هادية 🌙";
+    const hoursLeft = 24 - hrNow - now.getMinutes() / 60;
     const streakUrgent = state.streak.current > 0 && todayH.sessions === 0 && hoursLeft <= 3;
 
     const fMode = state.settings.focusMode || (state.settings.strict ? "strict" : "flex");
     const isOpenModeCfg = fMode === "open";
+    const modeChipMeta = isOpenModeCfg
+      ? { label: "♾️ مفتوح", title: "الوضع المفتوح" }
+      : state.settings.strict
+        ? { label: "🛡️ صارم", title: "الوضع الصارم" }
+        : { label: "✨ مرن", title: "الوضع المرن" };
     const restCycle = Math.max(2, state.settings.longBreakAfter || 4);
     const dynamicRestMin = (todayH.sessions > 0 && todayH.sessions % restCycle === 0)
       ? (state.settings.longBreakMin || 15)
@@ -22692,8 +23404,8 @@
     const bossHpPct = boss ? Math.max(0, (boss.hp / boss.maxHp) * 100) : 100;
     const bossShieldPct = boss && boss.maxShieldHp > 0 ? Math.max(0, ((boss.shieldHp || 0) / boss.maxShieldHp) * 100) : 0;
     const bossGlowPct = boss && boss.maxGlowHp > 0 ? Math.max(0, ((boss.glowHp || 0) / boss.maxGlowHp) * 100) : 0;
+    const bossAuraColor = boss ? getMonsterMeta(boss.monsterId).aura : "#7C5CFF";
     const flowInfo = getTodayFocusFlowInfo(true);
-    const circ = 2 * Math.PI * 50;
 
     const wk = getWeekKey();
     const weekCircles = CONFIG.DAY_NAMES_SHORT.map((lbl, i) => {
@@ -22732,12 +23444,19 @@
 
     const allDailyQuests = state.quests.daily.items || [];
     const doneDailyQuestsCount = allDailyQuests.filter(q => q.claimed).length;
+    const readyDailyAll = allDailyQuests.filter(q => !q.claimed && q.progress >= q.target);
+    const questTier = (q) => {
+      if (!q.claimed && q.progress >= q.target) return 0;
+      const expired = !q.claimed && q.deadlineHour && hrNow >= q.deadlineHour;
+      if (!q.claimed && !expired) return 1;
+      if (!q.claimed && expired) return 2;
+      return 3;
+    };
     const questsSorted = [...allDailyQuests]
       .sort((a, b) => {
-        const aReady = !a.claimed && a.progress >= a.target ? 1 : 0;
-        const bReady = !b.claimed && b.progress >= b.target ? 1 : 0;
-        if (aReady !== bReady) return bReady - aReady;
-        if (a.claimed !== b.claimed) return a.claimed ? 1 : -1;
+        const ta = questTier(a);
+        const tb = questTier(b);
+        if (ta !== tb) return ta - tb;
         return (b.progress / b.target) - (a.progress / a.target);
       })
       .slice(0, 2);
@@ -22751,22 +23470,25 @@
     const era = getCurrentEra();
     const activeHeroObj = HEROES.find(h => h.id === state.profile.hero) || HEROES[1];
     const reqRebirthLv = getRebirthRequiredLevel(state.rebirth?.count || 0);
-    const rebirthReady = state.progress.level >= reqRebirthLv;
     const glowEra = isGlowEra();
     const solarPct = Math.min(100, state.rebirth?.glowCharge || 0);
     const solarReady = !!state.rebirth?.glowBurstReady;
     const subjectsList = getActiveSubjectsList();
     const activeSubj = getActiveSubject();
     const dutiesInfo = computeHomeDuties(standingsNow);
+    const critDutiesCount = dutiesInfo.duties.filter(d => d.urgency === "crit").length;
     const reserveMissing = Math.max(0, dutiesInfo.totalReserveCoins - state.wallet.coins);
     const reserveCoverPct = dutiesInfo.totalReserveCoins > 0 ? Math.min(100, Math.round((state.wallet.coins / dutiesInfo.totalReserveCoins) * 100)) : 100;
     const shownDuties = homeDutiesExpanded ? dutiesInfo.duties : dutiesInfo.duties.slice(0, 3);
     const fuelLeft = getKingdomFuelHoursLeft();
-    const bpAb = state.backpack?.activeBuffs || {};
-    const hasActiveBackpackBuff = (bpAb.sessionXpPct || 0) > 0 || (bpAb.sessionCoinsPct || 0) > 0 || (bpAb.sessionDmgPct || 0) > 0;
     const weekActiveDays = CONFIG.DAY_NAMES_SHORT.reduce((acc, _, i) => acc + ((state.history[addDaysToKey(wk, i)]?.sessions || 0) > 0 ? 1 : 0), 0);
+    const weekTotalMin = CONFIG.DAY_NAMES_SHORT.reduce((acc, _, i) => acc + (state.history[addDaysToKey(wk, i)]?.min || 0), 0);
     const goalRemMin = Math.max(0, goalMin - todayH.min);
     const pityLimitHome = hasLevelFeature("perk_chest_pity8") ? 8 : 10;
+    const multInfo = getPlayerMultipliersSummary();
+
+    syncMerchantVisit(false);
+    const mrPresentNow = isMerchantPresent();
 
     const buildHealthCapAlertHtml = (curSelMin) => {
       if (state.settings.lastMode === "rest") return "";
@@ -22786,8 +23508,21 @@
     const awakeMeta = (state.rebirth?.count || 0) >= 1 ? HERO_AWAKENING_INFO[activeHeroObj.id] : null;
     const cpAura = getCompanionAuraInfo();
     const activatedBuffCount = (state.buffs.xp2 ? 1 : 0) + (state.backpack?.activatedItems?.length || 0);
+    const hasQuickDurPerk = hasLevelFeature("perk_quick_dur");
+    const quickDurList = hasQuickDurPerk ? [15, 25, 35, 50] : [25, 50];
+
+    const buildSmartHintHtml = (curSelMin) => {
+      if (state.settings.lastMode === "rest" || isOpenModeCfg || goalReached) return "";
+      if (goalRemMin >= 10 && goalRemMin <= 120 && Math.abs(goalRemMin - curSelMin) >= 5) {
+        const snap = Math.max(10, Math.min(120, Math.round(goalRemMin / 5) * 5));
+        return `<button class="home-smart-hint-btn" data-h-snap="${snap}">💡 باقي <span class="num">${goalRemMin} د</span> على هدفك — اضبطها لـ <span class="num">${snap} د</span></button>`;
+      }
+      return "";
+    };
+
     const buildBattleModeControlsHtml = () => {
       const isRestNow = state.settings.lastMode === "rest";
+      const curMinVal = Number(state.settings.lastMinutes) || 25;
       if (isOpenModeCfg) {
         return `
           <div class="battle-dual-switch" id="home-mode-controls">
@@ -22797,15 +23532,31 @@
           ${!isRestNow ? `<div class="text-xs fw-700 mb-12" style="color:#BAE6FD;">⏱️ عداد تصاعدي لحد ساعتين · كل 30 دقيقة بتتحسب جلسة تلقائياً</div>` : `<div class="text-xs text-green fw-700 mb-12">🧘 استراحة سريعة تشحن طاقتك للجولة الجاية</div>`}
         `;
       }
+      const isAnyPreset = !isRestNow && quickDurList.includes(curMinVal) && state.settings.lastMode !== "custom";
       return `
-        <div class="chips-row mb-12" id="home-mode-controls" style="justify-content:center;">
-          <button class="chip ${state.settings.lastMode === "25" ? "active" : ""}" style="flex:1;justify-content:center;" data-h-mode="25">25 د</button>
-          <button class="chip ${state.settings.lastMode === "50" ? "active" : ""}" style="flex:1;justify-content:center;" data-h-mode="50">50 د</button>
-          <button class="chip ${state.settings.lastMode === "custom" ? "active" : ""}" style="flex:1;justify-content:center;" data-h-mode="custom">مخصص</button>
-          <button class="chip ${isRestNow ? "active" : ""}" style="flex:1;justify-content:center;" data-h-mode="rest">راحة</button>
+        <div class="chips-row mb-12" id="home-mode-controls" style="justify-content:center;gap:6px;">
+          ${quickDurList.map(m => `
+            <button class="chip ${!isRestNow && curMinVal === m && state.settings.lastMode !== "custom" ? "active" : ""}" style="flex:1;justify-content:center;padding:5px 8px;min-height:36px;" data-h-mode="${m}">${m} د</button>
+          `).join("")}
+          <button class="chip ${!isRestNow && (!isAnyPreset || state.settings.lastMode === "custom") ? "active" : ""}" style="flex:1;justify-content:center;padding:5px 8px;min-height:36px;" data-h-mode="custom">مخصص</button>
+          <button class="chip ${isRestNow ? "active" : ""}" style="flex:1;justify-content:center;padding:5px 8px;min-height:36px;" data-h-mode="rest">راحة</button>
         </div>
       `;
     };
+
+    const cockpitChips = [];
+    if (chestCount > 0) cockpitChips.push(`<button class="cockpit-chip gold" data-go="chest">🎁 افتح ${mask(chestCount)} صندوق</button>`);
+    if (goalReached && !bonusClaimed) cockpitChips.push(`<button class="cockpit-chip green" id="home-cockpit-goal">🎯 استلم جايزة الهدف</button>`);
+    if (readyDailyAll.length > 0) cockpitChips.push(`<button class="cockpit-chip gold" id="home-cockpit-quests">⚡ استلم ${readyDailyAll.length} تحدي</button>`);
+    if (pendingCoins > 0 && (state.kingdom.satisfaction ?? 60) >= 50) {
+      cockpitChips.push(`<button class="cockpit-chip green" id="home-cockpit-collect">🏰 اجمع +${mask(formatCompactNum(pendingCoins))}</button>`);
+    }
+    if (wheelReadyCount > 0) cockpitChips.push(`<button class="cockpit-chip" data-go="wheel">🎡 لف العجلة (${wheelReadyCount})</button>`);
+    if (mrPresentNow) cockpitChips.push(`<button class="cockpit-chip gold" data-go="merchant">🐪 التاجر موجود!</button>`);
+    if (critDutiesCount > 0) cockpitChips.push(`<button class="cockpit-chip urgent" id="home-cockpit-duties">🚨 ${critDutiesCount} تنبيه عاجل</button>`);
+    if (!cockpitChips.length) {
+      cockpitChips.push(`<button class="cockpit-chip" id="home-cockpit-go-focus">🔥 يلا بينا — ابدأ أول خطوة لهدف النهاردة!</button>`);
+    }
 
     const sectionsMap = {
       battle: `
@@ -22814,13 +23565,14 @@
           <button class="battle-top-btn" id="home-focus-settings-btn" aria-label="إعدادات التركيز" title="إعدادات التركيز">${svgIcon("settings", 18)}</button>
           <div class="flex-center gap-8" style="flex-wrap:wrap;justify-content:center;">
             <div class="battle-badge" style="margin-bottom:0;">${escapeHtml(era.battleBadge)} ${svgIcon("sword", 15)}</div>
+            <button class="home-mode-pill-btn" id="home-focus-mode-pill" title="اضغط لتغيير وضع التركيز سريعاً">${modeChipMeta.label} ▾</button>
             ${flowInfo.active ? `<span class="flow-pill ${flowInfo.tier === 3 ? "peak" : ""}">${flowInfo.name}${flowInfo.dmgBonus > 0 ? ` (+${Math.round(flowInfo.dmgBonus * 100)}%)` : ""}</span>` : ""}
           </div>
           <button class="battle-top-btn" id="home-quick-cmd-btn" aria-label="بحث سريع" title="بحث وتنقل سريع">🔍</button>
         </div>
 
         <div class="battle-monster-stage">
-          <div class="monster-medallion" data-go="bosses" role="button" tabindex="0" aria-label="اختر وحشًا">
+          <div class="monster-medallion" data-go="bosses" role="button" tabindex="0" aria-label="اختر وحشًا" style="border-color:${bossAuraColor}88;box-shadow:0 0 24px ${bossAuraColor}44, inset 0 0 16px rgba(124,58,237,0.25);">
             ${getBossVisualHtml(boss, 70)}
           </div>
           <div style="flex:1;min-width:0;">
@@ -22861,6 +23613,7 @@
           <div class="text-xs text-muted fw-700 mt-8" id="home-timer-subhint">
             ${state.settings.lastMode === "rest" ? "استراحة قصيرة" : isOpenModeCfg ? "اضغط ابدأ وذاكر بحرية" : "اضغط على الرقم لتعديل الدقائق"}
           </div>
+          <div id="home-smart-hint-wrap">${buildSmartHintHtml(selMinutes)}</div>
         </div>
 
         ${glowEra ? `
@@ -22911,13 +23664,18 @@
           </button>
         </div>
 
-        <div class="home-preview-line" style="${state.settings.lastMode === "rest" ? "display:none;" : ""}">
-          <span>${isOpenModeCfg ? "لكل 30 د:" : ""} ${svgIcon("coin", 15)} +${mask(formatNum(preview.coins))}</span>
-          <span>${svgIcon("bolt", 15)} +${mask(formatNum(preview.xp))} XP</span>
-          ${(state.arsenal?.equipped?.length || 0) > 0 ? `<span class="pill pill-blue" style="min-height:22px;font-size:10.5px;">⚔️ عتاد (${state.arsenal.equipped.length})${preview.bombBonus > 0 ? " +💣1,000" : ""}</span>` : ""}
-          <span class="hero-perk-pill">${activeHeroObj.emoji} ${activeHeroObj.perkTag}</span>
-          ${cpAura.active ? `<span class="pill pill-green" style="min-height:22px;font-size:10.5px;">🐣 مؤازرة ${escapeHtml(cp.name)}</span>` : ""}
-          ${xp2Charges > 0 ? `<span class="pill pill-purple" style="min-height:22px;font-size:10.5px;">${svgIcon("bolt", 12)} ×2 XP (${mask(xp2Charges)})</span>` : ""}
+        <div id="home-rewards-wrap" style="${state.settings.lastMode === "rest" ? "display:none;" : ""}">
+          <div class="home-rewards-grid">
+            <div class="home-reward-pill text-gold num">${svgIcon("coin", 13)} +${mask(formatNum(preview.coins))}</div>
+            <div class="home-reward-pill text-purple num">${svgIcon("bolt", 13)} +${mask(formatNum(preview.xp))} XP</div>
+            <div class="home-reward-pill text-red num">⚔️ -${mask(formatNum(preview.damage))} HP</div>
+          </div>
+          <div class="home-preview-line" style="gap:6px;margin-top:8px;">
+            <span class="hero-perk-pill">${activeHeroObj.emoji} ${activeHeroObj.perkTag}</span>
+            ${(state.arsenal?.equipped?.length || 0) > 0 ? `<span class="pill pill-blue" style="min-height:22px;font-size:10.5px;">⚔️ عتاد (${state.arsenal.equipped.length})${preview.bombBonus > 0 ? " +💣1K" : ""}</span>` : ""}
+            ${cpAura.active ? `<span class="pill pill-green" style="min-height:22px;font-size:10.5px;">🐣 مؤازرة ${escapeHtml(cp.name)}</span>` : ""}
+            ${xp2Charges > 0 ? `<span class="pill pill-purple" style="min-height:22px;font-size:10.5px;">${svgIcon("bolt", 12)} ×2 XP (${mask(xp2Charges)})</span>` : ""}
+          </div>
         </div>
 
         ${activatedBuffCount > 0 && state.settings.lastMode !== "rest" ? `
@@ -22932,7 +23690,7 @@
       rooms: typeof StudyRooms !== "undefined" ? StudyRooms.renderHomeCard() : "",
 
       duties: `
-      <div class="glass-card home-card-v2 duties-card ${dutiesInfo.duties.length === 0 ? "all-clear hc-green" : "hc-crimson"}">
+      <div id="home-duties-section" class="glass-card home-card-v2 duties-card ${dutiesInfo.duties.length === 0 ? "all-clear hc-green" : "hc-crimson"}">
         <div class="hc-head">
           <div class="hc-title-wrap">
             <span class="hc-ico-pill">${svgIcon("scroll", 17)}</span>
@@ -22983,7 +23741,10 @@
         <div class="hc-head">
           <div class="hc-title-wrap">
             <span class="hc-ico-pill"><span class="emoji" style="font-size:16px;">📅</span></span>
-            <div class="fw-900" style="font-size:15px;">التزام الأسبوع</div>
+            <div>
+              <div class="fw-900" style="font-size:15px;">التزام الأسبوع</div>
+              <div class="text-xs text-muted num">إجمالي الأسبوع: ${mask(formatDecimal(weekTotalMin / 60))} س</div>
+            </div>
           </div>
           <span class="pill pill-gold text-xs num" style="min-height:24px;">${mask(weekActiveDays)}/7 أيام</span>
         </div>
@@ -23002,13 +23763,13 @@
       </div>`,
 
       companion: `
-      <div class="glass-card home-card-v2 hc-purple bento-tile-v2 ${cp.sadDaysAbsent > 2 ? "hc-crimson" : ""}" data-go="companion" role="button" tabindex="0">
+      <div class="glass-card home-card-v2 home-v3-bento-card hc-purple bento-tile-v2 ${cp.sadDaysAbsent > 2 ? "hc-crimson" : ""}" data-go="companion" role="button" tabindex="0">
         <div class="bento-head-row">
           <span class="bento-head-title">رفيقي: <span class="text-gold">${escapeHtml(cp.name)}</span></span>
           <span class="pill pill-gold" style="min-height:20px;font-size:10px;padding:1px 7px;">م${mask(cpInfo.stage)} ${cpInfo.badgeEmoji}</span>
         </div>
-        <div class="bento-pedestal" style="width:62px;height:62px;border-color:rgba(192,132,252,0.42);">
-          ${getCompanionSvg(cpInfo.stage, 52, cp.sadDaysAbsent > 2, cp.equippedAccessory)}
+        <div class="bento-pedestal" style="width:58px;height:58px;border-color:rgba(192,132,252,0.42);">
+          ${getCompanionSvg(cpInfo.stage, 48, cp.sadDaysAbsent > 2, cp.equippedAccessory)}
         </div>
         <div style="width:100%;">
           <div class="flex-between text-xs text-muted num mb-8" style="font-size:11px;">
@@ -23022,40 +23783,40 @@
 
       bento: `
       <div class="bento-2x2 home-v2-bento">
-        <div class="glass-card home-card-v2 ${chestCount > 0 ? "hc-gold gold-border" : "hc-purple"} bento-tile-v2" data-go="${chestCount > 0 ? "chest" : "chest-gate"}" role="button" tabindex="0">
+        <div class="glass-card home-card-v2 home-v3-bento-card ${chestCount > 0 ? "hc-gold gold-border" : "hc-purple"} bento-tile-v2" data-go="${chestCount > 0 ? "chest" : "chest-gate"}" role="button" tabindex="0">
           <div class="bento-head-row">
             <span class="bento-head-title">${chestCount > 0 ? "صندوق جاهز" : "بوابة الصناديق"}</span>
             <span class="pill ${chestCount > 0 ? "pill-gold" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${chestCount > 0 ? mask(chestCount) : `${mask(Math.min(pityLimitHome, state.chests.sinceLegendary))}/${pityLimitHome}`}</span>
           </div>
-          <div class="bento-pedestal">${svgIcon("chest", 34)}</div>
+          <div class="bento-pedestal">${svgIcon("chest", 32)}</div>
           <div class="text-xs text-muted num" style="font-size:11px;">${chestCount > 0 ? "اضغط وافتح كنزك ✨" : "ضمان أسطوري قريب"}</div>
           ${chestCount > 0
             ? `<span class="btn btn-primary btn-sm btn-block">افتح الآن 🎁</span>`
             : `<span class="btn btn-secondary btn-sm btn-block">اشترِ صندوق</span>`}
         </div>
 
-        <div class="glass-card home-card-v2 ${wheelReadyCount > 0 ? "hc-green" : "hc-purple"} bento-tile-v2" data-go="wheel" role="button" tabindex="0">
+        <div class="glass-card home-card-v2 home-v3-bento-card ${wheelReadyCount > 0 ? "hc-green" : "hc-purple"} bento-tile-v2" data-go="wheel" role="button" tabindex="0">
           <div class="bento-head-row">
             <span class="bento-head-title">عجلة الحظ</span>
             <span class="pill ${wheelReadyCount > 0 ? "pill-green" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${wheelReadyCount > 0 ? (wheelReadyCount > 1 ? `×${wheelReadyCount} مجانية` : "مجانية") : "بكرة"}</span>
           </div>
-          <div class="bento-pedestal">${svgIcon("wheel", 34)}</div>
-          <div class="text-xs text-muted num" style="font-size:11px;">${wheelFree ? (earnedWheelSpins > 0 ? `اليومية + ${earnedWheelSpins} من جلساتك` : "لفّتك اليوم جاهزة!") : earnedWheelSpins > 0 ? `معاك ${earnedWheelSpins} لفة من جلساتك!` : `عودة بعد ${hhLeft}:${mmLeft}`}</div>
+          <div class="bento-pedestal">${svgIcon("wheel", 32)}</div>
+          <div class="text-xs text-muted num" id="home-wh-cd" style="font-size:11px;">${wheelFree ? (earnedWheelSpins > 0 ? `اليومية + ${earnedWheelSpins} من جلساتك` : "لفّتك اليوم جاهزة!") : earnedWheelSpins > 0 ? `معاك ${earnedWheelSpins} لفة من جلساتك!` : `عودة بعد ${hhLeft}:${mmLeft}`}</div>
           ${wheelReadyCount > 0
             ? `<span class="btn btn-green btn-sm btn-block">لف العجلة 🎡</span>`
             : `<span class="btn btn-ghost btn-sm btn-block">شوف الجوايز</span>`}
         </div>
 
-        <div class="glass-card home-card-v2 ${(state.kingdom.satisfaction ?? 60) < 50 ? "hc-crimson gold-border" : "hc-gold"} bento-tile-v2" data-go="kingdom" role="button" tabindex="0" style="${(state.kingdom.satisfaction ?? 60) < 50 ? "border-color:rgba(248,113,113,0.72);" : ""}">
+        <div class="glass-card home-card-v2 home-v3-bento-card ${(state.kingdom.satisfaction ?? 60) < 50 ? "hc-crimson gold-border" : "hc-gold"} bento-tile-v2" data-go="kingdom" role="button" tabindex="0" style="${(state.kingdom.satisfaction ?? 60) < 50 ? "border-color:rgba(248,113,113,0.72);" : ""}">
           <div class="bento-head-row">
             <span class="bento-head-title">${escapeHtml(era.kingdomLabel)}</span>
-            <span class="pill ${isFocusFuelActive() ? "pill-blue" : "pill-red"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 6px;">${isFocusFuelActive() ? `⛽ ${formatDecimal(fuelLeft)}س` : "🛑 0س"}</span>
+            <span class="pill ${isFocusFuelActive() ? "pill-blue" : "pill-red"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 6px;">${isFocusFuelActive() ? `⛽ ${mask(formatDecimal(fuelLeft))}س` : "🛑 0س"}</span>
           </div>
-          <div class="mini-buildings-row">
+          <div class="home-bldg-mini-grid">
             ${builtPlots.map(p => {
               const b = getEraBuildingMeta(p.id);
-              const bSvg = SVG_ICONS[p.id] ? svgIcon(p.id, 19) : `<span class="emoji">${b ? b.emoji : "🏰"}</span>`;
-              return `<div class="mini-bldg">${p.stars ? `<span style="color:#38BDF8;font-size:9px;line-height:1;">★${p.stars}</span>` : `<span style="font-size:9px;line-height:1;opacity:0;">•</span>`}<span>${bSvg}</span><span>Lv${mask(p.level)}</span></div>`;
+              const bSvg = SVG_ICONS[p.id] ? svgIcon(p.id, 18) : `<span class="emoji">${b ? b.emoji : "🏰"}</span>`;
+              return `<div class="home-bldg-mini-item">${p.stars ? `<span style="color:#38BDF8;font-size:8.5px;line-height:1;">★${p.stars}</span>` : ""}<span>${bSvg}</span><span class="num">Lv${mask(p.level)}</span></div>`;
             }).join("")}
           </div>
           ${(state.kingdom.satisfaction ?? 60) < 50
@@ -23065,7 +23826,7 @@
               : `<span class="btn btn-secondary btn-sm btn-block num">+${mask(formatNum(getKingdomIncomePerHour()))} 🪙/س</span>`}
         </div>
 
-        <div class="glass-card home-card-v2 hc-cyan bento-tile-v2" data-go="league" role="button" tabindex="0">
+        <div class="glass-card home-card-v2 home-v3-bento-card hc-cyan bento-tile-v2" data-go="league" role="button" tabindex="0">
           <div class="bento-head-row">
             <span class="bento-head-title">الدوري</span>
             <span class="pill pill-purple text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">#${mask(myRank)} ${rankArrow}</span>
@@ -23077,7 +23838,6 @@
       </div>`,
 
       quests: (() => {
-        const readyDailyAll = allDailyQuests.filter(q => !q.claimed && q.progress >= q.target);
         const showHomeClaimAll = hasLevelFeature("perk_home_claim_all") && readyDailyAll.length > 0;
         return `
       <div class="glass-card home-card-v2 hc-purple mb-12">
@@ -23097,7 +23857,7 @@
         ${questsSorted.map(q => {
           const pct = Math.min(100, (q.progress / q.target) * 100);
           const ready = !q.claimed && q.progress >= q.target;
-          const hrsLeftQ = q.deadlineHour ? q.deadlineHour - now.getHours() : null;
+          const hrsLeftQ = q.deadlineHour ? q.deadlineHour - hrNow : null;
           const timeBadge = hrsLeftQ === null ? null : (hrsLeftQ <= 0 ? "انتهى وقتها اليوم" : hrsLeftQ === 1 ? "⏳ باقي أقل من ساعة" : `⏳ باقي ${hrsLeftQ} ساعات`);
           return `
             <div class="hq-row ${ready ? "ready" : q.claimed ? "done" : ""}">
@@ -23108,7 +23868,7 @@
                   : q.claimed
                     ? `<span class="pill pill-green text-xs" style="min-height:24px;">✓ مكتمل</span>`
                     : timeBadge
-                      ? `<span class="pill pill-gold text-xs" style="min-height:24px;">${timeBadge}</span>`
+                      ? `<span class="pill ${hrsLeftQ <= 0 ? "pill-muted" : "pill-gold"} text-xs" style="min-height:24px;">${timeBadge}</span>`
                       : `<span class="pill pill-gold text-xs" style="min-height:24px;">+${mask(formatNum(q.coins))} 🪙</span>`}
               </div>
               <div class="flex-between gap-8">
@@ -23128,27 +23888,27 @@
           const pctBet = Math.min(100, Math.round((doneDays / actBet.days) * 100));
           const todayDone = actBet.daysDone.includes(today);
           return `
-            <div class="glass-card home-card-v2 hc-gold bento-tile-v2 ${!todayDone ? "gold-border" : ""}" data-go="self-bet" role="button" tabindex="0">
+            <div class="glass-card home-card-v2 home-v3-bento-card hc-gold bento-tile-v2 ${!todayDone ? "gold-border" : ""}" data-go="self-bet" role="button" tabindex="0">
               <div class="bento-head-row">
                 <span class="bento-head-title">رهان على نفسك</span>
                 <span class="pill ${todayDone ? "pill-green" : "pill-gold"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${mask(doneDays)}/${mask(actBet.days)}</span>
               </div>
-              <div class="bento-pedestal">${svgIcon("handshake", 34)}</div>
+              <div class="bento-pedestal">${svgIcon("handshake", 32)}</div>
               <div style="width:100%;">
                 <div class="progress-track mb-8" style="height:5px;"><div class="progress-fill ${todayDone ? "green" : ""}" style="width:${pctBet}%;"></div></div>
-                <div class="text-xs fw-800 ${todayDone ? "text-green" : "text-gold"} num" style="font-size:11px;">${todayDone ? "✓ خلصت النهاردة" : `وديعة ${mask(formatNum(actBet.deposit))} 🪙`}</div>
+                <div class="text-xs fw-800 ${todayDone ? "text-green" : "text-gold"} num" style="font-size:11px;">${todayDone ? "✓ خلصت النهاردة" : `وديعة ${mask(formatCompactNum(actBet.deposit))} 🪙`}</div>
               </div>
               <span class="btn btn-secondary btn-sm btn-block">تفاصيل العقد</span>
             </div>
           `;
         }
         return `
-          <div class="glass-card home-card-v2 hc-gold bento-tile-v2" data-go="self-bet" role="button" tabindex="0">
+          <div class="glass-card home-card-v2 home-v3-bento-card hc-gold bento-tile-v2" data-go="self-bet" role="button" tabindex="0">
             <div class="bento-head-row">
               <span class="bento-head-title">رهان على نفسك</span>
               <span class="pill pill-gold text-xs" style="min-height:20px;font-size:10px;padding:1px 7px;">+120%</span>
             </div>
-            <div class="bento-pedestal">${svgIcon("handshake", 34)}</div>
+            <div class="bento-pedestal">${svgIcon("handshake", 32)}</div>
             <div class="text-xs text-muted" style="font-size:11px;">تحدّى نفسك وضاعف عملاتك</div>
             <span class="btn btn-primary btn-sm btn-block">ابدأ عقد ✍️</span>
           </div>
@@ -23164,14 +23924,14 @@
         const expPct = expAct ? Math.min(100, Math.max(4, Math.round((1 - remMs / Math.max(1, expAct.totalMs)) * 100))) : 0;
         const spdBal = getSpeedupMinutesBalance();
         return `
-          <div class="glass-card home-card-v2 hc-cyan bento-tile-v2 ${expAct ? "gold-border" : ""}" data-go="expeditions" role="button" tabindex="0">
+          <div class="glass-card home-card-v2 home-v3-bento-card hc-cyan bento-tile-v2 ${expAct ? "gold-border" : ""}" data-go="expeditions" role="button" tabindex="0">
             <div class="bento-head-row">
               <span class="bento-head-title">الرحلات</span>
-              <span class="pill ${expAct ? "pill-gold" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">
+              <span class="pill ${expAct ? "pill-gold" : "pill-muted"} text-xs num" id="home-exp-cd" style="min-height:20px;font-size:10px;padding:1px 7px;">
                 ${expAct ? `⏳ ${pad2(h)}:${pad2(m)}` : "جاهزة"}
               </span>
             </div>
-            <div class="bento-pedestal">${svgIcon("compass", 34)}</div>
+            <div class="bento-pedestal">${svgIcon("compass", 32)}</div>
             <div style="width:100%;">
               ${expAct ? `<div class="progress-track mb-8" style="height:5px;"><div class="progress-fill" style="width:${expPct}%;"></div></div>` : ""}
               <div class="text-xs text-muted num" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-size:11px;">
@@ -23184,25 +23944,23 @@
       })(),
 
       merchant: (() => {
-        syncMerchantVisit(false);
-        const present = isMerchantPresent();
-        const ms = present
+        const ms = mrPresentNow
           ? Math.max(0, state.merchant.visitEndsAt - Date.now())
           : Math.max(0, (state.merchant.nextVisitAt || Date.now()) - Date.now());
         const hrs = Math.floor(ms / 3600000);
         const mins = Math.floor((ms % 3600000) / 60000);
-        const isLast2h = present && ms <= 7200000;
+        const isLast2h = mrPresentNow && ms <= 7200000;
         return `
-          <div class="glass-card home-card-v2 ${isLast2h ? "hc-crimson" : present ? "hc-gold gold-border" : "hc-purple"} bento-tile-v2 ${isLast2h ? "urgent" : ""}" data-go="merchant" role="button" tabindex="0">
+          <div class="glass-card home-card-v2 home-v3-bento-card ${isLast2h ? "hc-crimson" : mrPresentNow ? "hc-gold gold-border" : "hc-purple"} bento-tile-v2 ${isLast2h ? "urgent" : ""}" data-go="merchant" role="button" tabindex="0">
             <div class="bento-head-row">
               <span class="bento-head-title">التاجر</span>
               ${isLast2h
                 ? `<span class="mr-urgent-badge num" style="font-size:9.5px;padding:2px 6px;">⚠️ ${pad2(hrs)}:${pad2(mins)}</span>`
-                : `<span class="pill ${present ? "pill-green" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${present ? "موجود" : "مسافر"}</span>`}
+                : `<span class="pill ${mrPresentNow ? "pill-green" : "pill-muted"} text-xs num" style="min-height:20px;font-size:10px;padding:1px 7px;">${mrPresentNow ? "موجود" : "مسافر"}</span>`}
             </div>
-            <div class="bento-pedestal">${svgIcon("merchant", 34)}</div>
-            <div class="text-xs text-muted num" style="font-size:11px;">${present ? `يغادر بعد ${pad2(hrs)}:${pad2(mins)}` : `يعود بعد ${pad2(hrs)}:${pad2(mins)}`}</div>
-            <span class="btn ${present ? "btn-primary" : "btn-ghost"} btn-sm btn-block">${present ? "شوف العروض 🐪" : "تفقد القافلة"}</span>
+            <div class="bento-pedestal">${svgIcon("merchant", 32)}</div>
+            <div class="text-xs text-muted num" id="home-mr-cd" style="font-size:11px;">${mrPresentNow ? `يغادر بعد ${pad2(hrs)}:${pad2(mins)}` : `يعود بعد ${pad2(hrs)}:${pad2(mins)}`}</div>
+            <span class="btn ${mrPresentNow ? "btn-primary" : "btn-ghost"} btn-sm btn-block">${mrPresentNow ? "شوف العروض 🐪" : "تفقد القافلة"}</span>
           </div>
         `;
       })(),
@@ -23335,72 +24093,95 @@
     `;
 
     el.innerHTML = `
-      <!-- Top Hero HUD (Redesigned) -->
-      <div class="home-v2-top">
-        <div class="home-v2-user-row">
+      <!-- Top Hero Command HUD 3.0 -->
+      <div class="home-v3-hud">
+        <div class="home-v3-top-row">
           <div class="home-user" data-go="profile" role="button" tabindex="0" style="cursor:pointer;flex:1;">
             ${renderAvatarHTML(46, true)}
             <div class="home-user-meta">
-              <div class="home-user-name" style="display:flex;align-items:center;gap:6px;">
+              <div class="home-v3-greeting">${greetingText}</div>
+              <div class="home-user-name" style="display:flex;align-items:center;gap:5px;">
                 <span style="overflow:hidden;text-overflow:ellipsis;">${escapeHtml(state.profile.name || "البطل")}</span>
                 ${state.rebirth?.legacyLv100 ? `<span class="rb-legacy-badge">☀️ 100</span>` : state.rebirth?.legacyLv50 ? `<span class="rb-legacy-badge">🏅 50</span>` : ""}
               </div>
               <div class="home-user-sub">${escapeHtml(getLevelTitle(state.progress.level))} · Lv <span class="num">${mask(state.progress.level)}</span> · ${escapeHtml(era.eraBadge)}</div>
               <div class="home-xp-row">
                 <div class="progress-track" style="height:5px;"><div class="progress-fill" style="width:${xpPct}%;"></div></div>
-                <span class="text-xs text-muted num" style="font-size:10.5px;">${mask(formatNum(state.progress.xp))}/${mask(formatNum(need))}</span>
+                <span class="text-xs text-muted num" style="font-size:10px;">${mask(formatCompactNum(state.progress.xp))}/${mask(formatCompactNum(need))}</span>
               </div>
             </div>
           </div>
 
-          <div class="home-v2-actions">
-            <button class="shop-cart-pill" data-go="shop" aria-label="المتجر" title="المتجر">
-              ${svgIcon("cart", 18)}
+          <div class="home-v3-actions">
+            <button class="home-v3-icon-btn cart" data-go="shop" aria-label="المتجر" title="المتجر">
+              ${svgIcon("cart", 17)}
             </button>
-            <button class="home-util-pill" data-go="backpack" aria-label="الحقيبة" title="الحقيبة">
-              ${svgIcon("backpack", 18)}
+            <button class="home-v3-icon-btn" data-go="backpack" aria-label="الحقيبة" title="الحقيبة">
+              ${svgIcon("backpack", 17)}
+              ${activatedBuffCount > 0 ? `<span class="home-util-badge num" style="background:var(--green);color:#042116;">${activatedBuffCount}</span>` : ""}
             </button>
-            <button class="home-util-pill" data-go="mailbox" aria-label="صندوق البريد" title="صندوق البريد">
-              ${svgIcon("mail", 18)}
+            <button class="home-v3-icon-btn" data-go="mailbox" aria-label="صندوق البريد" title="صندوق البريد">
+              ${svgIcon("mail", 17)}
               ${getMailboxUnreadCount() > 0 ? `<span class="home-util-badge num">${getMailboxUnreadCount()}</span>` : ""}
             </button>
           </div>
         </div>
 
-        <div class="home-v2-wallet-bar">
-          <button class="home-v2-stat-pill gold" data-go="shop" aria-label="العملات">
-            ${svgIcon("coin", 16)}
-            <span class="num" style="overflow:hidden;text-overflow:ellipsis;">${mask(formatNum(state.wallet.coins))}</span>
+        <div class="home-v3-wallet">
+          <button class="home-v3-coin-tile gold" data-go="shop" aria-label="العملات" title="${formatNum(state.wallet.coins)} 🪙">
+            <div class="flex-center gap-8" style="gap:4px;">${svgIcon("coin", 15)}<span class="home-v3-coin-val num">${mask(formatCompactNum(state.wallet.coins))}</span></div>
+            <span class="home-v3-coin-lbl">عملات</span>
           </button>
-          <button class="home-v2-stat-pill blue" data-go="shop" aria-label="الجواهر">
-            ${svgIcon("gem", 16)}
-            <span class="num">${mask(formatNum(state.wallet.gems))}</span>
+          <button class="home-v3-coin-tile blue" data-go="shop" aria-label="الجواهر">
+            <div class="flex-center gap-8" style="gap:4px;">${svgIcon("gem", 15)}<span class="home-v3-coin-val num">${mask(formatCompactNum(state.wallet.gems))}</span></div>
+            <span class="home-v3-coin-lbl">جواهر</span>
           </button>
-          <button class="home-v2-stat-pill ether" data-ether-info="1" aria-label="أحجار الأثير" title="أحجار الأثير">
-            ${svgIcon("crystal", 16)}
-            <span class="num">${mask(formatNum(state.rebirth?.etherCrystals || 0))}</span>
+          <button class="home-v3-coin-tile ether" data-ether-info="1" aria-label="أحجار الأثير" title="أحجار الأثير">
+            <div class="flex-center gap-8" style="gap:4px;">${svgIcon("crystal", 15)}<span class="home-v3-coin-val num">${mask(formatCompactNum(state.rebirth?.etherCrystals || 0))}</span></div>
+            <span class="home-v3-coin-lbl">أثير</span>
           </button>
-          <button class="home-v2-stat-pill fire ${streakUrgent ? "urgent" : ""}" data-go="streak" aria-label="السلسلة">
-            ${svgIcon("flame", 16)}
-            <span class="num">${mask(state.streak.current)}</span>
+          <button class="home-v3-coin-tile fire ${streakUrgent ? "urgent" : ""}" data-go="streak" aria-label="السلسلة">
+            <div class="flex-center gap-8" style="gap:4px;">${svgIcon("flame", 15)}<span class="home-v3-coin-val num">${mask(state.streak.current)}</span></div>
+            <span class="home-v3-coin-lbl">سلسلة</span>
+          </button>
+        </div>
+
+        <div class="home-v3-telemetry">
+          <button class="flex-center gap-8 text-xs fw-800" data-go="kingdom" style="gap:4px;color:${isFocusFuelActive() ? "#7DD3FC" : "#FCA5A5"};">
+            ${svgIcon("fuel", 14)}
+            <span class="num" id="home-fuel-val">${mask(formatDecimal(fuelLeft))}/${getKingdomFuelMaxHours()} س</span>
+          </button>
+          <button class="flex-center gap-8 text-xs fw-800" data-go="backpack" style="gap:4px;color:#7DD3FC;">
+            <span class="emoji">⏱️</span>
+            <span class="num">${mask(formatCompactNum(getSpeedupMinutesBalance()))} د</span>
+          </button>
+          <button class="flex-center gap-8 text-xs fw-800" data-go="streak" style="gap:4px;color:${state.shop.consumables.shield > 0 ? "#93C5FD" : "var(--muted)"};">
+            ${svgIcon("shield", 14)}
+            <span class="num">${mask(state.shop.consumables.shield)}</span>
+          </button>
+          <button class="home-v3-mult-pill" id="home-mult-summary-pill">
+            <span>⚡</span>
+            <span class="num">+${mask(multInfo.netXpPct)}% XP</span>
           </button>
         </div>
       </div>
 
-      <!-- شريط حالة سريع: الوقود والدقائق والدروع -->
-      <div class="home-v2-quick-strip" style="flex-wrap:wrap;">
-        <button class="flex-center gap-8 text-xs fw-800" data-go="kingdom" style="color:${isFocusFuelActive() ? "#7DD3FC" : "#FCA5A5"};">
-          ${svgIcon("fuel", 16)}
-          <span>وقود: <strong class="num">${formatDecimal(fuelLeft)}/${getKingdomFuelMaxHours()} س</strong></span>
-        </button>
-        <button class="flex-center gap-8 text-xs fw-800" data-go="backpack" style="color:#7DD3FC;">
-          <span class="emoji">⏱️</span>
-          <span>تسريع: <strong class="num">${mask(formatNum(getSpeedupMinutesBalance()))} د</strong></span>
-        </button>
-        <button class="flex-center gap-8 text-xs fw-800" data-go="streak" style="color:${state.shop.consumables.shield > 0 ? "#93C5FD" : "var(--muted)"};">
-          ${svgIcon("shield", 15)}
-          <span>دروع: <strong class="num">${mask(state.shop.consumables.shield)}</strong></span>
-        </button>
+      <!-- Smart Daily Cockpit -->
+      <div class="home-cockpit">
+        <div class="home-cockpit-top">
+          <div class="flex-center gap-8" style="min-width:0;">
+            ${svgIcon("target", 18)}
+            <div style="min-width:0;">
+              <div class="fw-900 text-xs ${goalReached ? "text-green" : ""}">
+                ${goalReached ? "✓ هدف اليوم مكتمل — عاش يا بطل!" : `هدف اليوم: ${mask(formatDurationHM(todayH.min))} / ${mask(formatDurationHM(goalMin))} س`}
+              </div>
+              <div class="text-xs text-muted num">${goalReached ? "إنجاز 100%" : `فاضل ${mask(goalRemMin)} دقيقة (${goalPct}%)`}</div>
+            </div>
+          </div>
+          <span class="pill ${goalReached ? "pill-green" : "pill-gold"} text-xs num" style="min-height:24px;padding:2px 9px;">${mask(goalPct)}%</span>
+        </div>
+        <div class="progress-track" style="height:6px;"><div class="progress-fill ${goalReached ? "green" : ""}" style="width:${goalPct}%;"></div></div>
+        <div class="home-cockpit-chips">${cockpitChips.join("")}</div>
       </div>
 
       ${orderedSectionsHtml}
@@ -23413,6 +24194,117 @@
         navigate(node.dataset.go, { from: "home" });
       };
     });
+
+    const multPill = document.getElementById("home-mult-summary-pill");
+    if (multPill) {
+      multPill.onclick = () => {
+        AudioFX.playClick();
+        const mInf = getPlayerMultipliersSummary();
+        const hasAny = mInf.coinsSources.length || mInf.xpSources.length || mInf.dmgSources.length;
+        UI.openSheet(`
+          <div class="flex-between mb-12">
+            <h3 class="fw-900">⚡ مضاعفاتك وبونصك الحالي</h3>
+            <span class="pill pill-gold text-xs num">+${mInf.netXpPct}% XP · +${mInf.netCoinsPct}% 🪙</span>
+          </div>
+          ${!hasAny
+            ? `<div class="text-sm text-muted" style="text-align:center;padding:16px 0;">لسه مفيش مضاعفات مفعّلة — حافظ على السلسلة أو طوّر المملكة أو فعّل مقويات من الحقيبة!</div>`
+            : `
+              ${mInf.xpSources.length ? `<div class="text-xs fw-900 text-purple mb-8">⚡ مصادر الـ XP (+${mInf.netXpPct}% صافي):</div>${mInf.xpSources.map(s => `<div class="bonus-row-card"><span class="text-xs fw-800">${s.icon} ${escapeHtml(s.label)}</span><span class="pill pill-purple text-xs num" style="min-height:22px;padding:1px 8px;">+${s.pct}%</span></div>`).join("")}` : ""}
+              ${mInf.coinsSources.length ? `<div class="text-xs fw-900 text-gold mb-8 mt-12">🪙 مصادر العملات (+${mInf.netCoinsPct}% صافي):</div>${mInf.coinsSources.map(s => `<div class="bonus-row-card"><span class="text-xs fw-800">${s.icon} ${escapeHtml(s.label)}</span><span class="pill pill-gold text-xs num" style="min-height:22px;padding:1px 8px;">+${s.pct}%</span></div>`).join("")}` : ""}
+              ${mInf.dmgSources.length ? `<div class="text-xs fw-900 text-red mb-8 mt-12">⚔️ مصادر الضرر (+${mInf.netDmgPct}% صافي):</div>${mInf.dmgSources.map(s => `<div class="bonus-row-card"><span class="text-xs fw-800">${s.icon} ${escapeHtml(s.label)}</span><span class="pill pill-red text-xs num" style="min-height:22px;padding:1px 8px;">+${s.pct}%</span></div>`).join("")}` : ""}
+            `}
+        `);
+      };
+    }
+
+    const cockGoal = document.getElementById("home-cockpit-goal");
+    if (cockGoal) {
+      cockGoal.onclick = () => document.getElementById("home-goal-bonus")?.click();
+    }
+    const cockQuests = document.getElementById("home-cockpit-quests");
+    if (cockQuests) {
+      cockQuests.onclick = () => {
+        runWithLoader(() => {
+          let totC = 0, cnt = 0;
+          for (const q of (state.quests.daily.items || [])) {
+            if (!q.claimed && q.progress >= q.target) {
+              q.claimed = true;
+              totC += q.coins;
+              state.season.xp += 50;
+              cnt++;
+            }
+          }
+          if (cnt > 0) {
+            awardCoins(totC, `استلام ${cnt} تحديات من الرئيسية ⚡`);
+            AudioFX.playSuccess();
+            FX.confetti(false);
+            FX.showToast(`⚡ استلمت ${cnt} تحديات (+${formatNum(totC)} 🪙)!`, "reward");
+            saveState();
+            renderHome();
+          }
+        }, "بنستلم تحديات اليوم...", 540);
+      };
+    }
+    const cockCollect = document.getElementById("home-cockpit-collect");
+    if (cockCollect) {
+      cockCollect.onclick = (e) => {
+        const b = e.currentTarget;
+        runWithLoader(() => collectKingdomIncome(b), "بنجمع أرباح المملكة...", 560);
+      };
+    }
+    const cockDuties = document.getElementById("home-cockpit-duties");
+    if (cockDuties) {
+      cockDuties.onclick = () => {
+        AudioFX.playClick();
+        const sec = document.getElementById("home-duties-section");
+        if (sec) sec.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+    }
+    const cockGoFocus = document.getElementById("home-cockpit-go-focus");
+    if (cockGoFocus) {
+      cockGoFocus.onclick = () => document.getElementById("home-start-btn")?.click();
+    }
+
+    const modePillBtn = document.getElementById("home-focus-mode-pill");
+    if (modePillBtn) {
+      modePillBtn.onclick = (e) => {
+        e.stopPropagation();
+        AudioFX.playClick();
+        const curFm = state.settings.focusMode || (state.settings.strict ? "strict" : "flex");
+        UI.openSheet(`
+          <h3 class="fw-900 mb-8" style="text-align:center;">🛡️ اختار وضع الجلسة السريع</h3>
+          <p class="text-xs text-muted mb-12" style="text-align:center;">غيّر النظام على مزاجك من هنا من غير ما تروح الإعدادات</p>
+          ${[
+            ["strict", "🛡️ الوضع الصارم", `الخروج أكتر من ${state.settings.exitGraceSec || 10} ث بيوقف الجلسة عشان تلتزم 100%`],
+            ["flex", "✨ الوضع المرن", "تقدر تخرج وترجع في أي وقت والعداد مكمل بأمان"],
+            ["open", "♾️ الوضع المفتوح", "عداد تصاعدي حر لحد ساعتين وكل 30 دقيقة تتحسب جلسة"]
+          ].map(([k, title, desc]) => `
+            <button class="glass-card mb-8 flex-between ${curFm === k ? "gold-border" : ""}" style="width:100%;text-align:right;padding:12px;" data-hm-pick="${k}">
+              <div style="flex:1;min-width:0;">
+                <div class="fw-900 text-sm">${title}</div>
+                <div class="text-xs text-muted mt-8">${desc}</div>
+              </div>
+              ${curFm === k ? `<span class="pill pill-gold text-xs">شغال ✓</span>` : `<span class="btn btn-secondary btn-sm">اختار</span>`}
+            </button>
+          `).join("")}
+        `);
+        document.querySelectorAll("[data-hm-pick]").forEach(b => {
+          b.onclick = () => {
+            const m = b.dataset.hmPick;
+            state.settings.focusMode = m;
+            state.settings.strict = m === "strict";
+            if (m !== "open" && state.settings.lastMode === "open") {
+              state.settings.lastMode = (state.settings.lastMinutes === 25 || state.settings.lastMinutes === 50) ? String(state.settings.lastMinutes) : "custom";
+            }
+            saveState();
+            UI.closeSheet();
+            AudioFX.playSuccess();
+            FX.showToast(`اتفعّل ${m === "strict" ? "الوضع الصارم 🛡️" : m === "open" ? "الوضع المفتوح ♾️" : "الوضع المرن ✨"}`, "success");
+            renderHome();
+          };
+        });
+      };
+    }
 
     const dutiesTog = document.getElementById("home-duties-toggle");
     if (dutiesTog) {
@@ -23482,14 +24374,15 @@
       };
     }
     if ((typeof navigator === "undefined" || navigator.onLine !== false) && !StudyRoomsDirectory.ready && !StudyRoomsDirectory.connecting) {
-      StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+      StudyRoomsDirectory.connect("supabase");
     }
     const hDirRefresh = document.getElementById("home-dir-refresh");
     if (hDirRefresh) {
       hDirRefresh.onclick = (e) => {
         e.stopPropagation();
         AudioFX.playClick();
-        StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+        StudyRoomsDirectory.lastAttemptAt = 0;
+        StudyRoomsDirectory.connect("supabase");
         StudyRoomsDirectory.recompute();
         FX.showToast("🔄 اتحدّث عدد الأونلاين بالغرف العامة!", "success");
       };
@@ -23535,14 +24428,29 @@
             document.getElementById("home-custom-timer")?.click();
             return;
           }
-          state.settings.lastMode = m;
-          if (m === "25") state.settings.lastMinutes = 25;
-          else if (m === "50") state.settings.lastMinutes = 50;
+          if (m === "rest" || m === "open") {
+            state.settings.lastMode = m;
+          } else {
+            const minsNum = Number(m);
+            state.settings.lastMinutes = minsNum;
+            state.settings.lastMode = String(minsNum);
+          }
           AudioFX.playClick();
           saveState();
           syncHomeBattleDOM();
         };
       });
+      const snapBtn = el.querySelector("[data-h-snap]");
+      if (snapBtn) {
+        snapBtn.onclick = () => {
+          const snapVal = Number(snapBtn.dataset.hSnap);
+          state.settings.lastMinutes = snapVal;
+          state.settings.lastMode = quickDurList.includes(snapVal) ? String(snapVal) : "custom";
+          AudioFX.playSuccess();
+          saveState();
+          syncHomeBattleDOM();
+        };
+      }
     };
 
     const syncHomeBattleDOM = () => {
@@ -23557,6 +24465,8 @@
       if (tEl) tEl.textContent = isRest ? `${pad2(curMin)}:00` : isOpenModeCfg ? "00:00 ♾️" : `${pad2(curMin)}:00`;
       const tHint = document.getElementById("home-timer-subhint");
       if (tHint) tHint.textContent = isRest ? "استراحة قصيرة" : isOpenModeCfg ? "اضغط ابدأ وذاكر بحرية" : "اضغط على الرقم لتعديل الدقائق";
+      const shWrapHint = document.getElementById("home-smart-hint-wrap");
+      if (shWrapHint) shWrapHint.innerHTML = buildSmartHintHtml(curMin);
       const sBtn = document.getElementById("home-start-btn");
       if (sBtn) sBtn.innerHTML = isRest ? "ابدأ الراحة 🧘" : isOpenModeCfg ? `ابدأ الوضع المفتوح ♾️` : `ابدأ التركيز ${svgIcon("sword", 18)}`;
 
@@ -23580,17 +24490,22 @@
 
       const hcSlot = document.getElementById("home-health-cap-slot");
       if (hcSlot) hcSlot.innerHTML = buildHealthCapAlertHtml(curMin);
-      const prevEl = el.querySelector(".home-preview-line");
-      if (prevEl) {
-        prevEl.style.display = isRest ? "none" : "flex";
+      const rewWrap = document.getElementById("home-rewards-wrap");
+      if (rewWrap) {
+        rewWrap.style.display = isRest ? "none" : "";
         if (!isRest) {
-          prevEl.innerHTML = `
-            <span>${isOpenModeCfg ? "لكل 30 د:" : ""} ${svgIcon("coin", 15)} +${mask(formatNum(curPrev.coins))}</span>
-            <span>${svgIcon("bolt", 15)} +${mask(formatNum(curPrev.xp))} XP</span>
-            ${(state.arsenal?.equipped?.length || 0) > 0 ? `<span class="pill pill-blue" style="min-height:22px;font-size:10.5px;">⚔️ عتاد (${state.arsenal.equipped.length})${curPrev.bombBonus > 0 ? " +💣1,000" : ""}</span>` : ""}
-            <span class="hero-perk-pill">${activeHeroObj.emoji} ${activeHeroObj.perkTag}</span>
-            ${cpAura.active ? `<span class="pill pill-green" style="min-height:22px;font-size:10.5px;">🐣 مؤازرة ${escapeHtml(cp.name)}</span>` : ""}
-            ${xp2Charges > 0 ? `<span class="pill pill-purple" style="min-height:22px;font-size:10.5px;">${svgIcon("bolt", 12)} ×2 XP (${mask(xp2Charges)})</span>` : ""}
+          rewWrap.innerHTML = `
+            <div class="home-rewards-grid">
+              <div class="home-reward-pill text-gold num">${svgIcon("coin", 13)} +${mask(formatNum(curPrev.coins))}</div>
+              <div class="home-reward-pill text-purple num">${svgIcon("bolt", 13)} +${mask(formatNum(curPrev.xp))} XP</div>
+              <div class="home-reward-pill text-red num">⚔️ -${mask(formatNum(curPrev.damage))} HP</div>
+            </div>
+            <div class="home-preview-line" style="gap:6px;margin-top:8px;">
+              <span class="hero-perk-pill">${activeHeroObj.emoji} ${activeHeroObj.perkTag}</span>
+              ${(state.arsenal?.equipped?.length || 0) > 0 ? `<span class="pill pill-blue" style="min-height:22px;font-size:10.5px;">⚔️ عتاد (${state.arsenal.equipped.length})${curPrev.bombBonus > 0 ? " +💣1K" : ""}</span>` : ""}
+              ${cpAura.active ? `<span class="pill pill-green" style="min-height:22px;font-size:10.5px;">🐣 مؤازرة ${escapeHtml(cp.name)}</span>` : ""}
+              ${xp2Charges > 0 ? `<span class="pill pill-purple" style="min-height:22px;font-size:10.5px;">${svgIcon("bolt", 12)} ×2 XP (${mask(xp2Charges)})</span>` : ""}
+            </div>
           `;
         }
       }
@@ -23612,7 +24527,12 @@
       const stageEl = el.querySelector(".battle-monster-stage");
       if (stageEl) {
         const med = stageEl.querySelector(".monster-medallion");
-        if (med) med.innerHTML = getBossVisualHtml(curBoss, 70);
+        if (med) {
+          const curAura = curBoss ? getMonsterMeta(curBoss.monsterId).aura : "#7C5CFF";
+          med.innerHTML = getBossVisualHtml(curBoss, 70);
+          med.style.borderColor = `${curAura}88`;
+          med.style.boxShadow = `0 0 24px ${curAura}44, inset 0 0 16px rgba(124,58,237,0.25)`;
+        }
         const titleEl = stageEl.querySelector("[data-go='bosses'].fw-900");
         if (titleEl) titleEl.textContent = curBoss ? getEraBossDisplayName(curBoss) : "اضغط لإضافة وحش";
         const roundPill = stageEl.querySelector(".pill.pill-red.num");
@@ -23657,7 +24577,7 @@
       timerDisp.onclick = () => {
         if (state.settings.lastMode === "rest") return;
         if (isOpenModeCfg) {
-          FX.showToast("إنت في الوضع المفتوح: العداد تصاعدي لحد ساعتين (غيّره من الإعدادات ⚙️)", "success");
+          FX.showToast("إنت في الوضع المفتوح: العداد تصاعدي لحد ساعتين (غيّره من زر الوضع فوق ♾️)", "success");
           return;
         }
         let tempMin = state.settings.lastMinutes || 25;
@@ -23680,7 +24600,7 @@
         };
         document.getElementById("sheet-min-save").onclick = () => {
           state.settings.lastMinutes = tempMin;
-          state.settings.lastMode = (tempMin === 25 || tempMin === 50 || tempMin === 90) ? String(tempMin) : "custom";
+          state.settings.lastMode = quickDurList.includes(tempMin) ? String(tempMin) : "custom";
           saveState();
           UI.closeSheet();
           renderHome();
@@ -23784,6 +24704,46 @@
         runWithLoader(() => claimQuest(qid, false), "بنستلم مكافأة التحدي...", 540);
       };
     });
+
+    // تحديث حي وموجّه للعدّادات والأرباح على الرئيسية بدون إعادة رسم الصفحة
+    clearScreenLiveTimers();
+    let homeTickCount = 0;
+    screenLiveTimer = setInterval(() => {
+      if (currentScreen !== "home") { clearScreenLiveTimers(); return; }
+      homeTickCount++;
+      const nMs = Date.now();
+      const fmtHM = (ms) => {
+        const s = Math.max(0, Math.floor(ms / 1000));
+        return `${pad2(Math.floor(s / 3600))}:${pad2(Math.floor((s % 3600) / 60))}`;
+      };
+      const mrCdEl = document.getElementById("home-mr-cd");
+      if (mrCdEl && state.merchant) {
+        const pNow = isMerchantPresent();
+        const target = pNow ? state.merchant.visitEndsAt : (state.merchant.nextVisitAt || nMs);
+        const diff = Math.max(0, target - nMs);
+        mrCdEl.textContent = pNow ? `يغادر بعد ${fmtHM(diff)}` : `يعود بعد ${fmtHM(diff)}`;
+      }
+      const expCdEl = document.getElementById("home-exp-cd");
+      if (expCdEl && state.expeditions?.active) {
+        const diff = Math.max(0, state.expeditions.active.endsAt - nMs);
+        expCdEl.textContent = diff <= 0 ? "وصلت! ✓" : `⏳ ${fmtHM(diff)}`;
+      }
+      const whCdEl = document.getElementById("home-wh-cd");
+      if (whCdEl && state.wheel.lastFreeDay === getTodayKey() && (state.shop.consumables.spin || 0) <= 0) {
+        const dNow = new Date(nMs);
+        const msMid = new Date(dNow.getFullYear(), dNow.getMonth(), dNow.getDate() + 1) - dNow;
+        whCdEl.textContent = `عودة بعد ${fmtHM(msMid)}`;
+      }
+      if (homeTickCount % 5 === 0) {
+        const fuelValEl = document.getElementById("home-fuel-val");
+        if (fuelValEl) fuelValEl.textContent = `${mask(formatDecimal(getKingdomFuelHoursLeft()))}/${getKingdomFuelMaxHours()} س`;
+        const curPend = getKingdomAccumulatedCoins();
+        const miniEl = document.getElementById("home-mini-collect");
+        if (miniEl) miniEl.textContent = `اجمع +${mask(formatNum(curPend))} 🪙`;
+        const cockEl = document.getElementById("home-cockpit-collect");
+        if (cockEl) cockEl.textContent = `🏰 اجمع +${mask(formatCompactNum(curPend))}`;
+      }
+    }, 1000);
   }
 
   // --- 7.3 #focus ---
@@ -25109,7 +26069,271 @@
      8. SCREEN RENDERERS (PART 2: 9 SCREENS + SETTINGS)
      ===================================================== */
 
-  // --- 8.1 #kingdom (مملكتي Hub — الصورتان 2 و7) ---
+  let kingdomHubTab = "gov";
+
+  function getKingdomEfficiencyReport() {
+    const citBon = getCitizenClassBonuses();
+    const treeBon = getEtherTreeBonuses();
+    const eliteOn = isEliteClubActive();
+    const fest = getActiveFestival();
+    const campOn = (state.kingdom?.activeDecrees?.build_campaign || 0) > Date.now();
+
+    const coinsPct = Math.round((
+      getKingdomBonus("coins") +
+      getWonderBonus("coins") +
+      getResearchBonus("coins") +
+      getRebirthRelicBonus("coins") +
+      (citBon.merchantCoinsPct || 0) +
+      getLuxuryBonus("coins") +
+      (eliteOn ? 0.35 : 0) +
+      (hasLevelFeature("perk_sovereign_crown") ? 0.20 : 0)
+    ) * 100);
+
+    const xpPct = Math.round((
+      getKingdomBonus("xp") +
+      getWonderBonus("xp") +
+      getResearchBonus("xp") +
+      (citBon.scholarXpPct || 0) +
+      getLuxuryBonus("xp") +
+      (eliteOn ? 0.35 : 0) +
+      (hasLevelFeature("perk_eternal_xp15") ? 0.15 : 0) +
+      ((state.rebirth?.xpBonusPct || 0) / 100) +
+      (treeBon.xpMult || 0)
+    ) * 100);
+
+    const dmgPct = Math.round((
+      getKingdomBonus("damage") +
+      getWonderBonus("damage") +
+      getResearchBonus("damage") +
+      getRebirthRelicBonus("damage") +
+      (treeBon.dmgMult || 0) +
+      getLuxuryBonus("damage") +
+      (eliteOn ? 0.20 : 0) +
+      (hasLevelFeature("perk_sovereign_crown") ? 0.20 : 0)
+    ) * 100);
+
+    const rareChestPct = Math.round((
+      getKingdomBonus("rareChest") +
+      getWonderBonus("rareChest") +
+      getResearchBonus("rareChest") +
+      (treeBon.rareChestMult || 0) +
+      getLuxuryBonus("rareChest")
+    ) * 100);
+
+    const kingdomIncPct = Math.round((
+      getResearchBonus("kingdomIncome") +
+      getRebirthRelicBonus("kingdom") +
+      (treeBon.kingdomMult || 0) +
+      getWonderBonus("kingdomIncome") +
+      getLuxuryBonus("kingdomIncome") +
+      (citBon.merchantCoinsPct || 0) +
+      (eliteOn ? 0.20 : 0) +
+      (hasLevelFeature("perk_master_aura") ? 0.15 : 0) +
+      (hasLevelFeature("perk_sovereign_crown") ? 0.20 : 0)
+    ) * 100);
+
+    const buildDiscPct = Math.min(65, Math.round((
+      getResearchBonus("buildDisc") +
+      (treeBon.buildDisc || 0) +
+      getWonderBonus("buildDisc") +
+      (campOn ? 0.20 : 0)
+    ) * 100));
+
+    const supSavePct = Math.round((
+      (citBon.farmerSuppliesSavePct || 0) +
+      (hasLevelFeature("perk_supplies_save20") ? 0.20 : 0)
+    ) * 100);
+
+    const fuelActive = isFocusFuelActive();
+    const expHr = getKingdomExpensesPerHour();
+    const netHr = getKingdomIncomePerHour();
+    const grossHr = fuelActive ? netHr + expHr : 0;
+
+    return {
+      coinsPct,
+      xpPct,
+      dmgPct,
+      rareChestPct,
+      kingdomIncPct,
+      buildDiscPct,
+      supSavePct,
+      raidDef: getNightRaidDefense(),
+      capHours: getKingdomCapHours(),
+      satMult: getKingdomSatisfactionMult(),
+      festCoinsMult: fest ? fest.coinsMult : 1,
+      festXpMult: fest ? fest.xpMult : 1,
+      grossHr,
+      expHr,
+      netHr
+    };
+  }
+
+  function openKingdomEfficiencySheet() {
+    const rep = getKingdomEfficiencyReport();
+    const satMultTxt = rep.satMult >= 1.1 ? "×1.1 (+10% بونص)" : rep.satMult >= 1.0 ? "×1.0 (كامل)" : "×0.4 (غاضب)";
+    AudioFX.playClick();
+    UI.openSheet(`
+      <div class="flex-between mb-12">
+        <h3 class="fw-900">📊 كفاءة ومضاعفات المملكة</h3>
+        <span class="pill pill-gold text-xs num">صافي +${formatNum(rep.netHr)} 🪙/س</span>
+      </div>
+      <p class="text-xs text-muted mb-12">ملخص كل الزيادات الشغالة دلوقتي من مبانيك وعجائبك ومختبرك ومواطنيك:</p>
+
+      <div class="kd-v3-eff-row"><span>🪙 بونص عملات الجلسات</span><span class="text-gold num">+${rep.coinsPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>⚡ بونص نقاط XP</span><span class="text-purple num">+${rep.xpPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>⚔️ بونص ضرر الوحوش</span><span class="text-red num">+${rep.dmgPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>🏰 مضاعف دخل المملكة</span><span class="text-green num">+${rep.kingdomIncPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>🎁 حظ الصندوق النادر</span><span class="text-gold num">+${rep.rareChestPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>🛡️ دفاع غارات الليل</span><span class="text-blue num">${rep.raidDef}%</span></div>
+      <div class="kd-v3-eff-row"><span>🏗️ خصم البناء والترقية</span><span class="text-green num">-${rep.buildDiscPct}%</span></div>
+      <div class="kd-v3-eff-row"><span>🥖 توفير استهلاك المؤن</span><span class="text-green num">-${rep.supSavePct}%</span></div>
+      <div class="kd-v3-eff-row"><span>🏦 سقف تراكم الخزينة</span><span class="text-gold num">${rep.capHours} ساعة</span></div>
+      <div class="kd-v3-eff-row"><span>❤️ معامل رضا الشعب</span><span class="num">${satMultTxt}</span></div>
+      ${(rep.festCoinsMult > 1 || rep.festXpMult > 1) ? `
+        <div class="kd-v3-eff-row" style="border-color:rgba(244,114,182,0.5);">
+          <span>🎪 مضاعف المهرجان الحالي</span>
+          <span class="text-gold num">XP ×${rep.festXpMult} · 🪙 ×${rep.festCoinsMult}</span>
+        </div>
+      ` : ""}
+
+      <div class="flex-between gap-8 mt-12">
+        <button class="btn btn-secondary btn-sm" style="flex:1;" id="keff-go-bldg">المباني 🏗️</button>
+        <button class="btn btn-primary btn-sm" style="flex:1;" id="keff-go-treas">الخزينة 💰</button>
+      </div>
+    `);
+    const b1 = document.getElementById("keff-go-bldg");
+    const b2 = document.getElementById("keff-go-treas");
+    if (b1) b1.onclick = () => { UI.closeSheet(); navigate("kingdom-buildings"); };
+    if (b2) b2.onclick = () => { UI.closeSheet(); navigate("kingdom-treasury"); };
+  }
+
+  function getKingdomCitadelPanoramaHtml(ctx) {
+    const { weather, isAngry, fuelActive, showDustOverlay, builtPlots, raidDone, defense, activeFest } = ctx;
+    const skyCls = isAngry
+      ? "sky-angry"
+      : weather.id === "rain_blessing"
+        ? "sky-rain"
+        : weather.id === "sandstorm"
+          ? "sky-sand"
+          : weather.id === "spring_breeze"
+            ? "sky-spring"
+            : "sky-night";
+
+    const winGlow = isAngry ? "#EF4444" : fuelActive ? "#FDE047" : "#475569";
+    const roofColor1 = isAngry ? "#991B1B" : isGlowEra() ? "#F59E0B" : "#7C3AED";
+    const roofColor2 = isAngry ? "#450A0A" : isGlowEra() ? "#B45309" : "#4C1D95";
+    const wallTop = isAngry ? "#3F1D2B" : "#312E81";
+    const wallBot = isAngry ? "#1C101B" : "#17143A";
+
+    const weatherFxSvg = weather.id === "rain_blessing"
+      ? `<g stroke="#7DD3FC" stroke-width="1.4" opacity="0.48" stroke-linecap="round">
+          <line x1="42" y1="12" x2="36" y2="28"/><line x1="94" y1="18" x2="88" y2="34"/>
+          <line x1="154" y1="8" x2="148" y2="24"/><line x1="224" y1="16" x2="218" y2="32"/>
+          <line x1="286" y1="10" x2="280" y2="26"/><line x1="322" y1="22" x2="316" y2="38"/>
+        </g>`
+      : weather.id === "sandstorm"
+        ? `<g fill="#FDBA74" opacity="0.35">
+            <ellipse cx="75" cy="48" rx="46" ry="5"/><ellipse cx="265" cy="36" rx="54" ry="6"/>
+            <circle cx="130" cy="24" r="2"/><circle cx="210" cy="54" r="2.2"/><circle cx="305" cy="64" r="1.8"/>
+          </g>`
+        : weather.id === "spring_breeze"
+          ? `<g fill="#F9A8D4" opacity="0.65">
+              <circle cx="48" cy="24" r="2.4"/><circle cx="115" cy="42" r="2"/><circle cx="242" cy="22" r="2.6"/><circle cx="312" cy="44" r="2.2"/>
+            </g>`
+          : `<g fill="#FFFBEB" opacity="0.72">
+              <circle cx="40" cy="20" r="1.4"/><circle cx="88" cy="34" r="1.1"/><circle cx="145" cy="14" r="1.6"/>
+              <circle cx="222" cy="18" r="1.3"/><circle cx="278" cy="32" r="1.5"/><circle cx="326" cy="16" r="1.2"/>
+            </g>`;
+
+    const top3Spots = builtPlots.slice(0, 3);
+    const activeWIdx = getActiveWonderIndex();
+    const activeWc = WONDERS_CATALOG[activeWIdx];
+    const activeWs = state.wonders[activeWc.id] || { stage: 0, completed: false };
+
+    return `
+      <div class="kd-v3-panorama ${skyCls}">
+        <div class="kd-v3-pan-top">
+          <button class="kd-v3-chip" id="kd-weather-chip">
+            <span class="emoji">${weather.emoji}</span>
+            <span>${weather.name}</span>
+          </button>
+          <div class="flex-center gap-8" style="flex-wrap:wrap;">
+            ${activeFest ? `<span class="kd-v3-chip" style="border-color:rgba(244,114,182,0.6);color:#FBCFE8;">🎪 <span class="num" id="kd-fest-cd">${activeFest.effectText}</span></span>` : ""}
+            <button class="kd-v3-chip" data-go="night-raids" style="border-color:${raidDone ? "rgba(52,211,153,0.55)" : "rgba(248,113,113,0.6)"};">
+              <span>${raidDone ? "🛡️ محمية الليلة" : `🌙 دفاع ${defense}%`}</span>
+            </button>
+          </div>
+        </div>
+
+        <svg class="kd-v3-stage-svg" viewBox="0 0 360 132" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="kdPanRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${roofColor1}"/><stop offset="100%" stop-color="${roofColor2}"/></linearGradient>
+            <linearGradient id="kdPanWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${wallTop}"/><stop offset="100%" stop-color="${wallBot}"/></linearGradient>
+            <radialGradient id="kdPanMoon" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="${isAngry ? "#F87171" : "#FEF08A"}" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+          </defs>
+
+          <circle cx="294" cy="30" r="24" fill="url(#kdPanMoon)" opacity="0.45"/>
+          <circle cx="294" cy="30" r="11" fill="${isAngry ? "#FCA5A5" : "#FEF08A"}" opacity="0.92"/>
+          ${weatherFxSvg}
+
+          <!-- سلاسل الجبال الخلفية -->
+          <polygon points="0,126 58,76 124,126" fill="rgba(15,23,42,0.55)"/>
+          <polygon points="236,126 302,72 360,126" fill="rgba(15,23,42,0.55)"/>
+
+          <!-- البرج الأيسر -->
+          <rect x="64" y="66" width="32" height="58" rx="3" fill="url(#kdPanWall)" stroke="rgba(196,181,253,0.3)" stroke-width="1.2"/>
+          <polygon points="59,66 101,66 80,42" fill="url(#kdPanRoof)" stroke="rgba(255,215,106,0.4)" stroke-width="1.2"/>
+          <rect x="76" y="78" width="8" height="12" rx="4" fill="${winGlow}"/>
+
+          <!-- البرج الأيمن -->
+          <rect x="264" y="66" width="32" height="58" rx="3" fill="url(#kdPanWall)" stroke="rgba(196,181,253,0.3)" stroke-width="1.2"/>
+          <polygon points="259,66 301,66 280,42" fill="url(#kdPanRoof)" stroke="rgba(255,215,106,0.4)" stroke-width="1.2"/>
+          <rect x="276" y="78" width="8" height="12" rx="4" fill="${winGlow}"/>
+
+          <!-- الأسوار والأجنحة -->
+          <rect x="96" y="82" width="168" height="42" fill="url(#kdPanWall)" stroke="rgba(196,181,253,0.28)" stroke-width="1.2"/>
+          <rect x="112" y="92" width="10" height="13" rx="5" fill="${winGlow}" opacity="0.85"/>
+          <rect x="238" y="92" width="10" height="13" rx="5" fill="${winGlow}" opacity="0.85"/>
+
+          <!-- الحصن المركزي الأعلى -->
+          <rect x="148" y="46" width="64" height="78" rx="4" fill="url(#kdPanWall)" stroke="rgba(255,215,106,0.48)" stroke-width="1.4"/>
+          <polygon points="140,46 220,46 180,14" fill="url(#kdPanRoof)" stroke="#FDE047" stroke-width="1.4"/>
+          <line x1="180" y1="6" x2="180" y2="15" stroke="#FDE047" stroke-width="2"/>
+          <polygon points="180,6 196,10 180,14" fill="${isAngry ? "#EF4444" : "#F59E0B"}"/>
+
+          <!-- نوافذ الحصن وبوابة المملكة -->
+          <rect x="164" y="58" width="10" height="14" rx="5" fill="${winGlow}"/>
+          <rect x="186" y="58" width="10" height="14" rx="5" fill="${winGlow}"/>
+          <path d="M167 124 V100 A13 13 0 0 1 193 100 V124 Z" fill="#090B1A" stroke="#FBBF24" stroke-width="1.8"/>
+
+          <!-- أرضية الساحة -->
+          <rect x="0" y="122" width="360" height="10" fill="rgba(7,11,20,0.88)"/>
+          ${showDustOverlay ? `<rect x="0" y="0" width="360" height="132" fill="rgba(148,163,184,0.22)"/>` : ""}
+        </svg>
+
+        <div class="kd-v3-bldgs-dock">
+          ${top3Spots.map(item => {
+            const bMeta = getEraBuildingMeta(item.plot.id);
+            const ico = SVG_ICONS[item.plot.id] ? svgIcon(item.plot.id, 22) : `<span class="emoji" style="font-size:20px;">${bMeta.emoji}</span>`;
+            return `
+              <button class="kd-v3-bldg-spot" data-kd-jumpplot="${item.idx}">
+                <div>${ico}</div>
+                <div class="kd-v3-bldg-spot-name">${escapeHtml(bMeta.name)}</div>
+                <span class="text-xs text-gold fw-900 num">Lv${item.plot.level}${item.plot.stars ? ` ★${item.plot.stars}` : ""}</span>
+              </button>
+            `;
+          }).join("")}
+          <button class="kd-v3-bldg-spot" data-go="kingdom-wonders" style="border-color:rgba(255,215,106,0.45);">
+            <div style="font-size:20px;" class="emoji">🏛️</div>
+            <div class="kd-v3-bldg-spot-name">${escapeHtml(activeWc.name)}</div>
+            <span class="text-xs text-purple fw-900 num">${activeWs.completed ? "مكتملة ✓" : `${activeWs.stage}/${activeWc.stages}`}</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // --- 8.1 #kingdom (مركز قيادة المملكة المتطور) ---
   function renderKingdom() {
     const el = document.getElementById("screen-kingdom");
     const kd = state.kingdom;
@@ -25119,7 +26343,12 @@
 
     const kLv = getKingdomLevel();
     const rate = getKingdomIncomePerHour();
+    const basePotRate = getKingdomBaseIncomePerHour();
+    const capHrs = getKingdomCapHours();
+    const maxCapCoins = Math.max(1, Math.floor(basePotRate * capHrs));
     const pending = getKingdomAccumulatedCoins();
+    const vaultPct = Math.min(100, Math.round((pending / maxCapCoins) * 100));
+
     const today = getTodayKey();
     const cit = kd.citizens || { total: 0, today: 0, todayKey: today };
     const todayCit = cit.todayKey === today ? cit.today : 0;
@@ -25134,315 +26363,336 @@
     const weather = getKingdomWeather();
     const fuelLeftHrs = getKingdomFuelHoursLeft();
     const fuelActive = isFocusFuelActive();
-    const basePotRate = getKingdomBaseIncomePerHour();
-    const isZeroCoinAttrition = (state.wallet?.coins || 0) <= 0 && totalCit > 0;
-    const builtIds = kd.plots.filter(Boolean).slice(0, 3).map(p => p.id);
-
-    // Semi-circular arc gauge math (180 deg)
-    const arcR = 82;
-    const arcLen = Math.PI * arcR;
-    const arcOffset = arcLen * (1 - sat / 100);
-    const moodFaces = ["😡", "😟", "😐", "😊", "😃"];
-    const activeMoodIdx = sat < 30 ? 0 : sat < 50 ? 1 : sat < 70 ? 2 : sat < 85 ? 3 : 4;
-
     const maxFuelHrs = getKingdomFuelMaxHours();
-    const upgradeableCnt = kd.plots.filter(p => p && state.wallet.coins >= getEffectiveBuildCost(getBuildingUpgradeCost(p.id, p.level))).length;
+    const fuelPct = Math.min(100, Math.round((fuelLeftHrs / Math.max(1, maxFuelHrs)) * 100));
+    const showDustOverlay = isKingdomDusty() && !isEra2KingdomGated();
+    const isZeroCoinAttrition = (state.wallet?.coins || 0) <= 0 && totalCit > 0;
+
+    const builtPlots = kd.plots
+      .map((plot, idx) => (plot ? { plot, idx } : null))
+      .filter(Boolean)
+      .sort((a, b) => ((b.plot.stars || 0) * 100 + b.plot.level) - ((a.plot.stars || 0) * 100 + a.plot.level));
+    const upgradeableCnt = builtPlots.filter(item =>
+      !showDustOverlay && state.wallet.coins >= getEffectiveBuildCost(getBuildingUpgradeCost(item.plot.id, item.plot.level))
+    ).length;
+
     const rankInfo = getKingdomRankInfo(totalCit);
-    const suppliesEmpty = totalCit > 0 && (state.supplies?.amount || 0) <= 0;
-    const raidDone = state.nightRaids?.repelledDay === today;
+    const suppliesAmt = Number(state.supplies?.amount || 0);
+    const dailyUse = getDailySuppliesConsumption();
+    const suppliesDaysLeft = dailyUse > 0 ? Math.floor(suppliesAmt / dailyUse) : null;
+    const suppliesEmpty = totalCit > 0 && suppliesAmt <= 0;
+    const raidDone = state.nightRaids?.repelledDay === today || (state.history[today]?.min || 0) >= 25;
+    const defense = getNightRaidDefense(today);
     const activeFest = getActiveFestival();
 
-    el.innerHTML = `
-      <div class="kd-hub-top" style="flex-wrap:wrap;">
-        <div>
-          <div class="kd-hub-title"><span>${escapeHtml(era.kingdomLabel)}</span>${svgIcon("castle", 22)}</div>
-          <button class="kd-lv-pill ${isAngry ? "angry" : ""}" id="kd-rank-pill">
-            ${svgIcon("crown", 14)}
-            <span>${rankInfo.cur.emoji} ${rankInfo.cur.name} · Lv <span class="num">${kLv}</span></span>
-          </button>
-        </div>
-        <div class="kd-top-pills">
-          <div class="kd-res-row">
-            <button class="kd-res-pill" data-go="shop">${svgIcon("coin", 15)}<span class="num">${formatNum(state.wallet.coins)}</span></button>
-            <button class="kd-res-pill" data-go="shop">${svgIcon("gem", 15)}<span class="num">${formatNum(state.wallet.gems)}</span></button>
-            <button class="kd-res-pill" data-ether-info="1" title="أحجار الأثير">${svgIcon("crystal", 15)}<span class="num">${formatNum(state.rebirth?.etherCrystals || 0)}</span></button>
-            <button class="kd-res-pill" data-go="streak">${svgIcon("flame", 15)}<span class="num">${state.streak.current}</span></button>
-          </div>
-          ${!isAngry ? `<button class="kd-rate-pill" data-go="kingdom-treasury"><span class="num">+${formatNum(rate)}</span>/ساعة ${svgIcon("coin", 15)}</button>` : ""}
-        </div>
-      </div>
+    const activeDecreeCnt = Object.values(kd.activeDecrees || {}).filter(t => t > now).length;
+    const labActiveList = state.researchLab?.active || [];
+    const labSlots = state.researchLab?.unlockedSlots || 1;
+    const expAct = state.expeditions?.active || null;
+    const wondersDone = getCompletedWondersCount();
+    const activeWonder = WONDERS_CATALOG[getActiveWonderIndex()];
+    const activeWonderState = state.wonders[activeWonder.id] || { stage: 0, completed: false };
 
-      <!-- شريط القيادة السريع للملك -->
-      <div class="kd-command-bar">
-        <button class="kd-cmd-btn" data-go="kingdom-buildings">
-          <span class="emoji" style="font-size:20px;">🏗️</span>
-          <span>المباني ${upgradeableCnt > 0 ? `(${upgradeableCnt}▲)` : ""}</span>
-        </button>
-        <button class="kd-cmd-btn" data-go="kingdom-demands">
-          <span class="emoji" style="font-size:20px;">📜</span>
-          <span>المطالب ${demandsCount > 0 ? `(${demandsCount})` : ""}</span>
-        </button>
-        <button class="kd-cmd-btn" data-go="kingdom-supplies">
-          <span class="emoji" style="font-size:20px;">🥖</span>
-          <span style="color:${suppliesEmpty ? "#FCA5A5" : ""};">${suppliesEmpty ? "مؤن نفدت!" : "المؤن"}</span>
-        </button>
-        <button class="kd-cmd-btn" data-go="kingdom-decrees">
-          <span class="emoji" style="font-size:20px;">👑</span>
-          <span>المراسيم</span>
-        </button>
-      </div>
+    const moodFaces = ["😡", "😟", "😐", "😊", "😃"];
+    const activeMoodIdx = sat < 30 ? 0 : sat < 50 ? 1 : sat < 70 ? 2 : sat < 85 ? 3 : 4;
+    const rulerLabel = sat >= 80 ? "محبوب 🌟" : sat >= 50 ? "عادل ✓" : "في خطر ⚠️";
 
-      ${isZeroCoinAttrition ? `
-        <div class="kd-attrition-banner" data-go="kingdom-people" role="button" tabindex="0" style="cursor:pointer;">
-          <span class="emoji" style="font-size:30px;">💀</span>
-          <div style="flex:1;min-width:0;">
-            <div class="fw-900 text-sm">⚠️ خزينتك فاضية (0 🪙) — المواطنون بيموتوا ويغادروا!</div>
-            <div class="text-xs mt-8" style="color:#FECACA;">فاضل <strong class="num">${formatNum(totalCit)}</strong> مواطن — اجمع أرباحك أو ذاكر دلوقتي لوقف الخسارة!</div>
-          </div>
-        </div>
-      ` : ""}
+    const fmtHMS = (ms) => {
+      const s = Math.max(0, Math.floor(ms / 1000));
+      return `${pad2(Math.floor(s / 3600))}:${pad2(Math.floor((s % 3600) / 60))}:${pad2(s % 60)}`;
+    };
 
-      <div class="kd-weather-card ${weather.id === "sandstorm" ? "storm" : ""}">
-        <span class="emoji" style="font-size:34px;">${weather.emoji}</span>
-        <div style="flex:1;min-width:0;">
-          <div class="flex-between">
-            <span class="fw-900 text-sm">طقس الأسبوع: <span class="text-gold">${weather.name}</span></span>
-            <span class="pill pill-purple text-xs" style="min-height:22px;padding:1px 8px;">${weather.tag}</span>
-          </div>
-          <div class="text-xs text-muted mt-8">${weather.desc}</div>
-        </div>
-      </div>
+    // اختيار أهم تنبيه عاجل واحد فقط لعرضه بوضوح بدون زحمة
+    let topAlert = null;
+    if (clockTampered) {
+      topAlert = { cls: "", icon: "⏰", title: "الساعة راجعة لورا", desc: "أرباح المملكة متجمدة لحد ما تظبط ساعة الجهاز.", btn: "", go: "" };
+    } else if (isZeroCoinAttrition) {
+      topAlert = { cls: "", icon: "💀", title: `خزينتك 0 🪙 — المواطنون بيموتوا (${formatNum(totalCit)})!`, desc: pending > 0 ? "اجمع أرباحك فوراً أو ذاكر جلسة لإنقاذ الشعب!" : "ذاكر جلسة فوراً لإنقاذ مملكتك وشعبك!", btn: pending > 0 ? "اجمع 💰" : "ذاكر ⚔️", qfix: pending > 0 ? "collect" : "focus" };
+    } else if (isAngry) {
+      topAlert = { cls: "", icon: "😡", title: `الشعب غاضب (${sat}/100) — الدخل 40% بس!`, desc: overdueDemands.length ? `عندك ${overdueDemands.length} مطالب متأخرة بتخصم عملات!` : "لبِّ مطالب الشعب أو أصدر مرسوم عشان يرجع الدخل 100%.", btn: "المطالب 📜", go: "kingdom-demands" };
+    } else if (suppliesEmpty) {
+      topAlert = { cls: "", icon: "🥖", title: "مؤن المملكة خلصت — الدخل قل للنص!", desc: "اشتري مؤن بـ 1,600 🪙 عشان يرجع الدخل كامل فوراً.", btn: state.wallet.coins >= 1600 ? "اشتري 1,600 🪙" : "المؤن 🥖", qfix: state.wallet.coins >= 1600 ? "buy_sup" : "", go: "kingdom-supplies" };
+    } else if (overdueDemands.length > 0) {
+      topAlert = { cls: "", icon: "📜", title: `${overdueDemands.length} مطالب متأخرة بتخصم عملات`, desc: "خلّصها بسرعة قبل ما ينزل رضا الشعب تحت 50.", btn: "نفّذ الآن", go: "kingdom-demands" };
+    } else if (showDustOverlay) {
+      topAlert = { cls: "warn", icon: "🌫️", title: "المملكة عليها غبار", desc: `ترقية المباني متوقفة — ذاكر جلستين (${kd.dustCleanSessions || 0}/2) للتنظيف.`, btn: "ذاكر ⚔️", qfix: "focus" };
+    } else if (!fuelActive || fuelLeftHrs <= 2) {
+      topAlert = { cls: "warn", icon: "⛽", title: fuelActive ? `وقود المملكة قرب يخلص (${formatDecimal(fuelLeftHrs)} س)` : "وقود المملكة خلص — الدخل متوقف!", desc: "كل 25 د مذاكرة بتشحن +8 ساعات تشغيل للمملكة.", btn: "اشحن ⚡", qfix: "focus" };
+    }
 
-      <div class="fuel-bar-card ${fuelActive ? "" : "empty"}">
-        <div class="flex-between mb-8">
-          <span class="fw-900 text-sm flex-center gap-8">${svgIcon("fuel", 17)} ${fuelActive ? "وقود المملكة شغال" : "🛑 الوقود خلص — الدخل متوقف!"}</span>
-          <span class="pill ${fuelActive ? "pill-blue" : "pill-red"} text-xs num" style="min-height:22px;padding:1px 9px;">${formatDecimal(fuelLeftHrs)} / ${maxFuelHrs} س</span>
-        </div>
-        <div class="progress-track lg mb-8"><div class="progress-fill ${fuelActive ? "purple" : "red"}" style="width:${Math.min(100, (fuelLeftHrs / maxFuelHrs) * 100)}%;"></div></div>
-        <div class="text-xs text-muted fw-700">
-          ${fuelActive
-            ? "طول ما العداد فيه وقود، مملكتك بتنتج عملات أوتوماتيكياً حتى وإنت أوفلاين، وكل 25 د مذاكرة بتشحن +8 ساعات تشغيل."
-            : `مملكتك جاهزة تنتج +${formatNum(basePotRate)} 🪙/س — ذاكر جلسة عشان تشغّل العداد!`}
-        </div>
-      </div>
+    const govDot = overdueDemands.length > 0 || isAngry;
+    const buildDot = upgradeableCnt > 0 || (expAct && now >= expAct.endsAt);
+    const defDot = !raidDone || suppliesEmpty;
 
-      ${clockTampered ? `
-        <div class="kd-angry-banner">
-          <span class="emoji">⏰</span>
-          <span>أرباح المملكة متجمدة لحد ما تظبط ساعة الجهاز</span>
-        </div>
-      ` : ""}
-
-      ${isAngry ? `
-        <div class="kd-angry-banner">
-          <span class="emoji">⚠️</span>
-          <span>الشعب غاضب! دخلك <span class="num">40%</span> فقط</span>
-        </div>
-      ` : ""}
-
-      <div class="kd-hero-card ${isAngry ? "angry" : ""}">
-        ${isAngry ? `
-          <div class="kd-skyline">
-            <span class="emoji" style="font-size:48px;">🏚️</span>
-            <span class="emoji" style="font-size:62px;">😡</span>
-            <span class="emoji" style="font-size:50px;">🔥</span>
-          </div>
-          <div class="mb-8"><span class="pill pill-red" style="font-weight:900;">دخل ×<span class="num">0.4</span></span></div>
-        ` : `
-          <div class="kd-skyline">
-            ${builtIds.map((bId, idx) => svgIcon(bId, idx === 0 ? 58 : 44)).join("")}
-            ${builtIds.length < 2 ? svgIcon("garden", 42) : ""}
-          </div>
-          <div class="kd-stats-strip">
-            <button class="kd-stat-chip gold" data-go="kingdom-treasury">
-              <span class="num">+${formatNum(rate)}</span>/س <span class="emoji">🪙</span>
-            </button>
-            <button class="kd-stat-chip green" data-go="kingdom-people">
-              <span>▲</span><span class="num">+${formatNum(todayCit)}</span> اليوم
-            </button>
-            <button class="kd-stat-chip dark" data-go="kingdom-people">
-              <span class="emoji">👥</span><span class="num">${formatNum(totalCit)}</span> مواطن
-            </button>
-          </div>
-        `}
-
-        <div class="kd-arc-box" data-go="kingdom-rating" role="button" tabindex="0" style="cursor:pointer;">
-          <svg width="224" height="122" viewBox="0 0 224 122">
-            <defs>
-              <linearGradient id="kdGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#EF4444"/>
-                <stop offset="50%" stop-color="#F59E0B"/>
-                <stop offset="100%" stop-color="#22C55E"/>
-              </linearGradient>
-            </defs>
-            <path d="M 30 106 A 82 82 0 0 1 194 106" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="14" stroke-linecap="round"/>
-            <path d="M 30 106 A 82 82 0 0 1 194 106" fill="none" stroke="${isAngry ? "#EF4444" : "url(#kdGaugeGrad)"}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${arcLen}" stroke-dashoffset="${arcOffset}"/>
-            <line x1="112" y1="14" x2="112" y2="30" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-            <text x="112" y="11" fill="#FFFFFF" font-size="11" font-weight="800" text-anchor="middle">50</text>
-          </svg>
-          <div class="kd-arc-val">
-            <div class="fw-900 num" style="font-size:34px;line-height:1;color:${isAngry ? "#F87171" : "#4ADE80"};">
-              ${sat}<span style="font-size:17px;color:#E2E8F0;">/100</span>
-            </div>
-            <div class="text-xs text-muted fw-800 mt-8">
-              ${isAngry ? "⚠️ حد الخطر: 50" : "رضا الشعب"}
-            </div>
-          </div>
-        </div>
-
-        ${isAngry && overdueDemands.length ? `
-          <div class="kd-overdue-strip">
-            ${overdueDemands.slice(0, 3).map(dm => `
-              <button class="kd-overdue-mini" data-go="kingdom-demands">
-                <span class="pill pill-red" style="min-height:20px;font-size:10px;padding:1px 8px;">متأخر</span>
-                <span class="emoji" style="font-size:26px;">${dm.icon}</span>
-                <span class="text-xs fw-800" style="line-height:1.25;">${escapeHtml(dm.title.slice(0, 20))}</span>
-                <span class="text-xs text-gold fw-900 num">-${formatNum(dm.coinPenaltyHr)} 🪙</span>
-              </button>
-            `).join("")}
-          </div>
-        ` : ""}
-
-        ${isAngry ? `
-          <button class="kd-collect-cta" data-go="kingdom-demands">
-            <span class="emoji">📜</span>
-            <span>لبِّ المطالب لاستعادة الرضا</span>
-          </button>
-        ` : `
-          <button class="kd-collect-cta" id="kd-collect-main">
-            <span>اجمع${hasLevelFeature("perk_kingdom_interest5") ? " (+5%)" : ""}</span>
-            <span class="emoji">🪙</span>
-            <span class="num">${formatNum(pending)}</span>
-          </button>
-        `}
-      </div>
-
-      ${!isAngry ? `
-        <div class="kd-section-title"><span>🏛️ إدارة الحكم والشعب</span><span class="text-xs text-muted">السياسة والموارد</span></div>
-        <div class="kd-menu-grid">
-          <button class="kd-pro-tile ${overdueDemands.length > 0 ? "alert" : ""}" data-go="kingdom-demands">
+    let tabCardsHtml = "";
+    if (kingdomHubTab === "gov") {
+      tabCardsHtml = `
+        <div class="kd-v3-grid">
+          <button class="kd-v3-tile ${overdueDemands.length > 0 ? "alert" : demandsCount > 0 ? "lit" : ""}" data-go="kingdom-demands">
             ${demandsCount > 0 ? `<span class="kd-badge-dot num">${demandsCount}</span>` : ""}
-            <span class="emoji" style="font-size:34px;">📜</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">📜</span></div>
             <div class="fw-900 text-sm">مطالب الشعب</div>
-            <div class="kd-pro-sub">${demandsCount > 0 ? `${demandsCount} طلب مفتوح` : "كله متنفذ ✓"}</div>
+            <div class="kd-v3-tile-sub">${overdueDemands.length > 0 ? `⚠️ ${overdueDemands.length} متأخر` : demandsCount > 0 ? `${demandsCount} طلب نشط` : "كله متنفذ ✓"}</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="kingdom-treasury">
-            <span class="emoji" style="font-size:34px;">💰</span>
+          <button class="kd-v3-tile" data-go="kingdom-treasury">
+            <div class="kd-v3-tile-ico"><span class="emoji">💰</span></div>
             <div class="fw-900 text-sm">الخزينة والضرائب</div>
-            <div class="kd-pro-sub num">ضريبة ${kd.taxRate || 0}% · +${formatNum(rate)}/س</div>
+            <div class="kd-v3-tile-sub num">ضريبة ${kd.taxRate || 0}% · +${formatNum(rate)}/س</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="kingdom-people">
-            <span class="emoji" style="font-size:34px;">👥</span>
+          <button class="kd-v3-tile" data-go="kingdom-people">
+            <div class="kd-v3-tile-ico"><span class="emoji">👥</span></div>
             <div class="fw-900 text-sm">شعبي والتخصصات</div>
-            <div class="kd-pro-sub num">${formatNum(totalCit)} مواطن</div>
+            <div class="kd-v3-tile-sub num">${formatNum(totalCit)} مواطن (+${formatNum(todayCit)})</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="kingdom-decrees">
-            <span class="emoji" style="font-size:34px;">👑</span>
+          <button class="kd-v3-tile ${activeDecreeCnt > 0 ? "lit" : ""}" data-go="kingdom-decrees">
+            ${activeDecreeCnt > 0 ? `<span class="kd-badge-dot num" style="background:#10B981;">${activeDecreeCnt}</span>` : ""}
+            <div class="kd-v3-tile-ico"><span class="emoji">👑</span></div>
             <div class="fw-900 text-sm">المراسيم الملكية</div>
-            <div class="kd-pro-sub">قرارات فورية</div>
+            <div class="kd-v3-tile-sub">${activeDecreeCnt > 0 ? `${activeDecreeCnt} مرسوم شغال ✓` : "قرارات فورية"}</div>
           </button>
         </div>
-
-        <div class="kd-section-title"><span>🏗️ التطوير والتوسّع</span><span class="text-xs text-muted">الإمبراطورية</span></div>
-        <div class="kd-menu-grid">
-          <button class="kd-pro-tile" data-go="kingdom-buildings">
+      `;
+    } else if (kingdomHubTab === "build") {
+      const nearestLabEnd = labActiveList.length ? Math.min(...labActiveList.map(j => j.endsAt)) : 0;
+      tabCardsHtml = `
+        <div class="kd-v3-grid">
+          <button class="kd-v3-tile ${upgradeableCnt > 0 ? "lit" : ""}" data-go="kingdom-buildings">
             ${upgradeableCnt > 0 ? `<span class="kd-badge-dot num" style="background:#22C55E;color:#032010;">${upgradeableCnt}▲</span>` : ""}
-            <span class="emoji" style="font-size:34px;">🏗️</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🏗️</span></div>
             <div class="fw-900 text-sm">المباني</div>
-            <div class="kd-pro-sub">${isKingdomDusty() && !isEra2KingdomGated() ? "🌫️ عليها غبار" : `${kd.plots.filter(Boolean).length}/9 مبني`}</div>
+            <div class="kd-v3-tile-sub">${showDustOverlay ? "🌫️ نظّف الغبار" : `${builtPlots.length}/9 مبني · ${upgradeableCnt} جاهز`}</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="kingdom-wonders">
-            <span class="kd-badge-dot num" style="background:linear-gradient(180deg,#FFE074,#F59E0B);color:#1A1104;">${getCompletedWondersCount()}/${WONDERS_CATALOG.length}</span>
-            <span class="emoji" style="font-size:34px;">🏛️</span>
+          <button class="kd-v3-tile" data-go="kingdom-wonders">
+            <span class="kd-badge-dot num" style="background:linear-gradient(180deg,#FFE074,#F59E0B);color:#1A1104;">${wondersDone}/${WONDERS_CATALOG.length}</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🏛️</span></div>
             <div class="fw-900 text-sm">عجائب المملكة</div>
-            <div class="kd-pro-sub">بونص دائم ∞</div>
+            <div class="kd-v3-tile-sub">${escapeHtml(activeWonder.name)} (${activeWonderState.stage}/${activeWonder.stages})</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="research-lab">
-            ${(state.researchLab?.active?.length || 0) > 0 ? `<span class="kd-badge-dot num" style="background:#8B5CF6;">${state.researchLab.active.length}/${state.researchLab.unlockedSlots}</span>` : ""}
-            <span class="emoji" style="font-size:34px;">⚗️</span>
+          <button class="kd-v3-tile ${labActiveList.length > 0 ? "lit" : ""}" data-go="research-lab">
+            ${labActiveList.length > 0 ? `<span class="kd-badge-dot num" style="background:#8B5CF6;">${labActiveList.length}/${labSlots}</span>` : ""}
+            <div class="kd-v3-tile-ico"><span class="emoji">⚗️</span></div>
             <div class="fw-900 text-sm">مختبر الأبحاث</div>
-            <div class="kd-pro-sub">تطوير علمي دائم</div>
+            <div class="kd-v3-tile-sub num" ${nearestLabEnd ? `data-kd-subcd="${nearestLabEnd}"` : ""}>${nearestLabEnd ? `⏳ ${fmtHMS(nearestLabEnd - now)}` : `${labSlots} خانات متاحة`}</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="expeditions">
-            ${state.expeditions?.active ? `<span class="kd-badge-dot" style="background:#F59E0B;color:#1A1104;">⏳</span>` : ""}
-            <span class="emoji" style="font-size:34px;">🧭</span>
+          <button class="kd-v3-tile ${expAct ? "lit" : ""}" data-go="expeditions">
+            ${expAct ? `<span class="kd-badge-dot" style="background:#F59E0B;color:#1A1104;">⏳</span>` : ""}
+            <div class="kd-v3-tile-ico"><span class="emoji">🧭</span></div>
             <div class="fw-900 text-sm">الرحلات</div>
-            <div class="kd-pro-sub">${state.expeditions?.active ? "في الطريق..." : "غنائم وصناديق"}</div>
+            <div class="kd-v3-tile-sub num" ${expAct ? `data-kd-subcd="${expAct.endsAt}"` : ""}>${expAct ? `⏳ ${fmtHMS(expAct.endsAt - now)}` : "جاهزة للانطلاق"}</div>
           </button>
         </div>
-
-        <div class="kd-section-title"><span>🛡️ الحماية والفعاليات</span><span class="text-xs text-muted">الأمان والمكافآت</span></div>
-        <div class="kd-menu-grid">
-          <button class="kd-pro-tile ${!raidDone ? "alert" : ""}" data-go="night-raids">
-            <span class="kd-badge-dot num" style="background:${raidDone ? "#10B981" : "#EF4444"};">${raidDone ? "✓" : `${getNightRaidDefense()}%`}</span>
-            <span class="emoji" style="font-size:34px;">🌙</span>
+      `;
+    } else {
+      const cg = state.chestGate || { boughtToday: 0, goldenPity: 0 };
+      tabCardsHtml = `
+        <div class="kd-v3-grid">
+          <button class="kd-v3-tile ${!raidDone ? "alert" : ""}" data-go="night-raids">
+            <span class="kd-badge-dot num" style="background:${raidDone ? "#10B981" : "#EF4444"};">${raidDone ? "✓" : `${defense}%`}</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🌙</span></div>
             <div class="fw-900 text-sm">غارات الليل</div>
-            <div class="kd-pro-sub">${raidDone ? "مصدودة الليلة ✓" : "استعد لـ 11 م"}</div>
+            <div class="kd-v3-tile-sub">${raidDone ? "مصدودة الليلة ✓" : "الهجوم الساعة 11 م"}</div>
           </button>
 
-          <button class="kd-pro-tile ${suppliesEmpty ? "alert" : ""}" data-go="kingdom-supplies">
-            <span class="kd-badge-dot num" style="background:${suppliesEmpty ? "#EF4444" : "#F59E0B"};color:${suppliesEmpty ? "#FFF" : "#1A1104"};">${formatNum(state.supplies?.amount || 0)}</span>
-            <span class="emoji" style="font-size:34px;">🥖</span>
+          <button class="kd-v3-tile ${suppliesEmpty ? "alert" : ""}" data-go="kingdom-supplies">
+            <span class="kd-badge-dot num" style="background:${suppliesEmpty ? "#EF4444" : "#F59E0B"};color:${suppliesEmpty ? "#FFF" : "#1A1104"};">${formatNum(suppliesAmt)}</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🥖</span></div>
             <div class="fw-900 text-sm">مؤن المملكة</div>
-            <div class="kd-pro-sub">${suppliesEmpty ? "⚠️ خلصت!" : "غذاء الشعب"}</div>
+            <div class="kd-v3-tile-sub">${suppliesEmpty ? "⚠️ خلصت المؤن!" : suppliesDaysLeft !== null ? `تكفي ${suppliesDaysLeft} يوم` : "مخزون جاهز ✓"}</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="kingdom-festival">
+          <button class="kd-v3-tile ${activeFest ? "lit" : ""}" data-go="kingdom-festival">
             ${activeFest ? `<span class="kd-badge-dot" style="background:#EC4899;">🔥</span>` : ""}
-            <span class="emoji" style="font-size:34px;">🎪</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🎪</span></div>
             <div class="fw-900 text-sm">مهرجان المملكة</div>
-            <div class="kd-pro-sub">${activeFest ? activeFest.effectText : "مضاعفات للجلسات"}</div>
+            <div class="kd-v3-tile-sub num" ${activeFest ? `data-kd-subcd="${state.festival.endsAt}"` : ""}>${activeFest ? `⏳ ${fmtHMS(state.festival.endsAt - now)}` : "مضاعفات للجلسات"}</div>
           </button>
 
-          <button class="kd-pro-tile" data-go="chest-gate">
-            <span class="kd-badge-dot num" style="background:#38BDF8;color:#082F49;">${state.chestGate?.boughtToday || 0}/5</span>
-            <span class="emoji" style="font-size:34px;">🎁</span>
+          <button class="kd-v3-tile" data-go="chest-gate">
+            <span class="kd-badge-dot num" style="background:#38BDF8;color:#082F49;">${cg.boughtToday || 0}/5</span>
+            <div class="kd-v3-tile-ico"><span class="emoji">🎁</span></div>
             <div class="fw-900 text-sm">بوابة الصناديق</div>
-            <div class="kd-pro-sub">افتح صناديق فورية</div>
+            <div class="kd-v3-tile-sub num">ضمان ذهبي ${cg.goldenPity || 0}/10</div>
+          </button>
+        </div>
+      `;
+    }
+
+    el.innerHTML = `
+      <!-- 1. الهيدر الملكي وشريط الموارد -->
+      <div class="kd-v3-header">
+        <div class="kd-v3-head-row">
+          <div class="kd-v3-title-wrap">
+            <div class="kd-v3-crest">${svgIcon("castle", 24)}</div>
+            <div style="min-width:0;">
+              <div class="fw-900" style="font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(era.kingdomLabel)}</div>
+              <button class="text-xs text-gold fw-800" id="kd-rank-pill" style="display:flex;align-items:center;gap:4px;">
+                <span>${rankInfo.cur.emoji} ${rankInfo.cur.name}</span>
+                <span>·</span>
+                <span class="num">Lv ${kLv}</span>
+              </button>
+            </div>
+          </div>
+          <button class="kd-v3-eff-btn" id="kd-eff-btn">
+            <span>📊</span>
+            <span>كفاءة المملكة</span>
           </button>
         </div>
 
-        <div class="fs-card" data-go="kingdom-rating" role="button" tabindex="0" style="cursor:pointer;margin-bottom:0;">
+        <div class="kd-v3-res-grid">
+          <button class="kd-v3-res-btn coins" data-go="shop">${svgIcon("coin", 14)}<span class="num">${formatNum(state.wallet.coins)}</span></button>
+          <button class="kd-v3-res-btn gems" data-go="shop">${svgIcon("gem", 14)}<span class="num">${formatNum(state.wallet.gems)}</span></button>
+          <button class="kd-v3-res-btn ether" data-ether-info="1">${svgIcon("crystal", 14)}<span class="num">${formatNum(state.rebirth?.etherCrystals || 0)}</span></button>
+          <button class="kd-v3-res-btn rate" data-go="kingdom-treasury"><span class="num">+${formatNum(rate)}/س</span></button>
+        </div>
+      </div>
+
+      <!-- 2. بانوراما القلعة التفاعلية الحية -->
+      ${getKingdomCitadelPanoramaHtml({ weather, isAngry, fuelActive, showDustOverlay, builtPlots, raidDone, defense, activeFest })}
+
+      <!-- 3. أهم تنبيه عاجل واحد فقط (إن وجد) -->
+      ${topAlert ? `
+        <div class="kd-v3-alert ${topAlert.cls}">
+          <span class="emoji" style="font-size:28px;flex-shrink:0;">${topAlert.icon}</span>
+          <div style="flex:1;min-width:0;">
+            <div class="fw-900 text-xs">${escapeHtml(topAlert.title)}</div>
+            <div class="text-xs text-muted mt-8" style="line-height:1.3;">${escapeHtml(topAlert.desc)}</div>
+          </div>
+          ${topAlert.btn ? `<button class="btn ${topAlert.cls === "warn" ? "btn-primary" : "btn-danger"} btn-sm" style="min-height:34px;padding:4px 10px;font-size:11.5px;white-space:nowrap;" ${topAlert.qfix ? `data-kd-qfix="${topAlert.qfix}"` : `data-go="${topAlert.go}"`}>${topAlert.btn}</button>` : ""}
+        </div>
+      ` : ""}
+
+      <!-- 4. غرفة العمليات: الخزينة + الوقود + الرضا والشعب -->
+      <div class="kd-v3-ops-card">
+        <div class="kd-v3-vault-box">
           <div class="flex-between mb-8">
-            <span class="fw-900 text-sm">مزاج الشعب وتقييمك</span>
-            <span class="text-xs text-gold fw-800">تفاصيل ←</span>
+            <span class="fw-900 text-sm">🏦 خزينة الأرباح المتراكمة ${isAngry ? `<span class="pill pill-red text-xs" style="min-height:20px;padding:1px 7px;">×0.4 غاضب</span>` : ""}</span>
+            <span class="text-xs text-gold fw-900 num" id="kd-vault-pct">${vaultPct}% / ${capHrs} س</span>
           </div>
-          <div class="kd-mood-row">
-            ${moodFaces.map((f, idx) => `<span class="kd-mood-face ${idx === activeMoodIdx ? "active" : ""}">${f}</span>`).join("")}
-          </div>
-        </div>
-      ` : `
-        <div class="kd-menu-grid">
-          <button class="kd-pro-tile" data-go="kingdom-decrees">
-            <span class="emoji" style="font-size:34px;">👑</span>
-            <div class="fw-900 text-sm">المراسيم الملكية</div>
-            <div class="kd-pro-sub">ارفع الرضا بسرعة</div>
-          </button>
-          <button class="kd-pro-tile" data-go="kingdom-treasury">
-            <span class="emoji" style="font-size:34px;">💰</span>
-            <div class="fw-900 text-sm">الخزينة</div>
-            <div class="kd-pro-sub">راقب الضرائب والمصروفات</div>
+          <div class="progress-track lg mb-12"><div class="progress-fill ${isAngry ? "red" : ""}" id="kd-vault-fill" style="width:${vaultPct}%;"></div></div>
+          <button class="kd-collect-cta" id="kd-collect-main" ${pending <= 0 ? "style='opacity:0.65;'" : ""}>
+            <span>${pending > 0 ? `اجمع${hasLevelFeature("perk_kingdom_interest5") ? " (+5%)" : ""}` : "الخزينة فاضية"}</span>
+            <span class="emoji">🪙</span>
+            <span class="num" id="kd-collect-amt">${formatNum(pending)}</span>
           </button>
         </div>
-      `}
+
+        <div class="kd-v3-split-metrics">
+          <div class="kd-v3-metric-box">
+            <div class="flex-between mb-8">
+              <span class="text-xs fw-900">${svgIcon("fuel", 14)} الوقود</span>
+              <span class="text-xs fw-900 num" style="color:${fuelActive ? "#7DD3FC" : "#FCA5A5"};" id="kd-fuel-cd">${fuelActive ? fmtHMS((kd.fuelEndsAt || 0) - now) : "00:00:00"}</span>
+            </div>
+            <div class="progress-track mb-8"><div class="progress-fill ${fuelActive ? "purple" : "red"}" id="kd-fuel-bar-fill" style="width:${fuelPct}%;"></div></div>
+            ${fuelLeftHrs <= 4
+              ? `<button class="btn btn-secondary btn-sm btn-block" id="kd-fuel-charge-btn" style="min-height:28px;font-size:11px;padding:2px 6px;">اشحن بجلسة ⚡</button>`
+              : `<div class="text-xs text-muted num" style="text-align:center;">${formatDecimal(fuelLeftHrs)} / ${maxFuelHrs} س</div>`}
+          </div>
+
+          <button class="kd-v3-metric-box" data-go="kingdom-people" style="text-align:right;">
+            <div class="flex-between mb-8">
+              <span class="text-xs fw-900">👥 الشعب</span>
+              <span class="text-xs text-green fw-900 num">+${formatNum(todayCit)} اليوم</span>
+            </div>
+            <div class="fw-900 text-gold num" style="font-size:18px;line-height:1.1;">${formatNum(totalCit)}</div>
+            <div class="progress-track mt-8"><div class="progress-fill green" style="width:${rankInfo.pct}%;"></div></div>
+          </button>
+        </div>
+
+        <div class="kd-v3-sat-bar" data-go="kingdom-rating" role="button" tabindex="0">
+          <div>
+            <div class="fw-900 text-sm">❤️ رضا الشعب: <span class="num" style="color:${isAngry ? "#F87171" : "#4ADE80"};">${sat}/100</span> <span class="text-xs text-muted">(${rulerLabel})</span></div>
+            <div class="text-xs text-muted mt-8">اضغط لمعرفة تفاصيل تقييم الحاكم</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;">
+            ${moodFaces.map((f, idx) => `<span style="font-size:${idx === activeMoodIdx ? "24px" : "16px"};opacity:${idx === activeMoodIdx ? "1" : "0.38"};filter:${idx === activeMoodIdx ? "drop-shadow(0 0 8px rgba(255,215,106,0.75))" : "none"};">${f}</span>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. التبويبات الثلاثة المنظمة للمملكة -->
+      <div class="kd-v3-tabs">
+        <button class="kd-v3-tab-btn ${kingdomHubTab === "gov" ? "active" : ""}" data-kd-tab="gov">
+          ${govDot ? `<span class="kd-v3-tab-dot"></span>` : ""}
+          <span>🏛️ الحكم والشعب</span>
+        </button>
+        <button class="kd-v3-tab-btn ${kingdomHubTab === "build" ? "active" : ""}" data-kd-tab="build">
+          ${buildDot ? `<span class="kd-v3-tab-dot" style="background:#22C55E;box-shadow:0 0 8px #22C55E;"></span>` : ""}
+          <span>🏗️ التطوير والتوسع</span>
+        </button>
+        <button class="kd-v3-tab-btn ${kingdomHubTab === "def" ? "active" : ""}" data-kd-tab="def">
+          ${defDot ? `<span class="kd-v3-tab-dot"></span>` : ""}
+          <span>🛡️ الحماية والفعاليات</span>
+        </button>
+      </div>
+
+      ${tabCardsHtml}
     `;
 
     el.querySelectorAll("[data-go]").forEach(btn => {
       btn.onclick = () => { AudioFX.playClick(); navigate(btn.dataset.go); };
     });
+    el.querySelectorAll("[data-kd-jumpplot]").forEach(btn => {
+      btn.onclick = () => {
+        kd.selectedPlot = Number(btn.dataset.kdJumpplot);
+        AudioFX.playClick();
+        saveState();
+        navigate("kingdom-buildings");
+      };
+    });
+    el.querySelectorAll("[data-kd-tab]").forEach(btn => {
+      btn.onclick = () => {
+        kingdomHubTab = btn.dataset.kdTab;
+        AudioFX.playClick();
+        renderKingdom();
+      };
+    });
+    el.querySelectorAll("[data-kd-qfix]").forEach(btn => {
+      btn.onclick = () => {
+        const fx = btn.dataset.kdQfix;
+        if (fx === "collect") {
+          runWithLoader(() => collectKingdomIncome(btn), "بنجمع أرباح المملكة...", 580);
+        } else if (fx === "buy_sup") {
+          runWithLoader(() => { if (buySuppliesPack("small", false)) renderKingdom(); }, "بنشتري مؤن...", 560);
+        } else if (fx === "focus") {
+          AudioFX.playClick();
+          openQuickFocusDialog();
+        }
+      };
+    });
+
+    const fuelBtn = document.getElementById("kd-fuel-charge-btn");
+    if (fuelBtn) {
+      fuelBtn.onclick = () => { AudioFX.playClick(); openQuickFocusDialog(); };
+    }
+    const weatherChip = document.getElementById("kd-weather-chip");
+    if (weatherChip) {
+      weatherChip.onclick = () => {
+        AudioFX.playClick();
+        FX.showToast(`${weather.emoji} ${weather.name}: ${weather.desc}`, "success");
+      };
+    }
+    const effBtn = document.getElementById("kd-eff-btn");
+    if (effBtn) effBtn.onclick = openKingdomEfficiencySheet;
+
     const rkPill = document.getElementById("kd-rank-pill");
     if (rkPill) {
       rkPill.onclick = () => {
         const info = getKingdomRankInfo();
-        FX.showToast(`رتبتك: ${info.cur.name} ${info.cur.emoji} · مستوى المملكة ${kLv}`, "success");
+        FX.showToast(
+          info.next
+            ? `رتبتك: ${info.cur.name} ${info.cur.emoji} · فاضلك ${formatNum(info.next.minCitizens - info.totalCitizens)} مواطن لـ ${info.next.name}`
+            : `أنت في أعلى رتبة: ${info.cur.name} ${info.cur.emoji} (Lv ${kLv})`,
+          "success"
+        );
       };
     }
+
     const collBtn = document.getElementById("kd-collect-main");
     if (collBtn) {
       collBtn.onclick = (e) => {
@@ -25450,6 +26700,33 @@
         runWithLoader(() => collectKingdomIncome(btnEl), "بنجمع أرباح المملكة...", 580);
       };
     }
+
+    clearScreenLiveTimers();
+    screenLiveTimer = setInterval(() => {
+      if (currentScreen !== "kingdom") { clearScreenLiveTimers(); return; }
+      const n = Date.now();
+      const fRemMs = Math.max(0, (state.kingdom?.fuelEndsAt || 0) - n);
+      const fCd = document.getElementById("kd-fuel-cd");
+      const fBar = document.getElementById("kd-fuel-bar-fill");
+      if (fCd) fCd.textContent = fmtHMS(fRemMs);
+      if (fBar) fBar.style.width = `${Math.min(100, (fRemMs / (maxFuelHrs * 3600000)) * 100)}%`;
+
+      const curPending = getKingdomAccumulatedCoins();
+      const curPct = Math.min(100, Math.round((curPending / Math.max(1, maxCapCoins)) * 100));
+      const amtEl = document.getElementById("kd-collect-amt");
+      const vPctEl = document.getElementById("kd-vault-pct");
+      const vFillEl = document.getElementById("kd-vault-fill");
+      if (amtEl) amtEl.textContent = formatNum(curPending);
+      if (vPctEl) vPctEl.textContent = `${curPct}% / ${capHrs} س`;
+      if (vFillEl) vFillEl.style.width = `${curPct}%`;
+
+      el.querySelectorAll("[data-kd-subcd]").forEach(node => {
+        const endTs = Number(node.dataset.kdSubcd);
+        if (endTs > 0) {
+          node.textContent = n >= endTs ? "✓ جاهز!" : `⏳ ${fmtHMS(endTs - n)}`;
+        }
+      });
+    }, 1000);
   }
 
   function renderKingdomBuildings() {
@@ -25476,7 +26753,8 @@
       const meta = BUILDINGS_CATALOG.find(x => x.id === pl.id);
       if (!meta) return;
       const cost = getEffectiveBuildCost(getBuildingUpgradeCost(pl.id, pl.level));
-      const gainHr = Math.round(meta.income * (pl.id === "wisdom_tower" && state.shop.owned.includes("skin_golden_tower") ? 1.05 : 1));
+      const starIncMult = 1 + (pl.stars || 0) * 0.5;
+      const gainHr = Math.round(meta.income * starIncMult * (pl.id === "wisdom_tower" && state.shop.owned.includes("skin_golden_tower") ? 1.05 : 1));
       const roi = gainHr / Math.max(1, cost);
       if (!bestROI || roi > bestROI.roi || (roi === bestROI.roi && cost < bestROI.cost)) {
         bestROI = { idx, plot: pl, meta: getEraBuildingMeta(pl.id, meta), cost, gainHr, roi };
@@ -25770,6 +27048,7 @@
 
     const incomeHr = getKingdomIncomePerHour();
     const expHr = getKingdomExpensesPerHour();
+    const grossHr = isFocusFuelActive() ? incomeHr + expHr : 0;
     const taxRate = Number(kd.taxRate || 0);
     const taxSliderPct = (taxRate / 30) * 100;
     const capHrs = getKingdomCapHours();
@@ -25821,13 +27100,17 @@
 
       <div class="tr-io-grid">
         <div class="tr-io-card inc">
-          <div class="text-sm fw-800 mb-8">الدخل</div>
-          <div class="fw-900 num" style="font-size:20px;color:#4ADE80;">+${formatNum(incomeHr)} 🪙/ساعة</div>
+          <div class="text-sm fw-800 mb-8">إجمالي الدخل</div>
+          <div class="fw-900 num" style="font-size:20px;color:#4ADE80;">+${formatNum(grossHr)} 🪙/ساعة</div>
         </div>
         <div class="tr-io-card exp">
           <div class="text-sm fw-800 mb-8">المصروفات</div>
           <div class="fw-900 num" style="font-size:20px;color:#FCA5A5;">-${formatNum(expHr)} 🪙/ساعة</div>
         </div>
+      </div>
+      <div class="pill pill-gold mb-12" style="width:100%;justify-content:center;">
+        <span>صافي الدخل الفعلي:</span>
+        <strong class="num">+${formatNum(incomeHr)} 🪙/ساعة</strong>
       </div>
 
       <div class="fs-card">
@@ -26319,22 +27602,26 @@
   let leagueOnlyReal = false;
   let leagueSearch = "";
 
-  function renderLeague() {
+  function renderLeague(opts = {}) {
     const el = document.getElementById("screen-league");
     const curTierIdx = LEAGUE_TIERS.findIndex(t => t.id === state.league.tier);
     const curTier = LEAGUE_TIERS[Math.max(0, curTierIdx)];
     const activeBoardKey = CloudLeague.getBoardKey(leagueTab, rankingCategory);
 
-    CloudLeague.ensureReadyAndSync(false);
-    CloudLeague.fetchBoard(activeBoardKey, false);
+    if (!opts?.skipAutoRefresh) {
+      CloudLeague.autoUpdateIfNeeded(activeBoardKey);
+    }
 
-    const statusDotCls = CloudLeague.status === "online" ? "online"
-      : CloudLeague.status === "syncing" ? "syncing"
+    const lastUpdatedAt = CloudLeague.getLastUpdatedAt(activeBoardKey);
+    const lastUpdatedLabel = CloudLeague.formatLastUpdated(lastUpdatedAt);
+    const isSyncingBoard = !!CloudLeague.inFlightFetch[activeBoardKey] || CloudLeague.status === "syncing";
+    const statusDotCls = isSyncingBoard ? "syncing"
+      : CloudLeague.status === "online" ? "online"
         : CloudLeague.status === "error" ? "error" : "offline";
-    const statusText = CloudLeague.status === "online" ? "🟢 متصل أونلاين مباشر"
-      : CloudLeague.status === "syncing" ? "⏳ جاري التزامن..."
+    const statusText = isSyncingBoard ? "⏳ بنحدّث الترتيب تلقائياً..."
+      : CloudLeague.status === "online" ? "🟢 متصل أونلاين"
         : CloudLeague.status === "error" ? "⚠️ مزامنة محلية مؤقتة"
-          : "📡 وضع محلي (أوفلاين)";
+          : (typeof navigator !== "undefined" && navigator.onLine === false) ? "📡 أوفلاين" : "🟢 جاهز";
 
     const renderSyncBarHtml = (poolCount, realCount) => `
       <div class="lg-sync-bar">
@@ -26343,7 +27630,7 @@
           <span class="text-xs fw-800">${statusText}</span>
           <span class="pill pill-blue text-xs num" style="min-height:20px;padding:1px 7px;">🌐 ${realCount} حقيقي</span>
         </div>
-        <button class="btn btn-ghost btn-sm" id="lg-cloud-refresh" style="min-height:28px;padding:2px 10px;font-size:11px;">🔄 تحديث</button>
+        <span class="lg-last-update-pill num" title="التحديث تلقائي كل ساعة عند دخول الدوري">🕒 آخر تحديث: ${escapeHtml(lastUpdatedLabel)}</span>
       </div>
       <div class="lg-filter-bar">
         <input class="sh-search-inp" id="lg-search-inp" type="search" placeholder="🔍 ابحث في أول ${poolCount} لاعب..." value="${escapeHtml(leagueSearch)}" style="min-height:36px;" />
@@ -26352,21 +27639,12 @@
     `;
 
     const bindCloudHeaderEvents = () => {
-      const refBtn = document.getElementById("lg-cloud-refresh");
-      if (refBtn) {
-        refBtn.onclick = async () => {
-          AudioFX.playClick();
-          await CloudLeague.syncProfile(true);
-          await CloudLeague.fetchBoard(activeBoardKey, true);
-          renderLeague();
-        };
-      }
       const realTog = document.getElementById("lg-real-toggle");
       if (realTog) {
         realTog.onclick = () => {
           leagueOnlyReal = !leagueOnlyReal;
           AudioFX.playClick();
-          renderLeague();
+          renderLeague({ skipAutoRefresh: true });
         };
       }
       const srch = document.getElementById("lg-search-inp");
@@ -26374,7 +27652,7 @@
         srch.oninput = (e) => {
           leagueSearch = e.target.value;
           const pos = srch.selectionStart || leagueSearch.length;
-          renderLeague();
+          renderLeague({ skipAutoRefresh: true });
           const newInp = document.getElementById("lg-search-inp");
           if (newInp) {
             newInp.focus();
@@ -37481,6 +38759,7 @@
     hbTimer: null,
     connecting: false,
     ready: false,
+    lastAttemptAt: 0,
     counts: {},
 
     getCount(code) {
@@ -37494,12 +38773,15 @@
       return PUBLIC_STUDY_ROOMS.reduce((acc, r) => acc + this.getCount(r.code), 0);
     },
 
-    async connect(strategy = state?.studyRooms?.lastStrategy || "nostr") {
+    async connect(strategy = "supabase") {
       if (this.room || this.connecting) return;
       if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+      if (Date.now() - this.lastAttemptAt < 30000) return;
+      this.lastAttemptAt = Date.now();
       this.connecting = true;
       try {
-        const mod = await StudyRooms.loadLib(strategy);
+        const useStrat = window.__supabaseFailed ? (strategy === "supabase" ? "nostr" : strategy) : "supabase";
+        const mod = await StudyRooms.loadLib(useStrat);
         const room = mod.joinRoom({ appId: STUDY_ROOM_DIR_ID, identity: "local" }, "public_lobby_dir");
         const pres = room.makeUserState("pubPres", { roomCode: "", ts: 0 });
         this.room = room;
@@ -37606,9 +38888,537 @@
     fileProgressPct: 0,
     unreadChatCount: 0,
 
-    async loadLib(strategy = "nostr") {
+    _getPeerUid(ephemeral = false) {
+      if (ephemeral) return `u_${Math.random().toString(36).slice(2, 10)}`;
+      if (state?.cloud?.userId) return `u_${String(state.cloud.userId).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 14)}`;
+      try {
+        const k = "ADEL_STUDYGAME_2026__sr_uid";
+        let saved = storageAvailable ? localStorage.getItem(k) : "";
+        if (!saved) {
+          saved = `u_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
+          if (storageAvailable) localStorage.setItem(k, saved);
+        }
+        return saved;
+      } catch {
+        return `u_${Math.random().toString(36).slice(2, 10)}`;
+      }
+    },
+
+    async _computePwToken(slug, password) {
+      const cleanPw = String(password || "").trim();
+      if (!cleanPw) return "";
+      const base = slug.includes("~") ? slug.slice(0, slug.lastIndexOf("~")) : slug;
+      const raw = `fc_sr_pw_v2:${base}:${cleanPw}`;
+      try {
+        if (window.crypto?.subtle?.digest) {
+          const buf = await window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw));
+          return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("").slice(0, 24);
+        }
+      } catch { /* fallback hash */ }
+      return `${hashStr(raw).toString(36)}_${hashStr(`${raw}_s2`).toString(36)}`;
+    },
+
+    _bytesToB64(bytes) {
+      let bin = "";
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+      }
+      return btoa(bin);
+    },
+
+    _b64ToBytes(b64) {
+      const bin = atob(b64);
+      const out = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    },
+
+    _createSupabaseRealtimeMod() {
+      const srOwner = this;
+      return {
+        roles(opts = {}) {
+          return { type: "roles", selfAsAdmin: !!opts.selfAsAdmin };
+        },
+        joinRoom(cfg = {}, roomSlug = "") {
+          const rolesPlugin = Array.isArray(cfg.use) ? cfg.use.find(u => u && u.type === "roles") : null;
+          const selfAsAdmin = !!(rolesPlugin && rolesPlugin.selfAsAdmin);
+          const myUserId = srOwner._getPeerUid(cfg.identity === "none");
+          const roomId = (selfAsAdmin && !String(roomSlug).includes("~")) ? `${roomSlug}~${myUserId}` : String(roomSlug);
+          const rootAdminId = roomId.includes("~") ? roomId.slice(roomId.lastIndexOf("~") + 1) : (selfAsAdmin ? myUserId : null);
+          const channelKey = `fc_sr_${cfg.appId === STUDY_ROOM_DIR_ID ? "dir_" : ""}${roomId.replace(/[^a-zA-Z0-9_~-]/g, "_")}`;
+
+          let sb = null;
+          let channel = null;
+          let subscribed = false;
+          let left = false;
+          let pwToken = "";
+          let capChecked = false;
+          let errorEmitted = false;
+          let prevPeerIds = new Set();
+          const adminsSet = new Set(rootAdminId ? [rootAdminId] : []);
+          const bannedSet = new Set();
+          const userStates = {};
+          const userPayloads = {};
+          const sharedStates = {};
+          const actions = {};
+          const joinCbs = [];
+          const leaveCbs = [];
+          const errorCbs = [];
+          const incomingFiles = {};
+          const pendingPings = {};
+
+          const isUidAdmin = (uidVal) => {
+            if (!uidVal) return false;
+            if (adminsSet.has(uidVal)) return true;
+            const metaAdmins = sharedStates.meta?.value?.admins;
+            return Array.isArray(metaAdmins) && metaAdmins.includes(uidVal);
+          };
+
+          const emitErr = (code, message) => {
+            if (errorEmitted && (code === "decrypt-failed" || code === "room-full" || code === "banned")) return;
+            if (code === "decrypt-failed" || code === "room-full" || code === "banned") errorEmitted = true;
+            errorCbs.forEach(cb => { try { cb({ code, message }); } catch {} });
+          };
+
+          const sendBroadcast = (payload) => {
+            if (!channel || !subscribed || left) return;
+            try {
+              channel.send({ type: "broadcast", event: "msg", payload });
+            } catch { /* ignore */ }
+          };
+
+          const trackPresence = async () => {
+            if (!channel || !subscribed || left) return;
+            try {
+              await channel.track({
+                _uid: myUserId,
+                _pw: pwToken,
+                _states: { ...userPayloads },
+                _at: Date.now()
+              });
+            } catch { /* ignore */ }
+          };
+
+          const buildUserStateMap = (name) => {
+            const out = {};
+            if (!channel) {
+              if (userPayloads[name] !== undefined) out[myUserId] = userPayloads[name];
+              return out;
+            }
+            const pres = channel.presenceState() || {};
+            for (const [k, arr] of Object.entries(pres)) {
+              const latest = Array.isArray(arr) && arr.length ? arr[arr.length - 1] : null;
+              if (!latest) continue;
+              const val = latest._states ? latest._states[name] : latest[name];
+              if (val !== undefined) out[k] = val;
+            }
+            if (out[myUserId] === undefined && userPayloads[name] !== undefined) {
+              out[myUserId] = userPayloads[name];
+            }
+            return out;
+          };
+
+          const applyIncomingState = (name, incoming) => {
+            const st = sharedStates[name];
+            if (!st || !incoming) return;
+            const cur = st;
+            const newer = (incoming.ts > cur.ts) || (incoming.ts === cur.ts && (incoming.seq || 0) > (cur.seq || 0));
+            if (!newer) return;
+            cur.value = incoming.value;
+            cur.ts = incoming.ts;
+            cur.seq = incoming.seq || 0;
+            cur.writer = incoming.writer || "";
+            if (name === "meta" && incoming.value) {
+              if (Array.isArray(incoming.value.admins)) {
+                incoming.value.admins.forEach(a => adminsSet.add(a));
+              }
+              if (Array.isArray(incoming.value.banned)) {
+                incoming.value.banned.forEach(b => bannedSet.add(b));
+                if (bannedSet.has(myUserId)) {
+                  emitErr("banned", "تم حظرك من الغرفة دي 🚫");
+                  return;
+                }
+              }
+            }
+            cur.cbs.forEach(cb => { try { cb(cur.value); } catch {} });
+          };
+
+          const connectPromise = (async () => {
+            pwToken = await srOwner._computePwToken(roomId, cfg.password);
+            await CloudLeague.ensureAuth();
+            sb = await CloudLeague.getClient();
+            if (!sb) throw new Error("تعذّر الاتصال بخادم الغرف — اتأكد من الإنترنت 🌐");
+            if (left) return null;
+
+            channel = sb.channel(channelKey, {
+              config: {
+                broadcast: { self: false },
+                presence: { key: myUserId }
+              }
+            });
+
+            channel
+              .on("presence", { event: "sync" }, () => {
+                if (left || !channel) return;
+                const pres = channel.presenceState() || {};
+                const curIds = new Set();
+
+                for (const [k, arr] of Object.entries(pres)) {
+                  const latest = Array.isArray(arr) && arr.length ? arr[arr.length - 1] : null;
+                  if (!latest) continue;
+                  if (k !== myUserId && latest._pw !== undefined && String(latest._pw || "") !== String(pwToken || "")) {
+                    emitErr("decrypt-failed", "كلمة السر غلط أو غير متطابقة 🔑");
+                    return;
+                  }
+                  curIds.add(k);
+                }
+
+                if (!capChecked && cfg.maxUsers) {
+                  capChecked = true;
+                  const othersCount = Array.from(curIds).filter(id => id !== myUserId).length;
+                  if (othersCount >= cfg.maxUsers) {
+                    emitErr("room-full", "الغرفة وصلت للحد الأقصى للعدد 🔒");
+                    return;
+                  }
+                }
+
+                if (bannedSet.has(myUserId)) {
+                  emitErr("banned", "تم حظرك من الغرفة دي 🚫");
+                  return;
+                }
+
+                let hasNewPeer = false;
+                for (const id of curIds) {
+                  if (!prevPeerIds.has(id)) {
+                    if (id !== myUserId) hasNewPeer = true;
+                    joinCbs.forEach(cb => { try { cb({ userId: id }); } catch {} });
+                  }
+                }
+                for (const oldId of prevPeerIds) {
+                  if (!curIds.has(oldId)) {
+                    leaveCbs.forEach(cb => { try { cb({ userId: oldId }); } catch {} });
+                  }
+                }
+                prevPeerIds = curIds;
+
+                if (hasNewPeer) {
+                  const snap = {};
+                  let hasSnap = false;
+                  for (const [sName, sObj] of Object.entries(sharedStates)) {
+                    if (sObj.ts > 0) {
+                      snap[sName] = { value: sObj.value, ts: sObj.ts, seq: sObj.seq, writer: sObj.writer };
+                      hasSnap = true;
+                    }
+                  }
+                  if (hasSnap) {
+                    setTimeout(() => {
+                      sendBroadcast({ t: "sync_res", states: snap, pw: pwToken, from: myUserId });
+                    }, isUidAdmin(myUserId) ? 35 : 220);
+                  }
+                }
+
+                for (const [uName, uObj] of Object.entries(userStates)) {
+                  const map = buildUserStateMap(uName);
+                  uObj.cbs.forEach(cb => { try { cb(map); } catch {} });
+                }
+              })
+              .on("broadcast", { event: "msg" }, ({ payload }) => {
+                if (left || !payload) return;
+                if (String(payload.pw || "") !== String(pwToken || "")) {
+                  if (payload.pw && payload.pw !== pwToken) emitErr("decrypt-failed", "كلمة السر غلط أو غير متطابقة 🔑");
+                  return;
+                }
+                if (payload.t === "sync_req") {
+                  const snap = {};
+                  let hasSnap = false;
+                  for (const [sName, sObj] of Object.entries(sharedStates)) {
+                    if (sObj.ts > 0) {
+                      snap[sName] = { value: sObj.value, ts: sObj.ts, seq: sObj.seq, writer: sObj.writer };
+                      hasSnap = true;
+                    }
+                  }
+                  if (hasSnap) {
+                    setTimeout(() => {
+                      sendBroadcast({ t: "sync_res", states: snap, pw: pwToken, from: myUserId });
+                    }, isUidAdmin(myUserId) ? 25 : 180);
+                  }
+                } else if (payload.t === "sync_res" && payload.states) {
+                  for (const [sName, sData] of Object.entries(payload.states)) {
+                    applyIncomingState(sName, sData);
+                  }
+                } else if (payload.t === "state") {
+                  applyIncomingState(payload.name, payload);
+                } else if (payload.t === "act") {
+                  if (payload.target && payload.target !== myUserId) return;
+                  const act = actions[payload.name];
+                  if (act) {
+                    act.msgCbs.forEach(cb => { try { cb(payload.data, { userId: payload.from, metadata: payload.metadata }); } catch {} });
+                  }
+                } else if (payload.t === "file_chunk") {
+                  const fid = payload.fid;
+                  if (!fid) return;
+                  if (!incomingFiles[fid]) {
+                    incomingFiles[fid] = {
+                      chunks: new Array(payload.total),
+                      received: 0,
+                      total: payload.total,
+                      metadata: payload.metadata || {},
+                      from: payload.from
+                    };
+                  }
+                  const rec = incomingFiles[fid];
+                  if (rec.chunks[payload.idx] === undefined) {
+                    rec.chunks[payload.idx] = srOwner._b64ToBytes(payload.b64);
+                    rec.received += 1;
+                    const act = actions[payload.name];
+                    if (act) {
+                      const pct = rec.received / Math.max(1, rec.total);
+                      act.progCbs.forEach(cb => { try { cb(pct); } catch {} });
+                    }
+                  }
+                  if (rec.received >= rec.total) {
+                    delete incomingFiles[fid];
+                    const totalBytes = rec.chunks.reduce((a, b) => a + b.byteLength, 0);
+                    const merged = new Uint8Array(totalBytes);
+                    let off = 0;
+                    for (const c of rec.chunks) {
+                      merged.set(c, off);
+                      off += c.byteLength;
+                    }
+                    const act = actions[payload.name];
+                    if (act) {
+                      const allowed = !act.recvCbs.length || act.recvCbs.every(fn => fn({ byteLength: merged.byteLength }));
+                      if (allowed) {
+                        act.msgCbs.forEach(cb => { try { cb(merged, { userId: rec.from, metadata: rec.metadata }); } catch {} });
+                      }
+                    }
+                  }
+                } else if (payload.t === "ban") {
+                  if (isUidAdmin(payload.from) && payload.targetId) {
+                    bannedSet.add(payload.targetId);
+                    if (payload.targetId === myUserId) emitErr("banned", "تم حظرك من الغرفة دي 🚫");
+                  }
+                } else if (payload.t === "ping") {
+                  sendBroadcast({ t: "pong", pid: payload.pid, target: payload.from, from: myUserId, pw: pwToken });
+                } else if (payload.t === "pong" && payload.target === myUserId) {
+                  const res = pendingPings[payload.pid];
+                  if (res) {
+                    delete pendingPings[payload.pid];
+                    res.resolve(Math.max(10, Date.now() - res.sentAt));
+                  }
+                }
+              });
+
+            await new Promise((resolve, reject) => {
+              const timer = setTimeout(() => reject(new Error("انتهى وقت الاتصال بالسيرفر — جرب مرة تانية 🌐")), 11000);
+              channel.subscribe(async (status) => {
+                if (left) { clearTimeout(timer); resolve(); return; }
+                if (status === "SUBSCRIBED") {
+                  clearTimeout(timer);
+                  subscribed = true;
+                  await trackPresence();
+                  sendBroadcast({ t: "sync_req", from: myUserId, pw: pwToken });
+                  resolve();
+                } else if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+                  clearTimeout(timer);
+                  reject(new Error("تعذّر الاتصال بقناة الغرفة — اتأكد من الإنترنت 🌐"));
+                }
+              });
+            });
+
+            return { roomId, userId: myUserId, isAdmin: isUidAdmin(myUserId) };
+          })();
+
+          return {
+            async getSelf() {
+              const info = await connectPromise;
+              return info || { roomId, userId: myUserId, isAdmin: isUidAdmin(myUserId) };
+            },
+            getUsers() {
+              if (!channel) return [myUserId];
+              const ids = Object.keys(channel.presenceState() || {});
+              return ids.includes(myUserId) ? ids : [myUserId, ...ids];
+            },
+            getRoles() {
+              const map = {};
+              const list = Array.from(adminsSet);
+              const metaAdmins = sharedStates.meta?.value?.admins;
+              if (Array.isArray(metaAdmins)) metaAdmins.forEach(a => { if (!list.includes(a)) list.push(a); });
+              for (const uidVal of list) map[uidVal] = ["admin"];
+              return map;
+            },
+            async grantRole(targetId, roleName = "admin") {
+              if (!isUidAdmin(myUserId) || !targetId) return;
+              adminsSet.add(targetId);
+              const metaSt = sharedStates.meta;
+              if (metaSt && metaSt.value) {
+                const curAdmins = Array.isArray(metaSt.value.admins) ? [...metaSt.value.admins] : Array.from(adminsSet);
+                if (!curAdmins.includes(targetId)) curAdmins.push(targetId);
+                metaSt.set({ ...metaSt.value, admins: curAdmins });
+              }
+            },
+            async ban(targetId) {
+              if (!isUidAdmin(myUserId) || !targetId || targetId === myUserId) return;
+              bannedSet.add(targetId);
+              sendBroadcast({ t: "ban", targetId, from: myUserId, pw: pwToken });
+              const metaSt = sharedStates.meta;
+              if (metaSt && metaSt.value) {
+                const curBanned = Array.isArray(metaSt.value.banned) ? [...metaSt.value.banned] : [];
+                if (!curBanned.includes(targetId)) curBanned.push(targetId);
+                metaSt.set({ ...metaSt.value, banned: curBanned });
+              }
+            },
+            async leave() {
+              left = true;
+              subscribed = false;
+              if (channel && sb) {
+                try { await channel.untrack(); } catch {}
+                try { await sb.removeChannel(channel); } catch {}
+              }
+              channel = null;
+            },
+            ping(targetId) {
+              return new Promise((resolve) => {
+                if (!subscribed || !targetId) { resolve(35); return; }
+                const pid = uid("pg");
+                const timer = setTimeout(() => {
+                  delete pendingPings[pid];
+                  resolve(45);
+                }, 3000);
+                pendingPings[pid] = {
+                  sentAt: Date.now(),
+                  resolve: (ms) => { clearTimeout(timer); resolve(ms); }
+                };
+                sendBroadcast({ t: "ping", pid, target: targetId, from: myUserId, pw: pwToken });
+              });
+            },
+            onUserJoin(cb, opts = {}) {
+              joinCbs.push(cb);
+              if (opts?.replay && channel) {
+                for (const id of Object.keys(channel.presenceState() || {})) {
+                  try { cb({ userId: id }); } catch {}
+                }
+              }
+              return () => { const i = joinCbs.indexOf(cb); if (i >= 0) joinCbs.splice(i, 1); };
+            },
+            onUserLeave(cb) {
+              leaveCbs.push(cb);
+              return () => { const i = leaveCbs.indexOf(cb); if (i >= 0) leaveCbs.splice(i, 1); };
+            },
+            onError(cb) {
+              errorCbs.push(cb);
+              return () => { const i = errorCbs.indexOf(cb); if (i >= 0) errorCbs.splice(i, 1); };
+            },
+            onPeerStream() { return () => {}; },
+            makeUserState(name, initVal) {
+              userPayloads[name] = initVal;
+              if (!userStates[name]) userStates[name] = { cbs: [] };
+              return {
+                set(val) {
+                  userPayloads[name] = val;
+                  trackPresence();
+                  const map = buildUserStateMap(name);
+                  userStates[name].cbs.forEach(cb => { try { cb(map); } catch {} });
+                },
+                getAll() {
+                  return buildUserStateMap(name);
+                },
+                onChange(cb, opts = {}) {
+                  userStates[name].cbs.push(cb);
+                  if (opts?.replay) {
+                    try { cb(buildUserStateMap(name)); } catch {}
+                  }
+                  return () => { const i = userStates[name].cbs.indexOf(cb); if (i >= 0) userStates[name].cbs.splice(i, 1); };
+                }
+              };
+            },
+            makeState(name, initVal) {
+              const authInit = name === "meta" && selfAsAdmin;
+              const st = {
+                value: initVal,
+                ts: authInit ? Date.now() : 0,
+                seq: authInit ? 1 : 0,
+                writer: myUserId,
+                cbs: []
+              };
+              sharedStates[name] = st;
+              return {
+                get() { return st.value; },
+                set(nextVal) {
+                  st.seq += 1;
+                  st.ts = Math.max(Date.now(), st.ts + 1);
+                  st.writer = myUserId;
+                  st.value = nextVal;
+                  st.cbs.forEach(cb => { try { cb(st.value); } catch {} });
+                  sendBroadcast({ t: "state", name, value: nextVal, ts: st.ts, seq: st.seq, writer: myUserId, pw: pwToken });
+                },
+                onChange(cb) {
+                  st.cbs.push(cb);
+                  return () => { const i = st.cbs.indexOf(cb); if (i >= 0) st.cbs.splice(i, 1); };
+                }
+              };
+            },
+            makeAction(name) {
+              const act = { msgCbs: [], recvCbs: [], progCbs: [] };
+              actions[name] = act;
+              return {
+                async send(data, opts = {}) {
+                  if (data instanceof Uint8Array) {
+                    if (data.byteLength > 1500 * 1024) {
+                      throw new Error("أقصى حجم للملف في السحابة المباشرة 1.5 ميجا");
+                    }
+                    const CHUNK_SIZE = 42000;
+                    const total = Math.max(1, Math.ceil(data.byteLength / CHUNK_SIZE));
+                    const fid = uid("fc");
+                    for (let idx = 0; idx < total; idx++) {
+                      const slice = data.subarray(idx * CHUNK_SIZE, Math.min(data.byteLength, (idx + 1) * CHUNK_SIZE));
+                      sendBroadcast({
+                        t: "file_chunk",
+                        name,
+                        fid,
+                        idx,
+                        total,
+                        b64: srOwner._bytesToB64(slice),
+                        metadata: idx === 0 ? opts.metadata : undefined,
+                        from: myUserId,
+                        pw: pwToken
+                      });
+                    }
+                    return;
+                  }
+                  sendBroadcast({ t: "act", name, data, target: opts?.target || null, metadata: opts?.metadata, from: myUserId, pw: pwToken });
+                },
+                onMessage(cb) {
+                  act.msgCbs.push(cb);
+                  return () => { const i = act.msgCbs.indexOf(cb); if (i >= 0) act.msgCbs.splice(i, 1); };
+                },
+                onReceive(cb) {
+                  act.recvCbs.push(cb);
+                  return () => { const i = act.recvCbs.indexOf(cb); if (i >= 0) act.recvCbs.splice(i, 1); };
+                },
+                onReceiveProgress(cb) {
+                  act.progCbs.push(cb);
+                  return () => { const i = act.progCbs.indexOf(cb); if (i >= 0) act.progCbs.splice(i, 1); };
+                }
+              };
+            }
+          };
+        }
+      };
+    },
+
+    async loadLib(strategy = "supabase") {
       if (typeof navigator !== "undefined" && navigator.onLine === false) {
         throw new Error("مفيش نت دلوقتي — غرف المذاكرة المباشرة محتاجة إنترنت 🌐");
+      }
+      if (strategy === "supabase") {
+        if (!this.mods.supabase) {
+          const sb = await CloudLeague.getClient();
+          if (!sb) throw new Error("تعذّر تحميل خادم الغرف السريع — اتأكد من الإنترنت 🌐");
+          this.mods.supabase = this._createSupabaseRealtimeMod();
+        }
+        return this.mods.supabase;
       }
       if (this.mods[strategy]) return this.mods[strategy];
       const urls = strategy === "mqtt"
@@ -37629,7 +39439,7 @@
           lastErr = err;
         }
       }
-      throw new Error(lastErr ? "تعذّر تحميل خدمة الغرف — اتأكد من النت أو جرّب شبكة MQTT" : "تعذّر الاتصال بخادم الإشارة");
+      throw new Error(lastErr ? "تعذّر تحميل خدمة الغرف — اتأكد من النت أو استخدم السحابة المباشرة ⚡" : "تعذّر الاتصال بخادم الإشارة");
     },
 
     isConnected() {
@@ -37791,13 +39601,14 @@
       saveState();
     },
 
-    async createRoom({ title, mode = "coop", roomMode = "flex", focusMin = 50, breakMin = 5, maxUsers = 8, password = "", autoCycle = true, strategy = "nostr", devMultiTab = false }) {
+    async createRoom({ title, mode = "coop", roomMode = "flex", focusMin = 50, breakMin = 5, maxUsers = 8, password = "", autoCycle = true, strategy = "supabase", devMultiTab = false }) {
       if (this.isConnecting) return false;
       this.isConnecting = true;
       this.connectError = "";
       try {
         await this.leave(true);
-        const mod = await this.loadLib(strategy);
+        const effStrategy = ["supabase", "nostr", "mqtt"].includes(strategy) ? strategy : "supabase";
+        const mod = await this.loadLib(effStrategy);
         const baseSlug = `fc_${Math.random().toString(36).slice(2, 7)}`;
         const cfg = {
           appId: STUDY_ROOM_APP_ID,
@@ -37805,6 +39616,15 @@
           identity: devMultiTab ? "none" : "local",
           use: [mod.roles({ selfAsAdmin: true })]
         };
+        if (effStrategy !== "supabase") {
+          cfg.rtcConfig = {
+            iceServers: [
+              { urls: "stun:stun.l.google.com:19302" },
+              { urls: "stun:stun1.l.google.com:19302" },
+              { urls: "stun:stun.cloudflare.com:3478" }
+            ]
+          };
+        }
         if (password && password.trim()) cfg.password = password.trim();
 
         const validRoomMode = ["strict", "flex", "open"].includes(roomMode) ? roomMode : "flex";
@@ -37858,16 +39678,20 @@
       }
     },
 
-    async joinRoomByCode(rawInput, { password = "", strategy = "nostr", devMultiTab = false } = {}) {
+    async joinRoomByCode(rawInput, { password = "", strategy = "supabase", devMultiTab = false } = {}) {
       if (this.isConnecting) return false;
       let code = String(rawInput || "").trim();
+      let urlNet = null;
       if (code.includes("room=")) {
         try {
           const u = new URL(code.startsWith("http") ? code : `https://x.local/${code}`);
           code = u.searchParams.get("room") || code;
+          urlNet = u.searchParams.get("net");
         } catch {
           const m = code.match(/[?&]room=([^&#]+)/);
           if (m) code = decodeURIComponent(m[1]);
+          const nm = code.match(/[?&]net=([^&#]+)/);
+          if (nm) urlNet = decodeURIComponent(nm[1]);
         }
       }
       code = code.trim();
@@ -37879,9 +39703,12 @@
       this.connectError = "";
       try {
         await this.leave(true);
-        const mod = await this.loadLib(strategy);
         const pubPreset = PUBLIC_STUDY_ROOMS.find(p => p.code === code);
         const isPubFixed = !!pubPreset;
+        const effStrategy = isPubFixed
+          ? (window.__supabaseFailed ? "nostr" : "supabase")
+          : (["supabase", "nostr", "mqtt"].includes(urlNet) ? urlNet : (["supabase", "nostr", "mqtt"].includes(strategy) ? strategy : "supabase"));
+        const mod = await this.loadLib(effStrategy);
         const hasRolesSuffix = !isPubFixed && code.includes("~");
 
         const cfg = {
@@ -37892,6 +39719,15 @@
           cfg.use = [mod.roles()];
         } else {
           cfg.maxUsers = isPubFixed ? 24 : 12;
+        }
+        if (effStrategy !== "supabase") {
+          cfg.rtcConfig = {
+            iceServers: [
+              { urls: "stun:stun.l.google.com:19302" },
+              { urls: "stun:stun1.l.google.com:19302" },
+              { urls: "stun:stun.cloudflare.com:3478" }
+            ]
+          };
         }
         if (!isPubFixed && password && password.trim()) cfg.password = password.trim();
 
@@ -38088,7 +39924,7 @@
             "banned": "تم حظرك من الغرفة دي 🚫",
             "decrypt-failed": "كلمة السر غلط أو غير متطابقة 🔑",
             "relay-failed": "مشكلة مؤقتة في الشبكة — جاري إعادة المحاولة 🌐",
-            "peer-connect-failed": "صعوبة اتصال مباشر بأحد الأعضاء"
+            "peer-connect-failed": "شبكتك مانعة الاتصال المباشر P2P — استخدم شبكة السحابة المباشرة ⚡ المضمونة"
           };
           const msg = msgMap[code] || err?.message || "حصل خطأ في اتصال الغرفة";
           FX.showToast(msg, "error");
@@ -38842,6 +40678,10 @@
 
     async toggleMic() {
       if (!this.room) return;
+      if (typeof this.room.addStream !== "function") {
+        FX.showToast("🎙️ المايك المباشر متاح في وضع P2P فقط — الشات والملفات والمؤقت شغالين معاك تمام ⚡", "warn");
+        return;
+      }
       if (this.micOn) {
         try {
           if (this.micStream) {
@@ -39483,13 +41323,15 @@
     if (currentParams) currentParams = {};
 
     if (typeof navigator === "undefined" || navigator.onLine !== false) {
-      StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+      StudyRoomsDirectory.connect("supabase");
     }
 
-    if (autoJoinCode && !StudyRooms.isConnected() && !StudyRooms.isConnecting) {
+    if (autoJoinCode && !StudyRooms.isConnected() && !StudyRooms.isConnecting && !StudyRooms._autoJoinPending) {
+      StudyRooms._autoJoinPending = true;
       setTimeout(() => {
+        StudyRooms._autoJoinPending = false;
         StudyRooms.joinRoomByCode(autoJoinCode, {
-          strategy: state.studyRooms?.lastStrategy || "nostr"
+          strategy: state.studyRooms?.lastStrategy || "supabase"
         });
       }, 60);
     }
@@ -39626,8 +41468,9 @@
             <div class="field-group mt-8">
               <label class="field-label">شبكة الاتصال</label>
               <div class="chips-row">
-                <button class="chip ${sr.lastStrategy !== "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="nostr">Nostr (الافتراضي)</button>
-                <button class="chip ${sr.lastStrategy === "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="mqtt">MQTT (بديل سريع)</button>
+                <button class="chip ${(!sr.lastStrategy || sr.lastStrategy === "supabase") ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="supabase">السحابة ⚡ (مضمون)</button>
+                <button class="chip ${sr.lastStrategy === "nostr" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="nostr">Nostr (P2P)</button>
+                <button class="chip ${sr.lastStrategy === "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="mqtt">MQTT (P2P)</button>
               </div>
             </div>
 
@@ -39653,8 +41496,9 @@
             <div class="field-group">
               <label class="field-label">شبكة الاتصال</label>
               <div class="chips-row">
-                <button class="chip ${sr.lastStrategy !== "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="nostr">Nostr (الافتراضي)</button>
-                <button class="chip ${sr.lastStrategy === "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="mqtt">MQTT (بديل)</button>
+                <button class="chip ${(!sr.lastStrategy || sr.lastStrategy === "supabase") ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="supabase">السحابة ⚡ (مضمون)</button>
+                <button class="chip ${sr.lastStrategy === "nostr" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="nostr">Nostr (P2P)</button>
+                <button class="chip ${sr.lastStrategy === "mqtt" ? "active" : ""}" style="flex:1;justify-content:center;" data-sr-strat="mqtt">MQTT (P2P)</button>
               </div>
             </div>
             <div class="fs-toggle-row mb-12">
@@ -39685,7 +41529,8 @@
 
       document.getElementById("sr-dir-refresh").onclick = () => {
         AudioFX.playClick();
-        StudyRoomsDirectory.connect(state.studyRooms?.lastStrategy || "nostr");
+        StudyRoomsDirectory.lastAttemptAt = 0;
+        StudyRoomsDirectory.connect("supabase");
         StudyRoomsDirectory.recompute();
         FX.showToast("🔄 اتحدّث عدد المتصلين الأونلاين!", "success");
       };
@@ -39751,7 +41596,7 @@
             maxUsers,
             password,
             autoCycle: autoCyc,
-            strategy: state.studyRooms.lastStrategy || "nostr",
+            strategy: state.studyRooms.lastStrategy || "supabase",
             devMultiTab: devTab
           });
         };
@@ -39764,7 +41609,7 @@
           const pass = document.getElementById("sr-j-pass").value;
           StudyRooms.joinRoomByCode(code, {
             password: pass,
-            strategy: state.studyRooms.lastStrategy || "nostr",
+            strategy: state.studyRooms.lastStrategy || "supabase",
             devMultiTab: devTabJ
           });
         };
@@ -39773,7 +41618,7 @@
       el.querySelectorAll("[data-sr-pub]").forEach(b => {
         b.onclick = () => {
           StudyRooms.joinRoomByCode(b.dataset.srPub, {
-            strategy: state.studyRooms?.lastStrategy || "nostr"
+            strategy: "supabase"
           });
         };
       });
@@ -39791,7 +41636,7 @@
             }, 30);
             return;
           }
-          StudyRooms.joinRoomByCode(code, { strategy: state.studyRooms?.lastStrategy || "nostr" });
+          StudyRooms.joinRoomByCode(code, { strategy: state.studyRooms?.lastStrategy || "supabase" });
         };
       });
       return;
@@ -40145,7 +41990,10 @@
     const copyBtn = document.getElementById("sr-copy-link");
     if (copyBtn) {
       copyBtn.onclick = async () => {
-        const shareUrl = `${window.location.origin}${window.location.pathname}?room=${encodeURIComponent(StudyRooms.roomCode)}`;
+        const netParam = (state.studyRooms?.lastStrategy && state.studyRooms.lastStrategy !== "supabase")
+          ? `&net=${encodeURIComponent(state.studyRooms.lastStrategy)}`
+          : "";
+        const shareUrl = `${window.location.origin}${window.location.pathname}?room=${encodeURIComponent(StudyRooms.roomCode)}${netParam}`;
         try {
           if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(shareUrl);
           FX.showToast("اتنسخ رابط الدعوة! ابعته لصحابك 📋", "success");
